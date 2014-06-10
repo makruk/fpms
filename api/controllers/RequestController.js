@@ -7,4 +7,10 @@
 
 module.exports = {
 	
+  index:function(req, res){
+    return res.view()+
+  },
+  request:function(req, res){
+    return res.view()+
+  }
 };
