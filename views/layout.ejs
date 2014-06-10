@@ -1,38 +1,16 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>New Sails App</title>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" href="/css/iconFont.css" />
+        <link rel="stylesheet" href="/css/metro-bootstrap.css" />
+        <link rel="stylesheet" href="/css/metro-bootstrap-responsive.css" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- Viewport mobile tag for sensible mobile support -->
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>Login</title>
 
-    
-    <!--  
-        Stylesheets and Preprocessors
-        ==============================
-
-        You can always bring in CSS files manually with `<link>` tags, or asynchronously
-        using a solution like AMD (RequireJS).  Or, if you like, you can take advantage 
-        of Sails' conventional asset pipeline (boilerplate Gruntfile).
-
-        By default, stylesheets from your `assets/linker/styles` folder are included
-        here automatically (between STYLES and STYLES END). Both CSS (.css) and LESS (.less)
-        are supported. In production, your styles will be minified and concatenated into
-        a single file.
-        
-        To customize any part of the built-in behavior, just edit your Gruntfile.
-        For example, here are a few things you could do:
-            
-            + Change the order of your CSS files
-            + Import stylesheets from other directories
-            + Use a different or additional preprocessor, like SASS, SCSS or Stylus
-    -->
-
-    <!--STYLES-->
-    <!--STYLES END-->
-  </head>
-
-  <body>
+    <body class="metro">
+    <% include header %>
     <%- body %>
 
 
@@ -59,6 +37,7 @@
     -->
 
     <!--TEMPLATES-->
+    
     <!--TEMPLATES END-->
 
 
@@ -86,6 +65,10 @@
     -->
 
     <!--SCRIPTS-->
+    <script src="/js/dependencies/sails.io.js"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/jquery/jquery.widget.min.js"></script>
+    <script src="/js/metro.min.js"></script>
     <!--SCRIPTS END-->
   </body>
 </html>

@@ -1,5 +1,3 @@
-# Food Product Management System
-
-Git test
+# fpms_
 
 a [Sails](http://sailsjs.org) application
