@@ -1,15 +1,15 @@
 <header class="bg-blue">
   <div class="navigation-bar blue">
     <div class="navigation-bar-content container">
-      <a href="list.html" class="element"><span class="icon-home"></span> リクエスト</a>
+      <a href="/request/" class="element"><span class="icon-home"></span> リクエスト</a>
       <span class="element-divider"></span>
       <a class="element1 pull-menu" href="#"></a>
       <ul class="element-menu">
-        <li><a href="/stock/search.html" class="element">在庫リスト</a>
-        <li><a href="/user/search.html" class="element">ユーザー検索</a>
-        <li><a href="/log/log.html" class="element">ログ閲覧</a>
-        <li><a href="/login.html" class="element place-right">Logout</a>
-        <li><a class="element place-right"><span class="icon-user"></span> 管理者名</a>
+        <li><a href="/stock/" class="element">在庫リスト</a>
+        <li><a href="/user/" class="element">ユーザー検索</a>
+        <li><a href="/log/" class="element">ログ閲覧</a>
+        <li><a href="/auth/logout" class="element place-right">Logout</a>
+        <li><a class="element place-right"><span class="icon-user"></span> <%= session.name %></a>
       </ul>
     </div>
   </div>
