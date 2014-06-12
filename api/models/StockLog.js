@@ -11,7 +11,10 @@ module.exports = {
     number:{type:"integer"},
     price:{type:"integer"},
     kind:{type:"integer"},
-    note:{type:"integer"}
+    note:{type:"integer"},
+    stock:{
+      model:"Stock"
+    }
   }
 };
 

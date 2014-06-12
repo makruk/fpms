@@ -14,7 +14,20 @@ module.exports = {
     grade:{type:"integer"},
     balance:{type:"integer"},
     permission:{type:"integer"},
-    limit:{type:"integer"}
+    limit:{type:"integer"},
+    UserLog:{
+      collection:"UserLog",
+      via:"user"
+    },
+    Request:{
+      collection:"Request",
+      via:"User"
+    },
+    favRequest:{
+      dominant:true,
+      collection:"Request",
+      via:"favUser"
+    }
   }
 };
 

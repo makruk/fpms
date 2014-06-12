@@ -10,7 +10,15 @@ module.exports = {
   attributes: {
     request:{type:"string"},
     responce:{type:"string"},
-    review:{type:"integer"}
+    review:{type:"integer"},
+    User:{
+      model:"User"
+    },
+    favUser:{
+      collection:"User",
+      via:"favRequest",
+      dominant:true
+    }
   }
 };
 

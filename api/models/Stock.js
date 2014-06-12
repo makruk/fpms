@@ -12,7 +12,11 @@ module.exports = {
     price:{type:"integer"},
     number:{type:"integer"},
     photo:{type:"binary"},
-    category:{type:"string"}
+    category:{type:"string"},
+    StockLog:{
+      collection:"StockLog",
+      via:"stock"
+    }
   }
 };
 

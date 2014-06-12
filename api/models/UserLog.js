@@ -10,7 +10,10 @@ module.exports = {
   attributes: {
     cash:{type:"integer"},
     kind:{type:"integer"},
-    note:{type:"string"}
+    note:{type:"string"},
+    user:{
+      model:"User"
+    }
   }
 };
 
