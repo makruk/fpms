@@ -58,8 +58,27 @@
 			</tr>
 		</thead>
 		<tbody>
-			<tr class=""><td>島村卯月</td><td>2014/05/11</td><td>カップ麺のカレー味が欲しい！</td><td></td><td>pending</td><td>3</td><td><a href="request1.html"><button class="button ">詳細</button></a><a href="list.html"><button class="button danger">削除</button></a></td></tr>
-			<tr class=""><td>渋谷凛</td><td>2014/05/10</td><td>じゃがりこチーズ味がもうない！</td><td>10個買ってきたよ</td><td>accept</td><td>3</td><td><a href="request2.html"><button class="button">詳細</button></a><a href="list.html"><button class="button danger">削除</button></a></td></tr>
+			<% for(var i = requests.length; i > 0; i--){%>
+				<tr class="">
+					<td>島村卯月</td>
+					<td><%= requests[i].createdAt %></td>
+					<td><%= requests[i].request %></td>
+					<td><%= requests[i].responce %></td>
+					<td><% var check = requests[i].review %>
+							<%if (check == 1){ %>
+								accept
+							<%}elseif(check == 2){ %>
+								reject
+							<%}elseif(check == 3){ %>
+								pending
+							<%}else{ %>
+								none
+							<%}%>
+					</td>
+					<td>3</td>
+					<td><a href="request1.html"><button class="button ">詳細</button></a><a href="list.html"><button class="button danger">削除</button></td>
+				</tr>	
+			<% } %>
 		</tbody>
 	</table>
 </div>
