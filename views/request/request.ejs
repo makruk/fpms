@@ -1,0 +1,100 @@
+﻿<body class="metro">
+
+<!--ここから本文 -->
+	<div class="container">
+		<form action="/bbs/submit">
+			<fieldset>
+				<div class="panel">
+					<div class="panel-header">
+						リクエストフォーム
+					</div>
+					<div class="panel-content">
+						<div class="input-control text" data-role="input-control">
+							<input name ="request" type="text" placeholder="リクエストはここに">
+						</div>
+						<input type="submit" value="送信" class="large info">
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		<form>
+			<fieldset>
+				<div class="panel">
+					<div class="panel-header">
+						リクエスト一覧
+					</div>
+					<div class="panel-content">
+						<div class="input-control checkbox" data-role="input-control">
+							<label class="inline-block">
+								<input type="checkbox" />
+           			<span class="check"></span>
+								自分のリクエストのみ表示する
+							</label>
+						</div>
+						<div class="input-control checkbox" data-role="input-control">
+							<label class="inline-block">
+								<input type="checkbox" />
+        	   		<span class="check"></span>
+								フィードバックがあるもののみ表示する
+							</label>
+						</div>
+						<input type="submit" value="リクエスト検索" class="large info">
+
+						<% for(var i = requests.length; i > 0; i--){%>
+
+<!--ユーザによって色を変える　別ユーザーのとき灰色-->
+
+							<div class="balloon">
+								<div class="padding20">
+									<%= requests[i].createdAt %>
+									<br>
+									<%= requests[i].request %>
+
+	<!--ボタン直す いいねをあとで作る-->
+
+									<div class="toolbar">
+										<button><i class="icon-star-3">いいね</i></button>
+									</div>
+								</div>
+							</div>
+
+<!--reviewについて... 1=accept,2=reject,3=pending,0=初期状態 -->
+
+							<% var check = requests[i].review %>
+							<%if (check == 1){ %>
+								<div class="balloon bottom bg-cyan">
+									<div class="padding20 fg-white">
+										2014/05/14<br>
+										<%= requests[i].responce %>
+									</div>
+								</div>
+							<%}elseif(check == 2){ %>
+									<div class="balloon bottom bg-red">
+									<div class="padding20 fg-white">
+										2014/05/14<br>
+										<%= requests[i].responce %>
+									</div>
+								</div>
+							<%}elseif(check == 3){ %>
+									<div class="balloon bottom bg-cyan">
+									<div class="padding20 fg-white">
+										2014/05/14<br>
+										<%= requests[i].responce %>
+									</div>
+								</div>
+							<%}else{ %>
+									<div class="balloon bottom">
+									<div class="padding20">
+										2014/05/14<br>
+										<%= requests[i].responce %>
+									</div>
+								</div>
+							<%}%>
+						<%}%>
+
+					</div>
+				</div>
+			</fieldset>
+		</form>
+		</div>
+	</body>
