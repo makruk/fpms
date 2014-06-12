@@ -57,28 +57,19 @@
 				<th class="text-left">その他</th>
 			</tr>
 		</thead>
-		<tbody>
-			<% for(var i = requests.length; i > 0; i--){%>
+		<% for(var i = 0; i < requests.length; i++){%>
+			<tbody>
 				<tr class="">
 					<td>島村卯月</td>
 					<td><%= requests[i].createdAt %></td>
 					<td><%= requests[i].request %></td>
 					<td><%= requests[i].responce %></td>
-					<td><% var check = requests[i].review %>
-							<%if (check == 1){ %>
-								accept
-							<%}elseif(check == 2){ %>
-								reject
-							<%}elseif(check == 3){ %>
-								pending
-							<%}else{ %>
-								none
-							<%}%>
+					<td>
 					</td>
 					<td>3</td>
 					<td><a href="request1.html"><button class="button ">詳細</button></a><a href="list.html"><button class="button danger">削除</button></td>
 				</tr>	
-			<% } %>
-		</tbody>
+			</tbody>
+		<%}%>
 	</table>
 </div>

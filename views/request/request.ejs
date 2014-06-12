@@ -2,7 +2,7 @@
 
 <!--ここから本文 -->
 	<div class="container">
-		<form action="/bbs/submit">
+		<form action="/request/submit">
 			<fieldset>
 				<div class="panel">
 					<div class="panel-header">
@@ -40,7 +40,7 @@
 						</div>
 						<input type="submit" value="リクエスト検索" class="large info">
 
-						<% for(var i = requests.length; i > 0; i--){%>
+						<% for(var i = 0; i < requests.length; i++){%>
 
 <!--ユーザによって色を変える　別ユーザーのとき灰色-->
 
@@ -59,39 +59,7 @@
 							</div>
 
 <!--reviewについて... 1=accept,2=reject,3=pending,0=初期状態 -->
-
-							<% var check = requests[i].review %>
-							<%if (check == 1){ %>
-								<div class="balloon bottom bg-cyan">
-									<div class="padding20 fg-white">
-										2014/05/14<br>
-										<%= requests[i].responce %>
-									</div>
-								</div>
-							<%}elseif(check == 2){ %>
-									<div class="balloon bottom bg-red">
-									<div class="padding20 fg-white">
-										2014/05/14<br>
-										<%= requests[i].responce %>
-									</div>
-								</div>
-							<%}elseif(check == 3){ %>
-									<div class="balloon bottom bg-cyan">
-									<div class="padding20 fg-white">
-										2014/05/14<br>
-										<%= requests[i].responce %>
-									</div>
-								</div>
-							<%}else{ %>
-									<div class="balloon bottom">
-									<div class="padding20">
-										2014/05/14<br>
-										<%= requests[i].responce %>
-									</div>
-								</div>
-							<%}%>
 						<%}%>
-
 					</div>
 				</div>
 			</fieldset>
