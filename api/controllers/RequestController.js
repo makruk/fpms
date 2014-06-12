@@ -1,4 +1,4 @@
-/**
+﻿/**
  * RequestController.js 
  *
  * @description ::
@@ -8,6 +8,9 @@
 module.exports = {
 	
   index:function(req, res){
+		Request.find({}).exec(function(err,found){
+			this.request = found;
+		});
     return res.view();
   },
   request:function(req, res){
