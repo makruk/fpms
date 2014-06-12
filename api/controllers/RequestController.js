@@ -14,11 +14,12 @@ module.exports = {
     return res.view();
   },
   request:function(req, res){
+			this.request = found;
 	  return res.view();
   },
 	submit:function(req,res){
 		var request = req.param('request');
-		Request.create({request:request,review:0,evaluation:0})
+		Request.create({request:request,review:0})
 		.exec(function(err){});
 		return res.redirect("/request")
 	}
