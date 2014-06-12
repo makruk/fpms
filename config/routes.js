@@ -32,7 +32,12 @@ module.exports.routes = {
 
 
   // Custom routes here...
-
+  'get /auth/login':{view:'auth/login'},
+  'post /auth/login':'AuthController.login',
+  'get /user/create':{view:'user/create'},
+  'post /user/create':'UserController.create',
+  'get /stock/create':{view:'stock/create'},
+  'post /stock/create':'StockController.create'
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options

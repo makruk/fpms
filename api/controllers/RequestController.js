@@ -11,6 +11,12 @@ module.exports = {
     return res.view();
   },
   request:function(req, res){
-    return res.view();
-  }
+	  return res.view();
+  },
+	submit:function(req,res){
+		var request = req.param('request');
+		Request.create({request:request,review:0,evaluation:0})
+		.exec(function(err){});
+		return res.redirect("/request")
+	}
 };

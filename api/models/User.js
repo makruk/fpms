@@ -24,7 +24,6 @@ module.exports = {
       via:"User"
     },
     favRequest:{
-      dominant:true,
       collection:"Request",
       via:"favUser"
     }
