@@ -1,5 +1,5 @@
 # Food Product Management System
 
-a [Sails beta docs](http://beta.sailsjs.org/#/documentation) documentation
+Sailsについて困ったときは[Sails beta docs](http://beta.sailsjs.org/#/documentation)を読もう
 
 a [Sails](http://sailsjs.org) application
