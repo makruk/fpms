@@ -12,5 +12,8 @@ module.exports = {
   },
   user:function(req, res){
     return res.view();
+  },
+  create:function(req, res){
+  	return res.view();
   }
 };
