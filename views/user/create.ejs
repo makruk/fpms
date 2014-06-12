@@ -1,10 +1,10 @@
 ﻿<div class="container">
     <h1>新規登録</h1>
-    <form action"/user/create">
+    <form action="/user/create" method="post">
     <fieldset>
-      <label>名前</label><div class="input-control text"><input type="text" class="size6"></div>
-      <label>ユーザーID</label><div class="input-control text"><input type="text" class="size6"></div>
-      <label>パスワード</label><div class="input-control text"><input type="password" class="size6"></div>
+      <label>名前</label><div class="input-control text"><input name="name" type="text" class="size6"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" class="size6"></div>
+      <label>パスワード</label><div class="input-control text"><input name="password" type="password" class="size6"></div>
       <div class="input-control checkbox" data-role="input-control">
       <label>学年</label>
         <label class="inline-block">
@@ -30,12 +30,12 @@
       </div>
       <label>権限</label>
       <div class="input-control select size6">
-        <select>
+        <select name="permission">
           <option value="1">管理者</option>
           <option value="2">購入者</option>
         </select>
       </div>
-      <label>ツケの上限</label><div class="input-control text"><input type="text" class="size6">円</div>
+      <label>ツケの上限</label><div class="input-control text"><input name="limit" type="text" class="size6">円</div>
     </fieldset>
     <input type="submit" class="large info" value="確認">
     </form>
