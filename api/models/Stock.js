@@ -8,11 +8,19 @@
 module.exports = {
 
   attributes: {
-    name:{type:"string"},
-    price:{type:"integer"},
-    number:{type:"integer"},
+    name:{type:"string",
+    required: true
+    },
+    price:{type:"integer",
+    required: true
+    },
+    number:{type:"integer",
+    required: true
+    },
     photo:{type:"binary"},
-    category:{type:"string"},
+    category:{type:"string",
+    required: true
+    },
     StockLog:{
       collection:"StockLog",
       via:"stock"
