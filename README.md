@@ -19,11 +19,13 @@ Sails.jsのインストール
     sudo npm -g install node-gyp
     
 ### Windows
+
 [Node.js download](http://nodejs.org/download/)
 
     npm -g install sails@0.10.0-rc5
     
 [Python 2.7.x Download](https://www.python.org/download/)
+
 [Microsoft Visual C++ for Windows Desktop Download](http://go.microsoft.com/?linkid=9816758)
 
     npm -g install node-gyp
