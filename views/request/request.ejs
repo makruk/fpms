@@ -1,6 +1,7 @@
 ﻿<body class="metro">
 
 <!--ここから本文 -->
+<!--リクエスト送信　ほぼOK-->
 	<div class="container">
 		<form action="/request/submit">
 			<fieldset>
@@ -17,6 +18,8 @@
 				</div>
 			</fieldset>
 		</form>
+
+<!--リクエスト表示および　リクエスト検索　検索のほうがまだできていない -->
 		<form>
 			<fieldset>
 				<div class="panel">
@@ -51,14 +54,36 @@
 									<%= requests[i].request %>
 
 	<!--ボタン直す いいねをあとで作る-->
-
 									<div class="toolbar">
 										<button><i class="icon-star-3">いいね</i></button>
 									</div>
 								</div>
 							</div>
-
 <!--reviewについて... 1=accept,2=reject,3=pending,0=初期状態 -->
+							<%if (requests[i].review == 1){ %>
+								<div class="balloon bottom bg-cyan">
+									<div class="padding20 fg-white">
+										2014/05/14<br>
+										<%= requests[i].responce %>
+									</div>
+								</div>
+							<%}%>
+							<%if (requests[i].review == 2){ %>
+								<div class="balloon bottom bg-red">
+									<div class="padding20 fg-white">
+										2014/05/14<br>
+										<%= requests[i].responce %>
+									</div>
+								</div>
+							<%}%>
+							<%if (requests[i].review == 3){ %>
+								<div class="balloon bottom">
+									<div class="padding20">
+										2014/05/14<br>
+										<%= requests[i].responce %>
+									</div>
+								</div>
+							<%}%>
 						<%}%>
 					</div>
 				</div>
