@@ -7,24 +7,28 @@
 
 module.exports = {
   login:function(req, res){
+    var bcrypt=require('bcrypt');
     var user_id=req.param("id");
     var password=req.param("password");
     if(user_id !== void 0){
-      User.find({user_id:user_id}).exec(function(err, found){
-        if( found[0] !== void 0 && found[0].password === password ){
-          req.session.user_id=user_id;
-          req.session.permission=found[0].permission;
+      User.findOne({user_id:user_id}).exec(function(err, found){
+        if(err)res.json({error:"DB error"}, 500);
+        if( found !== void 0 ){
+          bcrypt.compare(password, found.password, function(err, correct){
+            req.session.user_id=user_id;
+            req.session.permission=found.permission;
 
-          /*リダイレクト先は後で変更*/
-          res.redirect("/request/");
+            /*リダイレクト先は後で変更*/
+            return res.redirect("/");
+          });
         }
         else{
-          res.view();
+          return res.json({id:user_id});
         }
       });
     }
     else{
-      res.view();
+      return res.view();
     }
   },
   logout:function(req, res){
