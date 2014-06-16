@@ -5,11 +5,11 @@
 			条件
 			</div>
 			<div class="panel-content">
-			<form>
+			<form action="/user/" method="get">
 				<fieldset>
 					<label>名前</label>
 					<div class="input-control text" data-role="input-control">
-						<input type="text" class="span10">
+						<input type="text" name="name" class="span10">
 					</div>
 					<label>学年</label>
 					<div class="input-control checkbox" data-role="input-control">
@@ -70,7 +70,7 @@
 			</div>
 
 			<h2>検索結果</h2>
-      <div class="place-right"><a href="new_user.html"><button class="default span 2">新規登録</button></a></div>
+      <div class="place-right"><a href="/user/create"><button class="default span 2">新規登録</button></a></div>
 			<table class="table striped bordered hovered">
 				<thead>
 					<tr>
@@ -80,10 +80,11 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class=""><td><a href="user1.html">島村卯月</a></td><td>M2</td><td>0円</td></tr>
-					<tr class=""><td><a href="user2.html">渋谷凛</a></td><td>M1</td><td>10000円</td></tr>
-					<tr class=""><td><a href="user3.html">本田未央</a></td><td>B4</td><td>-5000円</td></tr>
+					<% for(var i=0; i<found.length; i++){ %>
+					<tr class=""><td><a href="/user/<%= found[i].user_id %>"><%= found[i].name %></a></td><td>M2</td><td>0円</td></tr>
+					<% } %>
 				</tbody>
 			</table>
 
 		</div>
+
