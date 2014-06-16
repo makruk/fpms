@@ -4,18 +4,18 @@
 			リクエスト検索
 		</div>
 		<div class="panel-content">
-			<form>
+			<form action="/request">
 				<fieldset>
 					<div class="clearfix">
 						<label>状態</label>
 						<div class="input-control radio inline-block" data-role="input-control">
 							<label class="inline-block">
-								<input type="radio" name="r1"  />
+								<input type="radio" name="r1" value="0"  />
 								<span class="check"></span>
 									フィードバック無し
 							</label>
 							<label class="inline-block">
-								<input type="radio" name="r1"  />
+								<input type="radio" name="r1" value="1" />
 								<span class="check"></span>
 									フィードバック有り
 							</label>
@@ -64,7 +64,18 @@
 					<td><%= requests[i].createdAt %></td>
 					<td><%= requests[i].request %></td>
 					<td><%= requests[i].responce %></td>
-					<td>
+					<td><%if (requests[i].review == 1){ %>
+								accept
+							<%}%>
+							<%if (requests[i].review == 2){ %>
+								reject
+							<%}%>
+							<%if (requests[i].review == 3){ %>
+								pending
+							<%}%>
+							<%if (requests[i].review == 0){ %>
+								未評価
+							<%}%>
 					</td>
 					<td>3</td>
 					<td><a href="request1.html"><button class="button ">詳細</button></a><a href="list.html"><button class="button danger">削除</button></td>
