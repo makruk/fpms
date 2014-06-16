@@ -31,9 +31,7 @@
     "v8_no_strict_aliasing": 1,
     "v8_use_snapshot": "true",
     "visibility": "",
-    "nodedir": "C:\\cygwin\\home\\11T5066F\\.node-gyp\\0.10.25",
     "copy_dev_lib": "true",
-    "standalone_static_library": 1,
-    "msvc_version": 2012
+    "standalone_static_library": 1
   }
 }
