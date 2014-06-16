@@ -9,8 +9,8 @@ module.exports = {
 
   attributes: {
     name:{type:"string"},
-    user_id:{type:"string"},
-    password:{type:"string"},
+    user_id:{type:"string", required:true, unique:true},
+    password:{type:"string", required:true},
     grade:{type:"integer"},
     balance:{type:"integer"},
     permission:{type:"integer"},
@@ -27,6 +27,17 @@ module.exports = {
       collection:"Request",
       via:"favUser"
     }
+  },
+  beforeCreate:function(attrs, next){
+    var bcrypt=require('bcrypt');
+    bcrypt.genSalt(10, function(err, salt){
+      if(err)return next(err);
+      bcrypt.hash(attrs.password, salt, function(err, hash){
+        if(err)return next(err);
+        attrs.password=hash;
+        next();
+      });
+    });
   }
 };
 
