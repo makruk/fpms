@@ -63,7 +63,9 @@
 					<td>島村卯月</td>
 					<td><%= requests[i].createdAt %></td>
 					<td><%= requests[i].request %></td>
-					<td><%= requests[i].responce %></td>
+					<td><% if(requests[i].responce != undefined){%>
+							<%= requests[i].responce %>
+							<%}%></td>
 					<td><%if (requests[i].review == 1){ %>
 								accept
 							<%}%>
