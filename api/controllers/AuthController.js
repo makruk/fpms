@@ -6,6 +6,17 @@
  */
 
 module.exports = {
+  index:function(req, res){
+    if(req.session.permission === 1){
+      return res.redirect('/request');
+    }
+    else if(req.session.permission === 0){
+      return res.redirect('/stock');
+    }
+    else{
+      return res.redirect('/auth/login');
+    }
+  },
   login:function(req, res){
     var bcrypt=require('bcrypt');
     var user_id=req.param("id");
@@ -20,7 +31,7 @@ module.exports = {
               req.session.permission=found.permission;
             }
             /*リダイレクト先は後で変更*/
-            return res.redirect("/");
+            return res.redirect("/auth/");
           });
         }
         else{
