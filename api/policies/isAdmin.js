@@ -1,5 +1,9 @@
 module.exports = function(req, res, next) {
+<<<<<<< HEAD
   if (req.session.permission === 1) {
+=======
+  if (req.session.permission === "1") {
+>>>>>>> make Policie
     return next();
   }
 

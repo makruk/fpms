@@ -18,18 +18,29 @@ module.exports.policies = {
   // (`true` allows public access) 
   '*': true,
   UserController:{
+<<<<<<< HEAD
   	'*': ['isLoggedIn','isAdmin'],
   	user:'isLoggedIn'
   },
   LogController:{
   	'*':['isLoggedIn','isAdmin']
+=======
+  	'*':'isLoggedIn',
+  },
+  LogController:{
+  	'*':'isLoggedIn'
+>>>>>>> make Policie
   },
   RequestController:{
   	'*':'isLoggedIn'
   },
   StockController:{
+<<<<<<< HEAD
   	'*':['isLoggedIn', 'isAdmin'],
   	index:'isLoggedIn'
+=======
+  	'*':'isLoggedIn'
+>>>>>>> make Policie
   },
   /*
 	// Here's an example of adding some policies to a controller
