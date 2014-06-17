@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
     request:{type:"string"},
-    responce:{type:"string"},
+    responce:{type:"string", defaultsTo:""},
     review:{type:"integer"},
 		evaluation:{type:"integer"},
     User:{
