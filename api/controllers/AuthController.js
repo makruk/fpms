@@ -15,9 +15,10 @@ module.exports = {
         if(err)res.json({error:"DB error"}, 500);
         if( found !== void 0 ){
           bcrypt.compare(password, found.password, function(err, correct){
-            req.session.user_id=user_id;
-            req.session.permission=found.permission;
-
+            if(correct){
+              req.session.user_id=user_id;
+              req.session.permission=found.permission;
+            }
             /*リダイレクト先は後で変更*/
             return res.redirect("/");
           });
