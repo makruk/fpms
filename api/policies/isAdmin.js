@@ -1,5 +1,4 @@
 module.exports = function(req, res, next) {
-<<<<<<< HEAD
   if (req.session.permission === 1) {
     return next();
   }
