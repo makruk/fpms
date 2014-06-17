@@ -31,17 +31,19 @@ module.exports.routes = {
 
   // Custom routes here...
 
-  'get /user/:id':'UserController.user',
-  'get /user/:id/edit':'UserController.edit',
+  '/user/:id':'UserController.user',
+  '/user/:id/edit':'UserController.edit',
 
-  'get /stock/:id':'StockController.stock',
-  'get /stock/:id/edit':'StockController.edit',
+  '/stock/:id':'StockController.stock',
+  '/stock/:id/edit':'StockController.edit',
+
+
+  '/user/create':'UserController.create',
+  '/stock/create':'StockController.create',
 
   'get /request/:id':'RequestController.request',
   'post /request/:id':'RequestController.feedback'
 
-  'get /request/:id':'RequestController.request',
-  'post /request/:id':'RequestController.feedback',
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options
