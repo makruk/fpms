@@ -12,7 +12,7 @@
         <li><a href="/auth/logout" class="element place-right">Logout</a>
         <li><a class="element place-right"><span class="icon-user"></span> <%= session.user_id %></a>
       </ul>
-<% }else if(session.permission === 1){ %>
+<% }else if(session.permission === 0){ %>
       <a href="/stock/" class="element"><span class="icon-home"></span> 商品リスト</a>
       <span class="element-divider"></span>
       <a class="element1 pull-menu" href="#"></a>
@@ -21,7 +21,7 @@
         <a href="/user/" class="element"><span class="icon-user"></span> <%= session.user_id %> <%= session.balance %></a>
         <a href="/auth/logout" class="element place-right">Logout</a>
       </ul>
-<% }else if(session.permission === void 0){ %>
+<% }else{ %>
       <a href="/" class="element"><span class="icon-home"></span></a>
       <span class="element-divider"></span>
 <% } %>
