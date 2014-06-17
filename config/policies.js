@@ -18,16 +18,18 @@ module.exports.policies = {
   // (`true` allows public access) 
   '*': true,
   UserController:{
-  	'*':'isLoggedIn',
+  	'*': ['isLoggedIn','isAdmin'],
+  	user:'isLoggedIn'
   },
   LogController:{
-  	'*':'isLoggedIn'
+  	'*':['isLoggedIn','isAdmin']
   },
   RequestController:{
   	'*':'isLoggedIn'
   },
   StockController:{
-  	'*':'isLoggedIn'
+  	'*':['isLoggedIn', 'isAdmin'],
+  	index:'isLoggedIn'
   },
   /*
 	// Here's an example of adding some policies to a controller
