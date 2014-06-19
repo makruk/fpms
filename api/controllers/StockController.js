@@ -21,12 +21,8 @@ module.exports = {
       return res.view();
     });
   },
-<<<<<<< HEAD
-  create:function(req, res){
-=======
  create:function(req, res){
     if(req.method == 'GET')return res.view();
->>>>>>> get methodがviewに直接ルーティングされている部分を削除
   	var name=req.param('name');
 	var price=req.param('price');
 	var buy_price=req.param('buy_price');
