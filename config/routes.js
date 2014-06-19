@@ -34,6 +34,7 @@ module.exports.routes = {
   '/user/:id':'UserController.user',
   '/user/:id/edit':'UserController.edit',
 
+
   '/stock/:id':'StockController.stock',
   '/stock/:id/edit':'StockController.edit',
 
