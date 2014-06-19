@@ -18,10 +18,11 @@ module.exports = {
     }
   },
   login:function(req, res){
+    if(req.session.user_id != void 0)return res.redirect('/');
+    if(req.method == 'GET')return res.view();
     var bcrypt=require('bcrypt');
     var user_id=req.param("id");
     var password=req.param("password");
-    if(req.session.user_id != void 0)return res.redirect('/');
     if(user_id !== void 0){
       User.findOne({user_id:user_id}).exec(function(err, found){
         if(err)res.json({error:"DB error"}, 500);
