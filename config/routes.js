@@ -37,7 +37,6 @@ module.exports.routes = {
   '/stock/:id':'StockController.stock',
   '/stock/:id/edit':'StockController.edit',
 
-
   '/user/create':'UserController.create',
   '/stock/create':'StockController.create',
 
