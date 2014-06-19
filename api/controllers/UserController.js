@@ -41,6 +41,7 @@ module.exports = {
     return res.view();
   },
   create:function(req, res){
+    if(req.method == 'GET')return res.view();
   	var name=req.param('name');
 		var user_id=req.param('user_id');
 		var password=req.param('password');
