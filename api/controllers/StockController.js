@@ -16,7 +16,8 @@ module.exports = {
   stock:function(req, res){
 	  return res.view();
   },
-  create:function(req, res){
+ create:function(req, res){
+    if(req.method == 'GET')return res.view();
   	var name=req.param('name');
 	var price=req.param('price');
 	var number=req.param('number');

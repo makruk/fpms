@@ -30,22 +30,12 @@ module.exports.routes = {
 
 
   // Custom routes here...
-  'get /auth/login':{view:'auth/login'},
-  'post /auth/login':'AuthController.login',
 
-  'get /user/create':{view:'user/create'},
-
-  'post /user/create':'UserController.create',
   '/user/:id':'UserController.user',
   '/user/:id/edit':'UserController.edit',
 
-  'get /stock/create':{view:'stock/create'},
-
-  'post /stock/create':'StockController.create',
-  'get /stock/:id':'StockController.stock',
-
-  'get /stock/:id/edit':{view:'stock/edit'},
-  'post /stock/:id/edit':'StockController.edit'
+  '/stock/:id':'StockController.stock',
+  '/stock/:id/edit':'StockController.edit',
 
   'get /request/:id':'RequestController.request',
   'post /request/:id':'RequestController.feedback'

@@ -20,6 +20,7 @@ module.exports = {
 	  return res.view();
   },
 	submit:function(req,res){
+    if(req.method == 'GET')return res.view();
 		var request = req.param('request');
 		Request.create({request:request,review:0})
 		.exec(function(err){});
