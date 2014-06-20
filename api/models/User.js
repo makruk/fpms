@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
     name:{type:"string"},
-    user_id:{type:"string", required:true, unique:true},
+    user_id:{type:"string", required:true},
     password:{type:"string", required:true},
     grade:{type:"integer"},
     balance:{type:"integer"},

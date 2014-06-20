@@ -34,17 +34,57 @@ module.exports = {
     return res.view();
   },
   user:function(req, res){
+    var id=req.param('id')
+    User.findOne({user_id:id}).exec(function findOneCB(err, found){
+      this.user=found;
+    });
     return res.view();
   },
   create:function(req, res){
   	var name=req.param('name');
 		var user_id=req.param('user_id');
 		var password=req.param('password');
+    var password_confirm=req.param('password_confirm');
 		var grade=req.param('grade');
 		var permission=req.param('permission');
 		var limit=req.param('limit');
     var balance=0;
-		User.create({name:name, user_id:user_id, password:password, grade:grade, permission:permission, balance:balance, limit:limit}).exec(function(err){});
-  	return res.redirect("/user");
+    if(password!==password_confirm){
+      return res.view();
+    }
+		User.create({name:name, user_id:user_id, password:password, grade:grade, permission:permission, balance:balance, limit:limit}).exec(function(err){
+      if(err){
+        console.log(err);
+        return res.view();
+      }
+      else{
+        return res.redirect('/user');
+      }
+    });
+  },
+  edit:function(req, res){
+    var id=req.param('id');
+    if(req.method==="GET"){
+      User.findOne({user_id:id}).exec(function findOneCB(err, found){
+        this.user=found;
+      });
+      return res.view();
+    }
+    else{
+      var name=req.param('name');
+      var user_id=req.param('user_id');
+      var grade=req.param('grade');
+      var limit=req.param('limit');
+      var balance=0;
+      User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit, balance:balance}).exec(function(err, updated){
+        if(err){
+          console.log(err);
+          return res.view();
+        }
+        else{
+          return res.redirect('/user/'+user_id);
+        }
+      });
+    }
   }
 };
