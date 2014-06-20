@@ -38,8 +38,8 @@ module.exports.routes = {
   'get /user/create':{view:'user/create'},
 
   'post /user/create':'UserController.create',
-  'get /user/:id':'UserController.user',
-  'get /user/:id/edit':'UserController.edit',
+  '/user/:id':'UserController.user',
+  '/user/:id/edit':'UserController.edit',
 
   'get /stock/create':{view:'stock/create'},
 

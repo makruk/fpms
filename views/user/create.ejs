@@ -5,29 +5,29 @@
       <label>名前</label><div class="input-control text"><input name="name" type="text" class="size6"></div>
       <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" class="size6"></div>
       <label>パスワード</label><div class="input-control text"><input name="password" type="password" class="size6"></div>
-      <div class="input-control checkbox" data-role="input-control">
+      <label>パスワードの確認</label><div class="input-control text"><input name="password_confirm" type="password" class="size6"></div>
       <label>学年</label>
-        <label class="inline-block">
-          <input type="checkbox" name="grade" value="1" />
-            <span class="check"></span>
-              B4
-        </label>
-        <label class="inline-block">
-          <input type="checkbox" name="grade" value="2" />
-            <span class="check"></span>
-              M1
-        </label>
-        <label class="inline-block">
-          <input type="checkbox" name="grade" value="3" />
-            <span class="check"></span>
-              M2
-        </label>
-        <label class="inline-block">
-          <input type="checkbox" name="grade" value="4" />
-            <span class="check"></span>
-              その他
-        </label>
-      </div>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="1" checked/>
+           <span class="check"></span>
+             B4
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="2" />
+           <span class="check"></span>
+             M1
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+          <input type="radio" name="grade" value="3" />
+           <span class="check"></span>
+             M2
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="4" />
+           <span class="check"></span>
+             その他
+       </label>
+
       <label>権限</label>
       <div class="input-control select size6">
         <select name="permission">
@@ -39,5 +39,5 @@
     </fieldset>
     <input type="submit" class="large info" value="確認">
     </form>
-    <a href="search.html"><button class="large">キャンセル</button></a>
+    <a href="/user"><button class="large">キャンセル</button></a>
   </div>

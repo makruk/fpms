@@ -1,0 +1,58 @@
+<div class="container">
+  <h1>情報の変更</h1>
+  <form action="/user/<%= user.user_id %>/edit" method="post">
+    <fieldset>
+      <label>名前</label><div class="input-control text"><input name="name" type="text" value=<%= user.name %> class="size6"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" value=<%= user.user_id %> class="size6"></div>
+      <label>学年</label>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="1" <% if(user.grade==1){%>checked<%}%>/>
+           <span class="check"></span>
+             B4
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="2" <% if(user.grade==2){%>checked<%}%>/>
+           <span class="check"></span>
+             M1
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+          <input type="radio" name="grade" value="3" <% if(user.grade==3){%>checked<%}%>/>
+           <span class="check"></span>
+             M2
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="4" <% if(user.grade==4){%>checked<%}%>/>
+           <span class="check"></span>
+             その他
+       </label>
+     <label>ツケの上限</label><div class="input-control text"><input name="limit" type="text" value=<%= user.limit %> class="size6">円</div>
+
+			<p><%= user.name %>さんの現在の残高 : <%= user.balance %>円</p>
+			<div class="input-control text" data-role="input-control">
+				<input type="text" class="size4" />
+					円 
+			</div>
+			<div class="input-control select">
+    				<select class="size4">
+							<option value="1">入金</option>
+							<option value="2">出金</option>
+						</select>する
+			</div>
+      <div class="input-control text" data-role="input-control">
+        <input type="text" class="size4" placeholder="備考" />
+      </div>
+
+      <div class="input-control checkbox" data-role="input-control">
+      <label>BAN</label>
+        <label class="inline-block">
+          <input type="checkbox" name="ban" value="1" />
+          <span class="check"></span>
+            このアカウントを凍結する
+        </label>
+			</div>
+      <br>
+      </fieldset>
+			<input type="submit" value="確認" class = "button large info">
+      </form>
+			<a href="/user/<%= user.user_id %>"><button class="button large">キャンセル</button></a>
+		</div>
