@@ -29,11 +29,11 @@
 
 			<p><%= user.name %>さんの現在の残高 : <%= user.balance %>円</p>
 			<div class="input-control text" data-role="input-control">
-				<input type="text" class="size4" />
+				<input type="number" class="size4" name="money" min="0"/>
 					円 
 			</div>
 			<div class="input-control select">
-    				<select class="size4">
+    				<select name="inOut" class="size4">
 							<option value="1">入金</option>
 							<option value="2">出金</option>
 						</select>する

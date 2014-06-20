@@ -64,10 +64,10 @@ module.exports = {
   },
   edit:function(req, res){
     var id=req.param('id');
+    User.findOne({user_id:id}).exec(function findOneCB(err, found){
+      this.user=found;
+    });
     if(req.method==="GET"){
-      User.findOne({user_id:id}).exec(function findOneCB(err, found){
-        this.user=found;
-      });
       return res.view();
     }
     else{
@@ -75,7 +75,18 @@ module.exports = {
       var user_id=req.param('user_id');
       var grade=req.param('grade');
       var limit=req.param('limit');
-      var balance=0;
+      var balance=this.user.balance;
+      var money=parseInt(req.param('money')) || 0;
+      var inOut=req.param('inOut');
+      if(money<0){
+        return res.view();
+      }
+      if(inOut==1){
+        balance+=money;
+      }
+      else{
+        balance-=money;
+      }
       User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit, balance:balance}).exec(function(err, updated){
         if(err){
           console.log(err);
