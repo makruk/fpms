@@ -45,7 +45,9 @@ module.exports.routes = {
 
   'post /stock/create':'StockController.create',
   'get /stock/:id':'StockController.stock',
-  'get /stock/:id/edit':'StockController.edit'
+
+  'get /stock/:id/edit':{view:'stock/edit'},
+  'post /stock/:id/edit':'StockController.edit'
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options

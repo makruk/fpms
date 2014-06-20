@@ -16,7 +16,7 @@ module.exports = {
   stock:function(req, res){
 	  return res.view();
   },
- create:function(req, res){
+  create:function(req, res){
   	var name=req.param('name');
 	var price=req.param('price');
 	var number=req.param('number');
@@ -24,5 +24,15 @@ module.exports = {
 	var category=req.param('category');
 	User.create({name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
   	return res.redirect("/stock/");
+  },
+   edit:function(req, res){
+  	var name=req.param('name');
+	var price=req.param('price');
+	var number=req.param('number');
+	var photo=req.param('photo');
+	var category=req.param('category');
+	var id=req.param('id');
+	User.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
+  	return res.redirect("/stock/"+id);
   }
 };
