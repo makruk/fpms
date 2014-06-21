@@ -1,15 +1,15 @@
 <div class="container">
-<h1>ガリガリ君　コーンポタージュ味　詳細情報</h1>
+<h1><%= stock.name %>　詳細情報</h1>
 	<p>
 		<img src="image/stock1.jpeg" class="shadow" data-src="image/stock1.jpeg" alt="商品画像" style="width: 640px; height: 480px;">
 	</p>
 
 			<table class="table striped bordered hovered">
-				<tr class="text-left"><th>商品名</th><td>ガリガリ君　コーンポタージュ味</td>
-				<tr class="text-left"><th>カテゴリ</th><td>アイス</td>
-				<tr class="text-left"><th>在庫数</th><td>10</td>
+				<tr class="text-left"><th>商品名</th><td><%= stock.name %></td>
+				<tr class="text-left"><th>カテゴリ</th><td><%= stock.category %></td>
+				<tr class="text-left"><th>在庫数</th><td><%= stock.number %></td>
 				<tr class="text-left"><th>仕入れ値</th><td>70</td>
-				<tr class="text-left"><th>販売価格</th><td>75</td>
+				<tr class="text-left"><th>販売価格</th><td><%= stock.price %></td>
 			</table>
 
 

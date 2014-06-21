@@ -14,7 +14,10 @@ module.exports = {
     return res.view();
   },
   stock:function(req, res){
-	  return res.view();
+    Stock.findOne({id:req.param('id')}).exec(function(err, found){
+      this.stock=found;
+    });
+    return res.view();
   },
   create:function(req, res){
   	var name=req.param('name');
@@ -22,7 +25,9 @@ module.exports = {
 	var number=req.param('number');
 	var photo=req.param('photo');
 	var category=req.param('category');
-	User.create({name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
+	Stock.create({name:name, price:price, number:number, category:category}).exec(function(err){
+          if(err)console.log(err);
+        });
   	return res.redirect("/stock/");
   },
    edit:function(req, res){
@@ -32,7 +37,7 @@ module.exports = {
 	var photo=req.param('photo');
 	var category=req.param('category');
 	var id=req.param('id');
-	User.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
+	Stock.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
   	return res.redirect("/stock/"+id);
   }
 };
