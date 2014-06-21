@@ -30,6 +30,7 @@ module.exports.routes = {
 
 
   // Custom routes here...
+<<<<<<< HEAD
 
   '/user/:id':'UserController.user',
   '/user/:id/edit':'UserController.edit',
@@ -37,6 +38,7 @@ module.exports.routes = {
 
   '/stock/:id':'StockController.stock',
   '/stock/:id/edit':'StockController.edit',
+
 
   'get /request/:id':'RequestController.request',
   'post /request/:id':'RequestController.feedback'
