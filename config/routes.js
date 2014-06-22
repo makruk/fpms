@@ -35,8 +35,8 @@ module.exports.routes = {
   'get /auth/login':{view:'auth/login'},
   'post /auth/login':'AuthController.login',
 
-
   'get /user/create':{view:'user/create'},
+
   'post /user/create':'UserController.create',
 
   '/user/:id':'UserController.user',

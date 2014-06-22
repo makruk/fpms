@@ -38,6 +38,7 @@ module.exports = {
 	var number=req.param('number');
 	var photo=req.param('photo');
 	var category=req.param('category');
+
 	var id=req.param('id');
 	Stock.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
   	return res.redirect("/stock/"+id);
