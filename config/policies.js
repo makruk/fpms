@@ -23,10 +23,6 @@ module.exports.policies = {
   },
   LogController:{
   	'*': ['isLoggedIn','isAdmin'],
-<<<<<<< HEAD
-  	user:'isLoggedIn'
-=======
->>>>>>> c072cccd64f44b9c8186deed6e2861313fb6f4dc
   },
   RequestController:{
   	'*':'isLoggedIn'
