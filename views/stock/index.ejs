@@ -17,7 +17,7 @@
   </select>
 </div>
 
-<form action="purchase_confirm.html">
+<form action="/stock/add">
 <table class="table striped bordered hovered">
 <thead>
   <tr>
@@ -31,33 +31,17 @@
   </tr>
 </thead>
 <tbody>
+  <% for(var i=0;i<stocks.length;i++){ %>
   <tr>
-    <td><img src="image/stock1.jpeg" alt="ガリガリくん　コーンポタージュ味"></td>
-    <td><a href=":id/">ガリガリくん　コーンポタージュ味</a></td>
-    <td>アイス</td>
-    <td>7個</td>
-    <td>75円</td>
-    <td>10個</td>
-    <td><input type="text" name="id1" class="size1" value="10">個</td>
+    <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
+    <td><a href="/stock/<%= stocks[i].id %>"><%= stocks[i].name %></a></td>
+    <td><%= stocks[i].category %></td>
+    <td> 個</td>
+    <td><%= stocks[i].price %></td>
+    <td><%= stocks[i].number %>個</td>
+    <td><input type="text" name="id<%= stocks[i].id %>" class="size1" value="0">個</td>
   </tr>
-  <tr>
-    <td><img src="image/stock1.jpeg" alt="ガリガリくん　コーンポタージュ味"></td>
-    <td>ガリガリくん　ねぎ味噌味</td>
-    <td>アイス</td>
-    <td>0個</td>
-    <td>100円</td>
-    <td>200個</td>
-    <td><input type="text" name="id2" class="size1" value="0">個</td>
-  </tr>
-  <tr>
-    <td><img src="image/stock1.jpeg" alt="ガリガリくん　コーンポタージュ味"></td>
-    <td>ガリガリくん　ほうとう味</td>
-    <td>アイス</td>
-    <td>2個</td>
-    <td>80円</td>
-    <td>12個</td>
-    <td><input type="text" name="id3" class="size1" value="1">個</td>
-  </tr>
+  <% } %>
 </tbody>
 </table>
 <input type="submit" value="入荷" class="info large">

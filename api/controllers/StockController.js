@@ -8,24 +8,26 @@
 module.exports = {
 	
   index:function(req, res){
-		Stock.find({}).exec(function(err,found){
-			this.stock = found;
-		});
+    Stock.find({}).exec(function(err,found){
+      this.stocks = found;
+    });
     return res.view();
   },
   stock:function(req, res){
     Stock.findOne({id:req.param('id')}).exec(function(err, found){
+      if(found===void 0)return res.notFound();
+      if(err)return res.serverError();
       this.stock=found;
+      return res.view();
     });
-    return res.view();
   },
   create:function(req, res){
   	var name=req.param('name');
 	var price=req.param('price');
-	var number=req.param('number');
+	var buy_price=req.param('buy_price');
 	var photo=req.param('photo');
 	var category=req.param('category');
-	Stock.create({name:name, price:price, number:number, category:category}).exec(function(err){
+	Stock.create({name:name, price:price, number:0, category:category}).exec(function(err){
           if(err)console.log(err);
         });
   	return res.redirect("/stock/");
