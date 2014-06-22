@@ -1,15 +1,15 @@
 <div class="container">
 	<h1>新規登録</h1>
-<form action="stock_new_confirm.html">
+<form action="/stock/create" method="post">
 	<label>商品名</label><div class="input-control text"><input type="text" value="" name="name" class="size6"></div>
-	<label>カテゴリ</label><div class="input-control text"><input type="text" value="" name="name" autocomplete="on" list="cat" class="size6"></div>
+	<label>カテゴリ</label><div class="input-control text"><input type="text" value="" name="category" autocomplete="on" list="cat" class="size6"></div>
 <datalist id="cat">
 <option value="アイス">
 <option value="スナック菓子">
 <option value="ジュース">
 </datalist>
-	<label>仕入れ値</label><div class="input-control text"><input type="text" value="" name="email" class="size6"></div>
-	<label>販売価格</label><div class="input-control text"><input type="text" value="" name="email" class="size6"></div>
+	<label>仕入れ値</label><div class="input-control text"><input type="number" value="" name="price" class="size6"></div>
+	<label>販売価格</label><div class="input-control text"><input type="number" value="" name="number" class="size6"></div>
 	<label>画像のアップロード</label><div><input type="file" name="upfile" size="30" /></div>
 	<p></p>
 		<input type="submit" value="確認" class = "button large info">

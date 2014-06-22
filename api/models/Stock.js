@@ -12,18 +12,23 @@ module.exports = {
     required: true
     },
     price:{type:"integer",
-    required: true
+    required: true,
+    min:1
     },
     number:{type:"integer",
-    required: true
+    required: true,
+    min:0
     },
     photo:{type:"binary"},
-    category:{type:"string",
-    required: true
-    },
+    category:{type:"string"},
     StockLog:{
       collection:"StockLog",
       via:"stock"
+    },
+    validation_messages: {
+      name: {
+        required: 'you have to specify a name or else'
+      }
     }
   }
 };
