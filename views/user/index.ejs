@@ -5,11 +5,11 @@
 			条件
 			</div>
 			<div class="panel-content">
-			<form>
+			<form action="/user/" method="get">
 				<fieldset>
 					<label>名前</label>
 					<div class="input-control text" data-role="input-control">
-						<input type="text" class="span10">
+						<input type="text" name="name" class="span10">
 					</div>
 					<label>学年</label>
 					<div class="input-control checkbox" data-role="input-control">
@@ -36,27 +36,27 @@
 					</div>
 					<label>残高</label>
 					<div class="input-control text" data-role="input-control">
-						<input type="text" class="size5">円～
-						<input type="text" class="size5">円
+						<input type="text" name="from_balance" class="size5">円～
+						<input type="text" name="to_balance" class="size5">円
 					</div>
 					<label>ソート方法</label>
 					<div class="input-control select span6">
-    				<select>
-							<option value="1">名前</option>
-							<option value="2">学年</option>
-							<option value="3">残高</option>
+    				<select name="sort">
+							<option value="name">名前</option>
+							<option value="grade">学年</option>
+							<option value="balance">残高</option>
 						</select>
 					</div>
 
 					<div class="clearfix">
 					<div class="input-control radio inline-block" data-role="input-control">
 						<label class="inline-block">
-							<input type="radio" name="r1" values="1"checked />
+							<input type="radio" name="r1" value="1"checked />
 							<span class="check"></span>
 							昇順
 						</label>
 						<label class="inline-block">
-							<input type="radio" name="r1" values="2"/>
+							<input type="radio" name="r1" value="2"/>
 							<span class="check"></span>
 							降順
 						</label>
@@ -70,7 +70,7 @@
 			</div>
 
 			<h2>検索結果</h2>
-      <div class="place-right"><a href="new_user.html"><button class="default span 2">新規登録</button></a></div>
+      <div class="place-right"><a href="/user/create"><button class="default span 2">新規登録</button></a></div>
 			<table class="table striped bordered hovered">
 				<thead>
 					<tr>
@@ -80,10 +80,22 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class=""><td><a href="user1.html">島村卯月</a></td><td>M2</td><td>0円</td></tr>
-					<tr class=""><td><a href="user2.html">渋谷凛</a></td><td>M1</td><td>10000円</td></tr>
-					<tr class=""><td><a href="user3.html">本田未央</a></td><td>B4</td><td>-5000円</td></tr>
+					<% for(var i=0; i<found.length; i++){ %>
+					<tr class=""><td><a href="/user/<%= found[i].user_id %>"><%= found[i].name %></a></td><td>
+						<% switch(found[i].grade){
+								case 1: %>
+									B4<% break; 
+								case 2: %>
+									M1<% break;
+								case 3: %>
+									M2<% break;
+								case 4: %>
+									その他
+						<% } %>
+					</td><td><%= found[i].balance %>円</td></tr>
+					<% } %>
 				</tbody>
 			</table>
 
 		</div>
+

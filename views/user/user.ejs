@@ -1,11 +1,22 @@
 		<div class="container">
 			<h1>ユーザー情報</h1>
 			<table class="table striped bordered hovered">
-				<tr class="text-left"><th>ユーザーID</th><td>simamurasan</td>
-				<tr class="text-left"><th>名前</th><td>島村卯月</td>
-				<tr class="text-left"><th>学年</th><td>M2</td>
-				<tr class="text-left"><th>残高</th><td>0円</td>
-				<tr class="text-left"><th>ツケの上限</th><td>10000円</td>
+				<tr class="text-left"><th>ユーザーID</th><td><%= user.user_id %></td>
+				<tr class="text-left"><th>名前</th><td><%= user.name %></td>
+				<tr class="text-left"><th>学年</th><td>
+					<% switch(user.grade){
+							case 1: %>
+								B4<% break; 
+							case 2: %>
+								M1<% break;
+							case 3: %>
+								M2<% break;
+							case 4: %>
+								その他
+					<% } %>
+				</td>
+				<tr class="text-left"><th>残高</th><td><%= user.balance%></td>
+				<tr class="text-left"><th>ツケの上限</th><td><%= user.limit %></td>
 			</table>
 
 			<div id="stock1" style="height: 300px; width: 500px;"></div>
@@ -40,7 +51,7 @@ jQuery( function() {
 } );
 			</script>
 			<div style="margin-top: 20px">
-				<a href="user1_edit.html"><button class="button large info">情報の変更</button></a>
+				<a href="/user/<%= user.user_id%>/edit"><button class="button large info">情報の変更</button></a>
 			</div>
 
 		</div>
