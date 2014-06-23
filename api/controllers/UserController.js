@@ -169,9 +169,13 @@ module.exports = {
         return res.view();
       }
       else{
-        return res.redirect('/user/mypage');
+        if(req.session.permission==1){
+          return res.redirect('/user/'+id+'/edit');
+        }
+        else{
+          return res.redirect('/user/mypage/edit');
+        }
       }
     });
-    return res.view();
   }
 };
