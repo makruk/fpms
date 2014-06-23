@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Routes
  *
  * Your routes map URLs to views and controllers.
@@ -46,8 +46,10 @@ module.exports.routes = {
   '/stock/:id/edit':'StockController.edit',
 
 
-  'get /request/:id':'RequestController.request',
-  'post /request/:id':'RequestController.feedback'
+  '/request/user_request':'RequestController.user_request',
+	'/request/reqsubmit':'RequestController.reqsubmit',
+	'/request/:id/feedsubmit':'RequestController.feedsubmit',
+  '/request/:id':'RequestController.request',
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options
