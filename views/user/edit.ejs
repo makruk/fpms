@@ -52,7 +52,11 @@
 			</div>
       <br>
       </fieldset>
+      <p>
+      <a href="/user/password"><button class="button large default">パスワードの変更</button></a>
+      </p>
 			<input type="submit" value="確認" class = "button large info">
+      <a href="/user/<%= user.user_id %>"><button class="button large">キャンセル</button></a>
       </form>
-			<a href="/user/<%= user.user_id %>"><button class="button large">キャンセル</button></a>
+			
 		</div>
