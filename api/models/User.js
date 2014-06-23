@@ -41,6 +41,7 @@ module.exports = {
   },
   beforeUpdate:function(attrs, next){
     var bcrypt=require('bcrypt');
+    if(attrs.password === void 0)return next();
     bcrypt.genSalt(10, function(err, salt){
       if(err)return next(err);
       bcrypt.hash(attrs.password, salt, function(err, hash){
