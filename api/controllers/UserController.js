@@ -8,12 +8,13 @@
 module.exports = {
 	
   index:function(req, res){
-    var name=req.param('name') || '';
+    this.name=req.param('name') || '';
     var grade=req.param('grade') || '';
-    var from_balance=req.param('from_balance') || -10e9;
-    var to_balance=req.param('to_balance') || 10e9;
-    var sort=req.param('sort') || "id";
-    var order=(req.param('r1')=='1' ?" ASC":" DESC");
+    this.from_balance=req.param('from_balance') || '';
+    this.to_balance=req.param('to_balance') || '';
+    this.sort=req.param('sort') || "id";
+    this.order=(req.param('r1')=='1' ?" ASC":" DESC");
+    this.grade=grade.toString();
     if(grade instanceof Array){
       for(var i=0;i<grade.length;i++){
         grade[i]={grade:grade[i]};
@@ -27,7 +28,7 @@ module.exports = {
         grade=[{}];
       }
     }
-    User.find({where:{name:{'contains':name}, or:grade, balance: {'>=': from_balance, '<=': to_balance}}, sort: sort+order}).exec(function findCB(err,found){
+    User.find({where:{name:{'contains':this.name}, or:grade, balance: {'>=': this.from_balance || -10e9, '<=': this.to_balance || 10e9}}, sort: this.sort+this.order}).exec(function findCB(err,found){
       this.found=found;
     });
     
@@ -81,13 +82,30 @@ module.exports = {
       if(money<0){
         return res.view();
       }
+      var ban=req.param('ban');
+      if(ban==1){
+        if(this.user.permission == 1){
+          this.user.permission=11;
+        }
+        else{
+          this.user.permission=10;
+        }
+      }
+      else{
+        if(this.user.permission == 10){
+          this.user.permission=0;
+        }
+        if(this.user.permission == 11){
+          this.user.permission=1;
+        }
+      }
       if(inOut==1){
         balance+=money;
       }
       else{
         balance-=money;
       }
-      User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit, balance:balance}).exec(function(err, updated){
+      User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit, balance:balance, permission:this.user.permission}).exec(function(err, updated){
         if(err){
           console.log(err);
           return res.view();
