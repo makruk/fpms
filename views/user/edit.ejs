@@ -45,7 +45,7 @@
       <div class="input-control checkbox" data-role="input-control">
       <label>BAN</label>
         <label class="inline-block">
-          <input type="checkbox" name="ban" value="1" />
+          <input type="checkbox" name="ban" value="1" <% if(user.permission==10 || user.permission==11){ %>checked<%}%>/>
           <span class="check"></span>
             このアカウントを凍結する
         </label>
