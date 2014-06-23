@@ -1,0 +1,33 @@
+<div class="container">
+  <h1>情報の変更</h1>
+  <form action="/user/mypage/edit" method="post">
+    <fieldset>
+      <label>名前</label><div class="input-control text"><input name="name" type="text" value=<%= user.name %> class="size6"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" value=<%= user.user_id %> class="size6"></div>
+      <label>学年</label>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="1" <% if(user.grade==1){%>checked<%}%>/>
+           <span class="check"></span>
+             B4
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="2" <% if(user.grade==2){%>checked<%}%>/>
+           <span class="check"></span>
+             M1
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+          <input type="radio" name="grade" value="3" <% if(user.grade==3){%>checked<%}%>/>
+           <span class="check"></span>
+             M2
+       </label>
+       <label class="input-control radio margin5" data-role="input-control">
+         <input type="radio" name="grade" value="4" <% if(user.grade==4){%>checked<%}%>/>
+           <span class="check"></span>
+             その他
+       </label>
+      <br>
+      </fieldset>
+      <input type="submit" value="確認" class = "button large info">
+      </form>
+      <a href="/user/mypage"><button class="button large">キャンセル</button></a>
+    </div>
