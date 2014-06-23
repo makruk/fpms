@@ -14,7 +14,7 @@ module.exports = {
       return res.redirect('/stock');
     }
     else{
-      return res.redirect('/auth/login');
+      return res.redirect('/auth/logout');
     }
   },
   login:function(req, res){
@@ -28,7 +28,7 @@ module.exports = {
         if(err)res.json({error:"DB error"}, 500);
         if( found !== void 0 ){
           bcrypt.compare(password, found.password, function(err, correct){
-            if(correct){
+            if(correct && found.permission<=9){
               req.session.user_id=user_id;
               req.session.permission=found.permission;
             }

@@ -19,7 +19,8 @@ module.exports.policies = {
   '*': true,
   UserController:{
   	'*': ['isLoggedIn','isAdmin'],
-  	user:'isLoggedIn'
+  	mypage:'isLoggedIn',
+  	myedit:'isLoggedIn'
   },
   LogController:{
   	'*': ['isLoggedIn','isAdmin'],
