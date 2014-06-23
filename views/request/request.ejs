@@ -21,89 +21,40 @@
 				<tr><td>いいね</td><td>3</td></tr>
 			</table>
 
-			<form>
+			<form action = "/request/<%= request.id %>/feedsubmit">
 				<fieldset>
 					<legend>フィードバックフォーム</legend>
-
-					<%if (request.responce == ""){ %>
 						<div class="input-control text" data-role="input-control">
-							<input type="text" placeholder="ここにフィードバックを記述してください">
+							<input type="text"  name = "feedback" placeholder="ここにフィードバックを記述してください" <%if(request.responce !== ""){ %>value= "<%= request.responce %>"	<%}%>>
 						</div>
-					<%}%>
-
-					<%if (request.responce !== ""){ %>
-						<div class="input-control text" data-role="input-control">
-							<input type="text" placeholder="ここにフィードバックを記述してください" value= "<%= request.responce %>">
-						</div>
-					<%}%>
+				
 					<div class="input-control radio inline-block" data-role="input-control">
-						<%if (request.review == 1){%>					
+										
 							<label class="inline-block">
-								<input type="radio" name="r1" checked/>
+								<input type="radio" name="r1" value = "1" <%if (request.review == 0|| 1){%>checked<%}%>/>
 								<span class="check"></span>
 									<i class="icon-thumbs-up"></i>
 									accept
 							</label>
 							<label class="inline-block">
-								<input type="radio" name="r1" />
+								<input type="radio" name="r1" value = "2" <%if (request.review == 2){%>checked<%}%>/>
 								<span class="check"></span>
 									<i class="icon-thumbs-down"></i>
 									reject
 							</label>
 							<label class="inline-block">
-								<input type="radio" name="r1" />
+								<input type="radio" name="r1" value = "3" <%if (request.review == 3){%>checked<%}%>/>
 								<span class="check"></span>
 									<i class="icon-heart"></i>
 									pending
 							</label>
-						<%}%>
-						<%if (request.review == 2){%>
-							<label class="inline-block">
-								<input type="radio" name="r1" />
-								<span class="check"></span>
-									<i class="icon-thumbs-up"></i>
-									accept
-							</label>
-							<label class="inline-block">
-								<input type="radio" name="r1" checked />
-								<span class="check"></span>
-									<i class="icon-thumbs-down"></i>
-									reject
-							</label>
-							<label class="inline-block">
-								<input type="radio" name="r1" />
-								<span class="check"></span>
-									<i class="icon-heart"></i>
-									pending
-							</label>
-						<%}%>
-						 <%if (request.review == 3){%>
-							<label class="inline-block">
-								<input type="radio" name="r1" />
-								<span class="check"></span>
-									<i class="icon-thumbs-up"></i>
-									accept
-							</label>
-							<label class="inline-block">
-								<input type="radio" name="r1" />
-								<span class="check"></span>
-									<i class="icon-thumbs-down"></i>
-									reject
-							</label>
-							<label class="inline-block">
-								<input type="radio" name="r1"checked />
-								<span class="check"></span>
-									<i class="icon-heart"></i>
-									pending
-							</label>
-
-						<%}%>
 					</div>
-				</fieldset>
-			</form>
 			<div style="margin-top: 20px; margin-left: 20px">
-				<a href="request1.html"><button class="button large info">フィードバック</button></a>
+				<input type ="submit" value="フィードバック" class="large info">
 				<a href="list.html"><button class="button large">キャンセル</button></a>
 			</div>
+
+				</fieldset>
+			</form>
 		</div>
 	</body>
