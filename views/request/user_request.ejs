@@ -63,7 +63,7 @@
 							<%if (requests[i].review == 1){ %>
 								<div class="balloon bottom bg-cyan">
 									<div class="padding20 fg-white">
-										2014/05/14<br>
+										<%= requests[i].updatedAt %><br>
 										<%= requests[i].responce %>
 									</div>
 								</div>
@@ -71,7 +71,7 @@
 							<%if (requests[i].review == 2){ %>
 								<div class="balloon bottom bg-red">
 									<div class="padding20 fg-white">
-										2014/05/14<br>
+										<%= requests[i].updatedAt %><br>
 										<%= requests[i].responce %>
 									</div>
 								</div>
@@ -79,7 +79,7 @@
 							<%if (requests[i].review == 3){ %>
 								<div class="balloon bottom">
 									<div class="padding20">
-										2014/05/14<br>
+										<%= requests[i].updatedAt %><br>
 										<%= requests[i].responce %>
 									</div>
 								</div>
