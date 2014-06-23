@@ -149,11 +149,29 @@ module.exports = {
 
   },
   password:function(req, res){
+    if(req.method==="GET"){
+      return res.view();
+    }
     if(req.session.permission==0){
       if(req.session.user_id !== req.param('id')){
         return res.redirect('/user/mypage');
       }
     }
+    var id=req.param('id');
+    var password=req.param('password');
+    var password_confirm=req.param('password_confirm');
+    if(password!==password_confirm){
+      return res.view();
+    }
+    User.update({user_id:id},{password:password}).exec(function(err, updated){
+      if(err){
+        console.log(err);
+        return res.view();
+      }
+      else{
+        return res.redirect('/user/mypage');
+      }
+    });
     return res.view();
   }
 };
