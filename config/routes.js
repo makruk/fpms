@@ -39,9 +39,12 @@ module.exports.routes = {
 
   'post /user/create':'UserController.create',
 
+
+  '/user/mypage':'UserController.mypage',
+  '/user/mypage/edit':'UserController.myedit',
   '/user/:id':'UserController.user',
   '/user/:id/edit':'UserController.edit',
-
+  '/user/:id/password':'UserController.password',
 
   'get /stock/create':{view:'stock/create'},
 
