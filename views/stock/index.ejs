@@ -34,7 +34,7 @@
   <% for(var i=0;i<stocks.length;i++){ %>
   <tr>
     <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
-    <td><a href="/stock/<%= stocks[i].id %>"><%= stocks[i].name %></a></td>
+    <td><a href="/stock/<%= stocks[i].id %>/"><%= stocks[i].name %></a></td>
     <td><%= stocks[i].category %></td>
     <td> 個</td>
     <td><%= stocks[i].price %></td>

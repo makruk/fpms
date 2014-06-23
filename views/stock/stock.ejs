@@ -8,7 +8,7 @@
 				<tr class="text-left"><th>商品名</th><td><%= stock.name %></td>
 				<tr class="text-left"><th>カテゴリ</th><td><%= stock.category %></td>
 				<tr class="text-left"><th>在庫数</th><td><%= stock.number %></td>
-				<tr class="text-left"><th>仕入れ値</th><td>70</td>
+				<tr class="text-left"><th>仕入れ値</th><td><%= stock.buy_price %></td>
 				<tr class="text-left"><th>販売価格</th><td><%= stock.price %></td>
 			</table>
 
@@ -16,7 +16,7 @@
 <br>
 <div id="stock1" style="height: 300px; width: 500px;"></div>
 
-<p><a href="edit/"><button class="large info">商品情報編集</button></a></p>
+<p><a href="/stock/<%= stock.id %>/edit/"><button class="large info">商品情報編集</button></a></p>
 <script>
 jQuery( function() {
     jQuery . jqplot(
