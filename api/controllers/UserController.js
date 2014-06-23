@@ -115,5 +115,45 @@ module.exports = {
         }
       });
     }
+  },
+  mypage:function(req, res){
+    var id=req.session.user_id;
+    User.findOne({user_id:id}).exec(function findOneCB(err, found){
+      this.user=found;
+    });
+    return res.view();
+  },
+  myedit:function(req, res){
+    var id=req.session.user_id;
+    User.findOne({user_id:id}).exec(function findOneCB(err, found){
+      this.user=found;
+    });
+    if(req.method==="GET"){
+      return res.view();
+    }
+    else{
+      var name=req.param('name');
+      var user_id=req.param('user_id');
+      var grade=req.param('grade');
+
+      User.update({user_id:id},{name:name, user_id:user_id, grade:grade}).exec(function(err, updated){
+        if(err){
+          console.log(err);
+          return res.view();
+        }
+        else{
+          return res.redirect('/user/mypage');
+        }
+      });
+    }
+
+  },
+  password:function(req, res){
+    if(req.session.permission==0){
+      if(req.session.user_id !== req.param('id')){
+        return res.redirect('/user/mypage');
+      }
+    }
+    return res.view();
   }
 };
