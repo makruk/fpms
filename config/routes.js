@@ -42,6 +42,7 @@ module.exports.routes = {
 
   '/user/mypage':'UserController.mypage',
   '/user/mypage/edit':'UserController.myedit',
+  '/user/alledit':'UserController.alledit',
   '/user/:id':'UserController.user',
   '/user/:id/edit':'UserController.edit',
   '/user/:id/password':'UserController.password',

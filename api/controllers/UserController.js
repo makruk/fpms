@@ -83,7 +83,7 @@ module.exports = {
         return res.view();
       }
       var ban=req.param('ban');
-      if(ban==1){
+      if(ban==1 && req.session.user_id!=this.user.user_id){
         if(this.user.permission == 1){
           this.user.permission=11;
         }
@@ -177,5 +177,71 @@ module.exports = {
         }
       }
     });
+  },
+  alledit:function(req, res){
+    if(req.session.permission!=1){
+      return res.redirect('/user');
+    } else if(req.method==="GET"){
+      return res.view();
+    }
+
+    var allUp=req.param('allUp');
+    var grade=req.param('grade') || '';
+    var permission=0;
+    if(allUp==1){
+      User.find({}).exec(function findCB(err,found){
+        this.found=found;
+      });
+      for(i=0; this.found.length>i ;i++){
+        grade=this.found[i].grade;
+        switch (grade){
+          case 1: grade=2; break;
+          case 2: grade=3; break;
+          case 3: grade=4; break;
+        }
+        User.update({user_id:this.found[i].user_id},{grade:grade}).exec(function(err, updated){
+          if(err){
+            console.log(err);
+            return res.view();
+          }
+        });
+      }
+      return res.redirect('/user');
+    } else {
+      this.grade=grade.toString();
+      if(grade instanceof Array){
+        for(var i=0;i<grade.length;i++){
+          grade[i]={grade:grade[i]};
+        }
+      }
+      else{
+        if( grade!== ""){
+         grade=[{grade:grade}];
+        }
+       else{
+          grade=[{}];
+        }
+      }
+    }
+    User.find({where:{or:grade}}).exec(function findCB(err,found){
+      this.found=found;
+    });
+    for(var i=0; this.found.length>i; i++){
+      if(req.session.user_id!=this.found[i].user_id){
+        if(this.found[i].permission==1 || this.found[i]==11){
+          permission=11;
+        }
+        else {
+          permission=10;
+        }
+        User.update({user_id:this.found[i].user_id},{permission:permission}).exec(function(err, updated){
+          if(err){
+            console.log(err);
+            return res.view();
+          }
+        });
+      }
+    }
+    return res.redirect('/user');
   }
 };
