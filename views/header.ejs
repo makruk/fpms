@@ -9,8 +9,10 @@
         <li><a href="/stock/" class="element">在庫リスト</a>
         <li><a href="/user/" class="element">ユーザー検索</a>
         <li><a href="/log/" class="element">ログ閲覧</a>
-        <li><a href="/auth/logout" class="element place-right">Logout</a>
-        <li><a class="element place-right"><span class="icon-user"></span> <%= session.user_id %></a>
+			</ul>
+			<ul class="element-menu place-right">
+        <li><a href="/auth/logout" class="element">Logout</a>
+        <li><a class="element"><span class="icon-user"></span> <%= session.user_id %></a>
       </ul>
 <% }else if(session.permission === 0){ %>
       <a href="/stock/" class="element"><span class="icon-home"></span> 商品リスト</a>
