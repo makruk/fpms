@@ -60,7 +60,7 @@
 		<% for(var i = 0; i < requests.length; i++){%>
 			<tbody>
 				<tr class="">
-					<td>島村卯月</td>
+					<td><%= requests[i].user_name %></td>
 					<td><%= requests[i].createdAt %></td>
 					<td><%= requests[i].request %></td>
 					<td><% if(requests[i].responce != undefined){%>
