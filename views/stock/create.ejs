@@ -22,7 +22,6 @@
 <script>
   var isConfirmDisplayed=false;
   var confirm=function(){
-    var id="<dt>ストックID</dt><dd>"+$('#create_stock input[name="stock_id"]').val()+"</dd>";
     var name="<dt>商品名</dt><dd>"+$('#create_stock input[name="name"]').val()+"</dd>";
     var category="<dt>カテゴリ</dt><dd>"+$('#create_stock input[name="category"]').val()+"</dd>";
     var buy_price="<dt>仕入れ値</dt><dd>"+$('#create_stock input[name="buy_price"]').val()+"</dd>";
@@ -35,7 +34,7 @@
           title: '変更確認',
           width: 500,
           padding: 10,
-          content: '<p>以下の内容で変更します。よろしいですか?</p><dl>'+id+name+category+buy_price+price+'</dl><button class="large info" onclick="$(\'#create_stock\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          content: '<p>以下の内容で変更します。よろしいですか?</p><dl>'+name+category+buy_price+price+'</dl><button class="large info" onclick="$(\'#create_stock\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
           onShow:function(){isConfirmDisplayed=true;},
       });
       $.Dialog.close=(function(){

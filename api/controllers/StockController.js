@@ -43,5 +43,11 @@ module.exports = {
 	var id=req.param('id');
 	Stock.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
   	return res.redirect("/stock/"+id+"/");
+  },
+   loss:function(req, res){
+    Stock.find({}).exec(function(err,found){
+      this.stocks = found;
+    });
+    return res.view();
   }
 };

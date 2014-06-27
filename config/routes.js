@@ -44,10 +44,12 @@ module.exports.routes = {
 
 
   'get /stock/create':{view:'stock/create'},
+  '/stock/loss':'StockController.loss',
 
   'post /stock/create':'StockController.create',
   'get /stock/:id':'StockController.stock',
   'get /stock/:id/edit':'StockController.edit',
+
 
   'get /request/:id':'RequestController.request',
   'post /request/:id':'RequestController.feedback'

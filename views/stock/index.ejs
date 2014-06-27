@@ -2,7 +2,7 @@
 <h1>在庫リスト</h1>
 <div class="grid">
 <div class="row">
-<a href="search_loss.html" class="place-right"><button class="danger span 2">在庫数の確認</button></a>
+<a href="loss/" class="place-right"><button class="danger span 2">在庫数の確認</button></a>
 <a href="create/"><button class="default span 2">新規登録</button></a>
 </div>
 </div>
@@ -17,7 +17,7 @@
   </select>
 </div>
 
-<form action="/stock/add">
+<form action="/stock/add/">
 <table class="table striped bordered hovered">
 <thead>
   <tr>
@@ -37,7 +37,7 @@
     <td><a href="/stock/<%= stocks[i].id %>/"><%= stocks[i].name %></a></td>
     <td><%= stocks[i].category %></td>
     <td> 個</td>
-    <td><%= stocks[i].price %></td>
+    <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
     <td><input type="text" name="id<%= stocks[i].id %>" class="size1" value="0">個</td>
   </tr>
