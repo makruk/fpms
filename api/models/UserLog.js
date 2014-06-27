@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
     cash:{type:"integer"},
-    kind:{type:"integer"},
+    kind:{type:"string"},
     note:{type:"string"},
     user:{
       model:"User",
@@ -17,7 +17,7 @@ module.exports = {
   },
 
   //static method
-  addLog: function(user, cash, kind, note){
+  addLog: function(user, cash, kind, note, cb){
     if(typeof user === "string"){
       User.findOne({user_id:user}).exec(function(err, f){
         user=f.id;
@@ -25,7 +25,8 @@ module.exports = {
     }
     UserLog.create({cash:cash, kind:kind, note:note, user:user}).exec(function(err, add){
       if(err){
-        UserLog.create({cash:0, kind:0, note:"Error occured!! cash=["+cash+"]kind=["+kind+"]user=["+user+"]"})
+        if(cb)cb();
+        UserLog.create({cash:0, kind:"", note:"Error occured!! cash=["+cash+"]kind=["+kind+"]user=["+user+"]"})
       }
     });
   }
