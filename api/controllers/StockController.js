@@ -1,12 +1,12 @@
 /**
- * StockController.js 
+ * StockController.js
  *
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
 module.exports = {
-	
+
   index:function(req, res){
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
