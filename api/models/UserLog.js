@@ -17,11 +17,7 @@ module.exports = {
   },
 
   //static method
-<<<<<<< HEAD
   addLog: function(user, cash, kind, note, cb){
-=======
-  addLog: function(user, cash, kind, note){
->>>>>>> add logging function
     if(typeof user === "string"){
       User.findOne({user_id:user}).exec(function(err, f){
         user=f.id;
@@ -29,12 +25,8 @@ module.exports = {
     }
     UserLog.create({cash:cash, kind:kind, note:note, user:user}).exec(function(err, add){
       if(err){
-<<<<<<< HEAD
         if(cb)cb();
-        UserLog.create({cash:0, kind:"", note:"Error occured!! cash=["+cash+"]kind=["+kind+"]user=["+user+"]"})
-=======
-        UserLog.create({cash:0, kind:0, note:"Error occured!! cash=["+cash+"]kind=["+kind+"]user=["+user+"]"})
->>>>>>> add logging function
+        UserLog.create({cash:0, kind:"", note:"Error occured!! cash=["+cash+"]kind=["+kind+"]user=["+user+"]"});
       }
     });
   }
