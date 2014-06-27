@@ -38,8 +38,8 @@
       <label>ツケの上限</label><div class="input-control text"><input name="limit" type="text" class="size6">円</div>
     </fieldset>
     <input type="submit" class="large info" value="確認">
+    <a href="/user"><button class="large" type="button">キャンセル</button></a>
     </form>
-    <a href="/user"><button class="large">キャンセル</button></a>
   </div>
 
 <script>
@@ -71,10 +71,10 @@
           shadow: true,
           overlay: false,
           icon: '<span class="icon-rocket"></span>',
-          title: '変更確認',
+          title: '登録確認',
           width: 500,
           padding: 10,
-          content: '<p>以下の内容で変更します。よろしいですか?</p><dl>'+name+user_id+grade+permission+limit+'</dl><button class="large info" onclick="$(\'#create\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          content: '<p>以下の内容で登録します。よろしいですか?</p><dl>'+name+user_id+grade+permission+limit+'</dl><button class="large info" onclick="$(\'#create\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
           onShow:function(){isConfirmDisplayed=true;},
       });
       $.Dialog.close=(function(){

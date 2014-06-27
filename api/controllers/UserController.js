@@ -219,10 +219,11 @@ module.exports = {
          grade=[{grade:grade}];
         }
        else{
-          grade=[{}];
+          grade=[{grade:-1}];
         }
       }
     }
+
     User.find({where:{or:grade}}).exec(function findCB(err,found){
       this.found=found;
     });
