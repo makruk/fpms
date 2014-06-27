@@ -1,5 +1,6 @@
 <div class="container">
 <p>以下の通り入荷します</p>
+<form action="/stock/" method="post">
 <table class="table striped bordered hovered">
 <thead>
   <tr>
@@ -13,15 +14,17 @@
 </thead>
 <tbody>
 <%var cost=0;%>
-  <% for(var i=0;i<stocks.length;i++){ %>
+  <% for(var i=0;i<number.length;i++){ %>
+  <% if(number[i]!= 0 && number[i]!= ""){ %>
   <tr>
     <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
-    <td><a href="/stock/<%= stocks[i].id %>/"><%= stocks[i].name %></a></td>
+    <td><%= stocks[i].name %></a></td>
     <td><%= stocks[i].category %></td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
-    <td><%= stocks[i].add %>個</td>
-    <%cost += stocks[i].add*stocks[i].price%>
+    <td><%= number[i] %>個</td>
+    <%cost += number[i]*stocks[i].price%>
+  <% } %>
   </tr>
   <% } %>
   <tr>

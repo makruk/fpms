@@ -60,6 +60,11 @@ module.exports = {
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
     });
-    return res.view();
+    var number=req.param('number');
+    var id=req.param('id');
+    this.number = number;
+    this.id = id;
+    if(req.method==="GET")return res.view();
+    return res.redirect("/stock/");
   }
 };

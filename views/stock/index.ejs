@@ -8,13 +8,11 @@
 </div>
 
 <div class="input-control select span4">
+<form name="cate">
   <select>
     <option value="0">--カテゴリ--</option>
-    <option value="1">スナック菓子</option>
-    <option value="2">アイス</option>
-    <option value="3">ジュース</option>
-    <option value="4">その他</option>
   </select>
+</form>
 </div>
 
 <form action="/stock/add/">
@@ -39,11 +37,11 @@
     <td> 個</td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
-    <td><input type="text" name="id<%= stocks[i].id %>" class="size1" value="0">個</td>
+    <td><input type="text" name="number" class="size1" value="0"><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
   </tr>
   <% } %>
 </tbody>
 </table>
 <input type="submit" value="入荷" class="info large">
 </form>
-</div>  
+</div>
