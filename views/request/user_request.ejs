@@ -1,9 +1,9 @@
 ﻿<body class="metro">
 
 <!--ここから本文 -->
-<!--リクエスト送信　ほぼOK-->
+<!--リクエスト送信　ほぼOK -->
 	<div class="container">
-		<form action="/request/reqsubmit">
+		<form action="/request/reqsubmit" method="post"onsubmit="return confirm();" id="request_check">
 			<fieldset>
 				<div class="panel">
 					<div class="panel-header">
@@ -19,7 +19,7 @@
 			</fieldset>
 		</form>
 
-<!--リクエスト表示および　リクエスト検索 ほぼok-->
+<!-- リクエスト表示および　リクエスト検索 ほぼok -->
 		<form = action="/request/user_request">
 			<fieldset>
 				<div class="panel">
@@ -53,13 +53,13 @@
 									<br>
 									<%= requests[i].request %>
 
-	<!--ボタン直す いいねをあとで作る　未完成-->
+	<!--ボタン直す いいねをあとで作る　未完成 -->
 									<div class="toolbar">
 										<button><i class="icon-star-3">いいね</i></button>
 									</div>
 								</div>
 							</div>
-<!--reviewについて... 1=accept,2=reject,3=pending,0=初期状態 ほぼok-->
+<!--reviewについて... 1=accept,2=reject,3=pending,0=初期状態 ほぼok -->
 							<%if (requests[i].review == 1){ %>
 								<div class="balloon bottom bg-cyan">
 									<div class="padding20 fg-white">
@@ -91,3 +91,28 @@
 		</form>
 		</div>
 	</body>
+
+<script>
+  var isConfirmDisplayed=false;
+  var confirm=function(){
+    var request="<dt>リクエスト内容</dt><dd>"+$('#request_check input[name="request"]').val()+"</dd>";
+    if(!isConfirmDisplayed){
+      $.Dialog({
+          shadow: true,
+          overlay: false,
+          icon: '<span class="icon-rocket"></span>',
+          title: 'リクエストの投稿確認',
+          width: 500,
+          padding: 10,
+          content: '<p>以下の内容で投稿します。よろしいですか?</p><dl>'+request+'</dl><button class="large info" onclick="$(\'#request_check\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          onShow:function(){isConfirmDisplayed=true;},
+      });
+      $.Dialog.close=(function(){
+        var context=$.Dialog;
+        var origin=$.Dialog.close;
+        return (function(){isConfirmDisplayed=false;origin.call(context);});
+      })();
+      return false;
+    }
+  }
+</script>
