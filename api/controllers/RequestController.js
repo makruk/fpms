@@ -74,6 +74,15 @@ module.exports = {
 		});
 	},
 
+	/*リクエスト削除*/
+	destroy:function(req,res){
+		var id = req.param('id');
+		Request.destroy({id:id}).exec(function deleteCB(err){
+ 		console.log('The record has been deleted');
+	 	});
+		return res.redirect('/request');
+	},
+
 	/*以下購入者側*/
   user_request:function(req,res){
 		var user_id = req.session.user_id;
