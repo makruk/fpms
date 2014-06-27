@@ -26,18 +26,13 @@ module.exports.routes = {
   // default view engine) your home page.
   // 
   // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
-  '/': {
-    view: 'homepage'
-  },
+  '/': 'AuthController.index',
 
 
   // Custom routes here...
-  'get /auth/login':{view:'auth/login'},
-  'post /auth/login':'AuthController.login',
 
-  'get /user/create':{view:'user/create'},
-
-  'post /user/create':'UserController.create',
+  '/user/create':'UserController.create',
+  '/stock/create':'StockController.create',
 
 
   '/user/mypage':'UserController.mypage',
@@ -47,11 +42,9 @@ module.exports.routes = {
   '/user/:id/edit':'UserController.edit',
   '/user/:id/password':'UserController.password',
 
-  'get /stock/create':{view:'stock/create'},
+  '/stock/:id':'StockController.stock',
+  '/stock/:id/edit':'StockController.edit',
 
-  'post /stock/create':'StockController.create',
-  'get /stock/:id':'StockController.stock',
-  'get /stock/:id/edit':'StockController.edit',
 
   'get /request/:id':'RequestController.request',
   'post /request/:id':'RequestController.feedback'
