@@ -1,6 +1,6 @@
-<div class="container">
 	<h1>新規登録</h1>
-<form action="/stock/create" method="post">
+<form action="/stock/create" method="post"onsubmit="return confirm();" id="create_stock">
+  <fieldset>
 	<label>商品名</label><div class="input-control text"><input type="text" value="" name="name" class="size6"></div>
 	<label>カテゴリ</label><div class="input-control text"><input type="text" value="" name="category" autocomplete="on" list="cat" class="size6"></div>
 <datalist id="cat">
@@ -13,8 +13,37 @@
 	<label>画像のアップロード</label><div><input type="file" name="upfile" size="30" /></div>
 	<p></p>
 		<input type="submit" value="確認" class = "button large info">
-	&nbsp;&nbsp;
+	<div>
 		<input type="button" value="キャンセル" onClick="location.href='search.html'" class = "button large">
+    </div>
+  </fieldset>
 </form>
-</div>
 
+<script>
+  var isConfirmDisplayed=false;
+  var confirm=function(){
+    var id="<dt>ストックID</dt><dd>"+$('#create_stock input[name="stock_id"]').val()+"</dd>";
+    var name="<dt>商品名</dt><dd>"+$('#create_stock input[name="name"]').val()+"</dd>";
+    var category="<dt>カテゴリ</dt><dd>"+$('#create_stock input[name="category"]').val()+"</dd>";
+    var buy_price="<dt>仕入れ値</dt><dd>"+$('#create_stock input[name="buy_price"]').val()+"</dd>";
+    var price="<dt>販売価格</dt><dd>"+$('#create_stock input[name="price"]').val()+"</dd>";
+    if(!isConfirmDisplayed){
+      $.Dialog({
+          shadow: true,
+          overlay: false,
+          icon: '<span class="icon-rocket"></span>',
+          title: '変更確認',
+          width: 500,
+          padding: 10,
+          content: '<p>以下の内容で変更します。よろしいですか?</p><dl>'+id+name+category+buy_price+price+'</dl><button class="large info" onclick="$(\'#create_stock\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          onShow:function(){isConfirmDisplayed=true;},
+      });
+      $.Dialog.close=(function(){
+        var context=$.Dialog;
+        var origin=$.Dialog.close;
+        return (function(){isConfirmDisplayed=false;origin.call(context);});
+      })();
+      return false;
+    }
+  }
+</script>
