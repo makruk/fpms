@@ -34,9 +34,13 @@ module.exports.routes = {
   '/user/create':'UserController.create',
   '/stock/create':'StockController.create',
 
+
+  '/user/mypage':'UserController.mypage',
+  '/user/mypage/edit':'UserController.myedit',
+  '/user/alledit':'UserController.alledit',
   '/user/:id':'UserController.user',
   '/user/:id/edit':'UserController.edit',
-
+  '/user/:id/password':'UserController.password',
 
   '/stock/:id':'StockController.stock',
   '/stock/:id/edit':'StockController.edit',
