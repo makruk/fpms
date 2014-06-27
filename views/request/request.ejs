@@ -1,68 +1,109 @@
 ﻿<body class="metro">
-
-<!--ここから本文 -->
 	<div class="container">
-		<form action="/request/submit">
-			<fieldset>
-				<div class="panel">
-					<div class="panel-header">
-						リクエストフォーム
-					</div>
-					<div class="panel-content">
+		<h1>Feedback</h1>
+
+			<table class="table striped bordered hovered">
+				<tr><td>名前</td><td>島村卯月</td></tr>
+				<tr><td>日付</td><td>2014/05/11</td></tr>
+				<tr><td>内容</td><td><%= request.request %></td></tr>
+				<tr><td>状態</td><td><%if (request.review == 1){ %>
+																accept
+															<%}%>
+															<%if (request.review == 2){ %>
+																reject
+															<%}%>
+															<%if (request.review == 3){ %>
+																pending
+															<%}%>
+															<%if (request.review == 0){ %>
+																未評価
+															<%}%></td></tr>
+				<tr><td>いいね</td><td>3</td></tr>
+			</table>
+
+			<form>
+				<fieldset>
+					<legend>フィードバックフォーム</legend>
+
+					<%if (request.responce == ""){ %>
 						<div class="input-control text" data-role="input-control">
-							<input name ="request" type="text" placeholder="リクエストはここに">
+							<input type="text" placeholder="ここにフィードバックを記述してください">
 						</div>
-						<input type="submit" value="送信" class="large info">
-					</div>
-				</div>
-			</fieldset>
-		</form>
-		<form>
-			<fieldset>
-				<div class="panel">
-					<div class="panel-header">
-						リクエスト一覧
-					</div>
-					<div class="panel-content">
-						<div class="input-control checkbox" data-role="input-control">
+					<%}%>
+
+					<%if (request.responce !== ""){ %>
+						<div class="input-control text" data-role="input-control">
+							<input type="text" placeholder="ここにフィードバックを記述してください" value= "<%= request.responce %>">
+						</div>
+					<%}%>
+					<div class="input-control radio inline-block" data-role="input-control">
+						<%if (request.review == 1){%>					
 							<label class="inline-block">
-								<input type="checkbox" />
-           			<span class="check"></span>
-								自分のリクエストのみ表示する
+								<input type="radio" name="r1" checked/>
+								<span class="check"></span>
+									<i class="icon-thumbs-up"></i>
+									accept
 							</label>
-						</div>
-						<div class="input-control checkbox" data-role="input-control">
 							<label class="inline-block">
-								<input type="checkbox" />
-        	   		<span class="check"></span>
-								フィードバックがあるもののみ表示する
+								<input type="radio" name="r1" />
+								<span class="check"></span>
+									<i class="icon-thumbs-down"></i>
+									reject
 							</label>
-						</div>
-						<input type="submit" value="リクエスト検索" class="large info">
+							<label class="inline-block">
+								<input type="radio" name="r1" />
+								<span class="check"></span>
+									<i class="icon-heart"></i>
+									pending
+							</label>
+						<%}%>
+						<%if (request.review == 2){%>
+							<label class="inline-block">
+								<input type="radio" name="r1" />
+								<span class="check"></span>
+									<i class="icon-thumbs-up"></i>
+									accept
+							</label>
+							<label class="inline-block">
+								<input type="radio" name="r1" checked />
+								<span class="check"></span>
+									<i class="icon-thumbs-down"></i>
+									reject
+							</label>
+							<label class="inline-block">
+								<input type="radio" name="r1" />
+								<span class="check"></span>
+									<i class="icon-heart"></i>
+									pending
+							</label>
+						<%}%>
+						 <%if (request.review == 3){%>
+							<label class="inline-block">
+								<input type="radio" name="r1" />
+								<span class="check"></span>
+									<i class="icon-thumbs-up"></i>
+									accept
+							</label>
+							<label class="inline-block">
+								<input type="radio" name="r1" />
+								<span class="check"></span>
+									<i class="icon-thumbs-down"></i>
+									reject
+							</label>
+							<label class="inline-block">
+								<input type="radio" name="r1"checked />
+								<span class="check"></span>
+									<i class="icon-heart"></i>
+									pending
+							</label>
 
-						<% for(var i = 0; i < requests.length; i++){%>
-
-<!--ユーザによって色を変える　別ユーザーのとき灰色-->
-
-							<div class="balloon">
-								<div class="padding20">
-									<%= requests[i].createdAt %>
-									<br>
-									<%= requests[i].request %>
-
-	<!--ボタン直す いいねをあとで作る-->
-
-									<div class="toolbar">
-										<button><i class="icon-star-3">いいね</i></button>
-									</div>
-								</div>
-							</div>
-
-<!--reviewについて... 1=accept,2=reject,3=pending,0=初期状態 -->
 						<%}%>
 					</div>
-				</div>
-			</fieldset>
-		</form>
+				</fieldset>
+			</form>
+			<div style="margin-top: 20px; margin-left: 20px">
+				<a href="request1.html"><button class="button large info">フィードバック</button></a>
+				<a href="list.html"><button class="button large">キャンセル</button></a>
+			</div>
 		</div>
 	</body>

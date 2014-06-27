@@ -20,7 +20,8 @@ module.exports = {
     min:0
     },
     photo:{type:"binary"},
-    category:{type:"string"},
+    category:{type:"string",
+    },
     StockLog:{
       collection:"StockLog",
       via:"stock"
