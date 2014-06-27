@@ -55,5 +55,11 @@ module.exports = {
       this.stocks = found;
     });
     return res.view();
+  },
+   add:function(req, res){
+    Stock.find({}).exec(function(err,found){
+      this.stocks = found;
+    });
+    return res.view();
   }
 };
