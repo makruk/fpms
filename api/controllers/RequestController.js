@@ -90,7 +90,6 @@ module.exports = {
 		User.findOne({user_id:user_id}).exec(function(err,found){
 			id = found.id;
 		});
-
 		/*フィードバックのチェック*/
 		var checkfeed = {contains:""};
 		if(req.param('r2') == '1'){
