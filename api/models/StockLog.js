@@ -10,7 +10,7 @@ module.exports = {
   attributes: {
     number:{type:"integer"},
     price:{type:"integer"},
-    kind:{type:"integer"},
+    kind:{type:"string"},
     note:{type:"string"},
     stock:{
       model:"Stock"

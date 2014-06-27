@@ -81,13 +81,8 @@ module.exports = {
       if(money<0){
         return res.view();
       }
-      if(inOut==1){
-        balance+=money;
-      }
-      else{
-        balance-=money;
-      }
-      User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit, balance:balance}).exec(function(err, updated){
+      if(inOut == 1 || inOut == 0)User.payment(user_id, money, inOut, "残高調整", console.log);
+      User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit}).exec(function(err, updated){
         if(err){
           console.log(err);
           return res.view();
