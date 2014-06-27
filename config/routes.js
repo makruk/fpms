@@ -44,6 +44,7 @@ module.exports.routes = {
 
 
   'get /stock/create':{view:'stock/create'},
+  '/stock/loss/reason':'StockController.reason',
   '/stock/loss':'StockController.loss',
 
   'post /stock/create':'StockController.create',

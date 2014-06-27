@@ -1,12 +1,6 @@
 <div class="container">
-<h1>在庫数の確認</h1>
-<div class="grid">
-<div class="row">
-<a href="/stock/" class="place-right"><button class="success span 2">商品の検索</button></a>
-</div>
-</div>
-
-<form action="/stock/loss/reason/">
+		<h1>変更の確認</h1>
+<form action="/stock/loss/">
 <table class="table striped bordered hovered">
 <thead>
   <tr>
@@ -16,7 +10,9 @@
     <th>週間売上</th>
     <th>値段</th>
     <th>在庫数</th>
-    <th>現在の在庫数</th>
+    <th>変更後の在庫数</th>
+    <th>変更理由</th>
+    <th>備考</th>
   </tr>
 </thead>
 <tbody>
@@ -28,7 +24,17 @@
     <td> 個</td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
-    <td><input type="text" name="changenumber" class="size1" value="">個</td>
+    <td><%= stocks[i].changenumber %>">個</td>
+    <td>
+      <select name="reason">
+      <option value="loss">紛失</option>
+      <option value="excess">過多</option>
+      <option value="other">その他</option>
+      </select>
+    </td>
+    <td>
+      <input type="text" name="notes">
+    </td>
   </tr>
   <% } %>
 </tbody>
