@@ -34,7 +34,7 @@ module.exports = {
 			}
 		}
 		
-		Request.find({or:checkview,responce:checkfeed}).exec(function findCB(err,found){
+		Request.find({where:{or:checkview,responce:checkfeed},sort:'id DESC'}).exec(function findCB(err,found){
 			this.requests = found;
 		});
 		for(var i = 0; i < this.requests.length;i++){
@@ -98,11 +98,11 @@ module.exports = {
 
 		/*自分の投稿のチェックをif文で検索*/
 		if(req.param('r1') == '1'){
-			Request.find({User:id,responce:checkfeed}).exec(function (err,found){
+			Request.find({where:{User:id,responce:checkfeed},sort:'id DESC'}).exec(function (err,found){
 				this.requests = found;
 			});
 		}else{
-			Request.find({responce:checkfeed}).exec(function (err,found){
+			Request.find({where:{responce:checkfeed},sort:'id DESC'}).exec(function (err,found){
 				this.requests = found;
 			});
 		}
