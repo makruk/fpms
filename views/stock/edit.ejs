@@ -4,9 +4,9 @@
 	<label>商品名</label><div class="input-control text"><input type="text" value="ガリガリくんコーンポタージュ味" name="name" class="size6"></div>
 	<label>カテゴリ</label><div class="input-control text"><input type="text" value="アイス" name="name"　autocomplete="on" list="cat" class="size6"></div>
 <datalist id="cat">
-<option value="アイス">
-<option value="スナック菓子">
-<option value="ジュース">
+<% for(var i=0;i<category.length;i++){ %>
+<option value="<%= category[i].name %>">
+<% } %>
 </datalist>
 	<label>仕入れ値</label><div class="input-control text"><input type="text" value="70" name="email" class="size6"></div>
 	<label>販売価格</label><div class="input-control text"><input type="text" value="75" name="email" class="size6"></div>

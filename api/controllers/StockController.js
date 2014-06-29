@@ -8,6 +8,9 @@
 module.exports = {
 	
   index:function(req, res){
+    Category.find({}).exec(function(err, found){
+      if(!err)this.category=found;
+    });
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
     });
@@ -22,6 +25,9 @@ module.exports = {
     });
   },
  create:function(req, res){
+    Category.find({}).exec(function(err, found){
+      if(!err)this.category=found;
+    });
     if(req.method == 'GET')return res.view();
   	var name=req.param('name');
 	var price=req.param('price');
@@ -34,6 +40,10 @@ module.exports = {
   	return res.redirect("/stock/");
   },
    edit:function(req, res){
+    Category.find({}).exec(function(err, found){
+      if(!err)this.category=found;
+    });
+    if(req.method == 'GET')return res.view();
   	var name=req.param('name');
 	var price=req.param('price');
 	var number=req.param('number');

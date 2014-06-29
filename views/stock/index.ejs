@@ -9,11 +9,10 @@
 
 <div class="input-control select span4">
   <select>
-    <option value="0">--カテゴリ--</option>
-    <option value="1">スナック菓子</option>
-    <option value="2">アイス</option>
-    <option value="3">ジュース</option>
-    <option value="4">その他</option>
+    <option value="">--カテゴリ--</option>
+    <% for(var i=0;i<category.length;i++){ %>
+    <option value="<%= category[i].name %>"><%= category[i].name %></option>
+    <% } %>
   </select>
 </div>
 
