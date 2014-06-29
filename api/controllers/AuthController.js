@@ -18,6 +18,7 @@ module.exports = {
     }
   },
   login:function(req, res){
+    this.err={};
     if(req.session.user_id != void 0)return res.redirect('/');
     if(req.method == 'GET')return res.view();
     var bcrypt=require('bcrypt');
@@ -25,19 +26,23 @@ module.exports = {
     var password=req.param("password");
     if(user_id !== void 0){
       User.findOne({user_id:user_id}).exec(function(err, found){
-        if(err)res.json({error:"DB error"}, 500);
+        if(err)return res.view();
         if( found !== void 0 ){
           bcrypt.compare(password, found.password, function(err, correct){
             if(correct && found.permission<=9){
               req.session.user_id=user_id;
               req.session.permission=found.permission;
+                return res.redirect("/auth/");
             }
-            /*リダイレクト先は後で変更*/
-            return res.redirect("/auth/");
+            else{
+              this.err.id="ユーザーIDまたはパスワードが不正です";
+              return res.view();
+            }
           });
         }
         else{
-          return res.json({id:user_id});
+          this.err.id="ユーザーIDまたはパスワードが不正です";
+          return res.view();
         }
       });
     }
