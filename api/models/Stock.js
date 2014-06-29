@@ -20,8 +20,7 @@ module.exports = {
     min:0
     },
     photo:{type:"binary"},
-    category:{type:"string",
-    },
+    category:{type:"string"},
     StockLog:{
       collection:"StockLog",
       via:"stock"
@@ -31,6 +30,18 @@ module.exports = {
         required: 'you have to specify a name or else'
       }
     }
+  },
+  afterUpdate:function(record, next){
+    Category.rebuild(function(err){console.log(err);});
+    return next();
+  },
+  afterCreate:function(record, next){
+    Category.rebuild(function(err){console.log(err);});
+    return next();
+  },
+  afterDestroy:function(record, next){
+    Category.rebuild(function(err){console.log(err);});
+    return next();
   }
 };
 
