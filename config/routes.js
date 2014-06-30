@@ -49,6 +49,7 @@ module.exports.routes = {
   'post /stock/create':'StockController.create',
   'get /stock/:id':'StockController.stock',
   'get /stock/:id/edit':'StockController.edit',
+
   '/request/user_request':'RequestController.user_request',
 	'/request/reqsubmit':'RequestController.reqsubmit',
 	'/request/:id/feedsubmit':'RequestController.feedsubmit',
