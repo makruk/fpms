@@ -54,7 +54,10 @@ module.exports = {
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
     });
-    return res.view();
+    var changenumber=req.param('changenumber');
+    this.changenumber = changenumber;
+    if(req.method==="GET")return res.view();
+    return res.redirect("/stock/");
   },
    add:function(req, res){
     Stock.find({}).exec(function(err,found){

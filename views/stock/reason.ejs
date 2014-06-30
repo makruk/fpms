@@ -17,6 +17,7 @@
 </thead>
 <tbody>
   <% for(var i=0;i<stocks.length;i++){ %>
+  <% if(changenumber[i]!= stocks[i].number && changenumber[i]!= ""){ %>
   <tr>
     <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
     <td><%= stocks[i].name %></a></td>
@@ -24,7 +25,7 @@
     <td> 個</td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
-    <td><%= stocks[i].changenumber %>個</td>
+    <td><%= changenumber[i] %>個</td>
     <td>
       <select name="reason">
       <option value="loss">紛失</option>
@@ -36,6 +37,7 @@
       <input type="text" name="notes">
     </td>
   </tr>
+  <% } %>
   <% } %>
 </tbody>
 </table>
