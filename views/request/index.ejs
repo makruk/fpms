@@ -84,7 +84,8 @@
 							<%}%>
 					</td>
 					<td>3</td>
-					<td><a href="/request/<%= requests[i].id %>"><button class="button ">詳細</button></a><a href="/request/destroy/<%= requests[i].id %>"><button class="button danger">削除</button></td>
+					<td><a href="/request/<%= requests[i].id %>"><button class="button">詳細</button></a>
+							<button class="button danger" onclick="destroy(<%= requests[i].id %>);">削除</button></td>
 				</tr>	
 			</tbody>
 		<%}%>
@@ -97,4 +98,16 @@ $(document).ready(function(){
         $('input[type="radio"], input[type="checkbox"], select').removeAttr('checked').removeAttr('selected');
     });
 });
+
+  var destroy=function(id){
+      $.Dialog({
+          shadow: true,
+          overlay: false,
+          icon: '<span class="icon-rocket"></span>',
+          title: '投稿の削除',
+          width: 350,
+          padding: 10,
+          content: '<p>投稿を削除します。よろしいですか?</p><a href="/request/destroy/'+id+'"><button class="large info">OK</button></a><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+      });
+  }
 </script>
