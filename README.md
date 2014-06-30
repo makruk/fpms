@@ -15,18 +15,21 @@ Node.jsのインストール
 
 Sails.jsのインストール
 
-    sudo npm -g install sails@0.10.0-rc5
+    sudo npm -g install sails@0.10.0-rc8
     sudo npm -g install node-gyp
     
 ### Windows
 
 [Node.js download](http://nodejs.org/download/)
 
-    npm -g install sails@0.10.0-rc5
-    
 [Python 2.7.x Download](https://www.python.org/download/)
 
 [Microsoft Visual C++ for Windows Desktop Download](http://go.microsoft.com/?linkid=9816758)
+
+Microsoft Visual Studio 2010が入っている場合、アンインストールしてから試してください。
+
+    npm -g install sails@0.10.0-rc8
+    
 
     npm -g install node-gyp
     node-gyp configure --msvs_version=2012
@@ -34,15 +37,14 @@ Sails.jsのインストール
 ## How to lunch Sails application
 
     cd [sails directory]
-    npm -g install
     sails lift
     
     http://localhost:1337/
     
-もしCSSなどが適用されなかった場合、
-    
+### Before first lift
+
+    npm -g install
     npm install
     
-を試してください    
 
 a [Sails](http://sailsjs.org) application
