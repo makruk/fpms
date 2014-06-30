@@ -6,14 +6,14 @@
 		<form action="/request/reqsubmit" method="post"onsubmit="return confirm();" id="request_check">
 			<fieldset>
 				<div class="panel">
-					<div class="panel-header">
+					<div class="panel-header bg-lightBlue fg-white">
 						リクエストフォーム
 					</div>
 					<div class="panel-content">
 						<div class="input-control text" data-role="input-control">
 							<input name ="request" type="text" placeholder="リクエストはここに">
 						</div>
-						<input type="submit" value="送信" class="large info">
+						<input type="submit" value="送信" class="large">
 					</div>
 				</div>
 			</fieldset>
@@ -23,20 +23,20 @@
 		<form = action="/request/user_request">
 			<fieldset>
 				<div class="panel">
-					<div class="panel-header">
+					<div class="panel-header bg-lightBlue fg-white">
 						リクエスト一覧
 					</div>
 					<div class="panel-content">
 						<div class="input-control checkbox" data-role="input-control">
 							<label class="inline-block">
-								<input type="checkbox" name = "r1" value ="1"/>
+								<input type="checkbox" name = "r1" value ="1" <% if(requests.r1checker == 1 ){%>checked<%}%> />
            			<span class="check"></span>
 								自分のリクエストのみ表示する
 							</label>
 						</div>
 						<div class="input-control checkbox" data-role="input-control">
 							<label class="inline-block">
-								<input type="checkbox" name = "r2" value="1" />
+								<input type="checkbox" name = "r2" value="1"  <% if(requests.r2checker == 1 ){%>checked<%}%> />
         	   		<span class="check"></span>
 								フィードバックがあるもののみ表示する
 							</label>

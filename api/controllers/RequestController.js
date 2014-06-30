@@ -90,6 +90,7 @@ module.exports = {
 		User.findOne({user_id:user_id}).exec(function(err,found){
 			id = found.id;
 		});
+
 		/*フィードバックのチェック*/
 		var checkfeed = {contains:""};
 		if(req.param('r2') == '1'){
@@ -97,13 +98,27 @@ module.exports = {
 		}
 
 		/*自分の投稿のチェックをif文で検索*/
+		/*r1checker及びr2checkerはリクエスト検索後のチェックを保持するため*/
 		if(req.param('r1') == '1'){
 			Request.find({where:{User:id,responce:checkfeed},sort:'id DESC'}).exec(function (err,found){
 				this.requests = found;
+				this.requests.r1checker = 1;
+				if(req.param('r2') == '1'){
+					this.requests.r2checker = 1;
+				}else{
+					this.requests.r2checker = 0;
+				}
 			});
 		}else{
 			Request.find({where:{responce:checkfeed},sort:'id DESC'}).exec(function (err,found){
+			
 				this.requests = found;
+				this.requests.r1checker = 0;
+				if(req.param('r2') == '1'){
+					this.requests.r2checker = 1;
+				}else{
+					this.requests.r2checker = 0;
+				}
 			});
 		}
 	  return res.view();
