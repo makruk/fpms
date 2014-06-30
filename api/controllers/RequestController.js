@@ -20,6 +20,8 @@ module.exports = {
 
 		/*評価の状態に関して*/
 		var checkview = req.param('grade') || '';
+		var gradecheck = checkview.toString();
+		this.gradecheck = gradecheck;
 		if(checkview instanceof Array){
 			for(var i=0;i<checkview.length;i++){
 				checkview[i]={review:checkview[i]};
