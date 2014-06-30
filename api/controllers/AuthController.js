@@ -6,7 +6,20 @@
  */
 
 module.exports = {
+  index:function(req, res){
+    if(req.session.permission === 1){
+      return res.redirect('/request');
+    }
+    else if(req.session.permission === 0){
+      return res.redirect('/stock');
+    }
+    else{
+      return res.redirect('/auth/logout');
+    }
+  },
   login:function(req, res){
+    if(req.session.user_id != void 0)return res.redirect('/');
+    if(req.method == 'GET')return res.view();
     var bcrypt=require('bcrypt');
     var user_id=req.param("id");
     var password=req.param("password");
@@ -15,12 +28,12 @@ module.exports = {
         if(err)res.json({error:"DB error"}, 500);
         if( found !== void 0 ){
           bcrypt.compare(password, found.password, function(err, correct){
-            if(correct){
+            if(correct && found.permission<=9){
               req.session.user_id=user_id;
               req.session.permission=found.permission;
             }
             /*リダイレクト先は後で変更*/
-            return res.redirect("/");
+            return res.redirect("/auth/");
           });
         }
         else{
