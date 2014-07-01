@@ -47,7 +47,9 @@ module.exports = {
   	return res.redirect("/stock/"+id+"/");
   },
    loss:function(req, res){
-    Stock.find({}).exec(function(err,found){
+    this.order=(req.param('order')=='ASC' ?" ASC":" DESC");
+    this.sort=req.param('sort') || "id";
+    Stock.find({sort: this.sort+this.order}).exec(function(err,found){
       this.stocks = found;
     });
     return res.view();
