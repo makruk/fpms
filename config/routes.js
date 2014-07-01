@@ -30,25 +30,18 @@ module.exports.routes = {
 
 
   // Custom routes here...
+  '/stock/purchase':'StockController.purchase',
+  '/stock/create':'StockController.create',
+  '/stock/:id':'StockController.stock',
+  '/stock/:id/edit':'StockController.edit',
 
   '/user/create':'UserController.create',
-  '/stock/create':'StockController.create',
-
-
   '/user/mypage':'UserController.mypage',
   '/user/mypage/edit':'UserController.myedit',
   '/user/alledit':'UserController.alledit',
   '/user/:id':'UserController.user',
   '/user/:id/edit':'UserController.edit',
   '/user/:id/password':'UserController.password',
-
-  '/stock/:id':'StockController.stock',
-  '/stock/:id/edit':'StockController.edit',
-
-
-  'post /stock/create':'StockController.create',
-  'get /stock/:id':'StockController.stock',
-  'get /stock/:id/edit':'StockController.edit',
 
   '/request/user_request':'RequestController.user_request',
 	'/request/reqsubmit':'RequestController.reqsubmit',

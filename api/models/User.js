@@ -53,10 +53,15 @@ module.exports = {
       user.balance+=parseInt(cash);
       strkind="購入";
     }
+    if(user.balance<user.limit){
+      UserLog.addLog(user.id, 0, 0, "Balance too less.["+note+"]", cb);
+      if(cb)return cb("預金が少なすぎます.");
+      return;
+    }
     User.update({id:user.id}, {balance:user.balance}).exec(function(err, u){
       if(err){
-        if(cb)cb(err);
         UserLog.addLog(user.id, cash, kind, "Failed by DB error.["+note+"]", cb);
+        if(cb)return cb(err);
       }
       else{
         UserLog.addLog(user.id, cash, strkind, note, cb);

@@ -53,5 +53,35 @@ module.exports = {
 	var id=req.param('id');
 	Stock.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
   	return res.redirect("/stock/"+id);
+  },
+  purchase:function(req, res){
+    var user_id=req.session.user_id;
+    var id;
+    var stocks=req.allParams();
+    try{
+      User.findOne({user_id:user_id}).exec(function(err, u){
+        if(err)throw err;
+        for(var i in stocks){
+          var stock=parseInt(i.slice(2));
+          var number=parseInt(stocks[i]);
+          if(stock === NaN || number === NaN) continue;
+          Stock.findOne({id:stock}).exec(function(err, s){
+            if(err)throw err;
+            s.number-=number;
+            Stock.update({id:s.id}, {number:s.number}, function(err){
+              if(err)throw err;
+              User.payment(u.id, s.price*number, 2, s.name+"を購入", function(err){
+                if(err)throw err;
+                StockLog.addLog(s.id, number, s.price, 2, u.name+"が購入");
+              });
+            });
+          });
+        }
+        return res.redirect("/stock/");
+      });
+    }
+    catch(err){
+      return res.serverError(err);
+    }
   }
 };

@@ -25,9 +25,10 @@ module.exports = {
     }
     UserLog.create({cash:cash, kind:kind, note:note, user:user}).exec(function(err, add){
       if(err){
-        if(cb)cb();
         UserLog.create({cash:0, kind:"", note:"Error occured!! cash=["+cash+"]kind=["+kind+"]user=["+user+"]"});
+        if(cb)return cb(err);
       }
+      if(cb)return cb(void 0, add);
     });
   }
 };

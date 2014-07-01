@@ -33,7 +33,8 @@ module.exports.policies = {
   },
   StockController:{
   	'*':['isLoggedIn', 'isAdmin'],
-  	index:'isLoggedIn'
+  	index:'isLoggedIn',
+    purchase:'isLoggedIn'
   },
   /*
 	// Here's an example of adding some policies to a controller
