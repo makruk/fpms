@@ -17,7 +17,7 @@
 </thead>
 <tbody>
   <% for(var i=0;i<stocks.length;i++){ %>
-  <% if(changenumber[i]!= stocks[i].number && changenumber[i]!= ""){ %>
+  <% if(changenumber[i]!= ""){ %>
   <tr>
     <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
     <td><%= stocks[i].name %></a></td>
@@ -28,9 +28,9 @@
     <td><%= changenumber[i] %>個</td>
     <td>
       <select name="reason">
-      <option value="loss">紛失</option>
-      <option value="excess">過多</option>
-      <option value="other">その他</option>
+      <option value="loss"<% if(changenumber[i] < stocks[i].number){%>selected<%}%>>紛失</option>
+      <option value="excess"<% if(changenumber[i] > stocks[i].number){%>selected<%}%>>過多</option>
+      <option value="other"<% if(changenumber[i] == stocks[i].number){%>selected<%}%>>その他</option>
       </select>
     </td>
     <td>

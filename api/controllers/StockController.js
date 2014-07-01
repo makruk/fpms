@@ -8,7 +8,9 @@
 module.exports = {
 
   index:function(req, res){
-    Stock.find({}).exec(function(err,found){
+    this.order=(req.param('order')=='ASC' ?" ASC":" DESC");
+    this.sort=req.param('sort') || "id";
+    Stock.find({sort: this.sort+this.order}).exec(function(err,found){
       this.stocks = found;
     });
     return res.view();
@@ -55,8 +57,15 @@ module.exports = {
       this.stocks = found;
     });
     var changenumber=req.param('changenumber');
+    var number=req.param('number');
+    var reason=req.param('reason');
+    var id=req.param('id');
     this.changenumber = changenumber;
+    this.number = number;
     if(req.method==="GET")return res.view();
+    for(var i=0; changenumber.length>i; i++){
+      Stock.update({id:parseInt(stocks[i].id,10), number:parseInt(changenumber[i],10)}).exec(function(err){});
+    };
     return res.redirect("/stock/");
   },
    add:function(req, res){
