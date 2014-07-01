@@ -34,7 +34,7 @@ module.exports.policies = {
   StockController:{
   	'*':['isLoggedIn', 'isAdmin'],
   	index:'isLoggedIn',
-    purchase:'isLoggedIn'
+    purchase:['isLoggedIn', 'isUser']
   },
   /*
 	// Here's an example of adding some policies to a controller

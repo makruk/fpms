@@ -58,6 +58,17 @@ module.exports = {
     var user_id=req.session.user_id;
     var id;
     var stocks=req.allParams();
+    if(req.method === "GET"){
+      this.stocks=[];
+      for(var i in stocks){
+        Stock.findOne({id:parseInt(i.slice(2))}).exec(function(err, s){
+          if(err)return;
+          s.param=stocks[i];
+          this.stocks.push(s);
+        });
+      }
+      return res.view();
+    }
     try{
       User.findOne({user_id:user_id}).exec(function(err, u){
         if(err)throw err;
@@ -81,6 +92,7 @@ module.exports = {
       });
     }
     catch(err){
+      this.error=err;
       return res.serverError(err);
     }
   }
