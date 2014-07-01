@@ -27,7 +27,9 @@ module.exports.policies = {
   	'*': ['isLoggedIn','isAdmin'],
   },
   RequestController:{
-  	'*':'isLoggedIn'
+  	'*':['isLoggedIn','isAdmin'],
+	'user_request': ['isLoggedIn','isUser'],
+	'reqsubmit': ['isLoggedIn','isUser'],
   },
   StockController:{
   	'*':['isLoggedIn', 'isAdmin'],
