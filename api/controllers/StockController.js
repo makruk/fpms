@@ -54,15 +54,30 @@ module.exports = {
 	Stock.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
   	return res.redirect("/stock/"+id);
   },
+  list:function(req, res){
+    this.params=req.allParams();
+    Category.find({}).exec(function(err, found){
+      if(!err)this.category=found;
+    });
+    Stock.find({}).exec(function(err,found){
+      this.stocks = found;
+    });
+    return res.view();
+  },
   purchase:function(req, res){
     var user_id=req.session.user_id;
     var id;
     var stocks=req.allParams();
     this.query="?";
     for(var i in stocks){
+      if(stocks[i] === '0' || stocks[i] === ''){
+        delete stocks[i];
+        continue;
+      }
       this.query+=i+'='+stocks[i]+'&';
     }
     this.error={};
+    if(Object.keys(stocks).length === 0)res.redirect("/stock/list");
     if(req.method === "GET"){
       this.stocks=[];
       var cash=0;
@@ -107,7 +122,7 @@ module.exports = {
             });
           });
         }
-        return res.redirect("/stock/");
+        return res.redirect("/stock/list");
       });
     }
     catch(err){

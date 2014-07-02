@@ -33,6 +33,7 @@ module.exports.routes = {
   '/stock/':'StockController.index',
   '/stock/purchase':'StockController.purchase',
   '/stock/create':'StockController.create',
+  '/stock/list':'StockController.list',
   '/stock/:id':'StockController.stock',
   '/stock/:id/edit':'StockController.edit',
 

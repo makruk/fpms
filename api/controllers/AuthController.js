@@ -11,7 +11,7 @@ module.exports = {
       return res.redirect('/request');
     }
     else if(req.session.permission === 0){
-      return res.redirect('/stock');
+      return res.redirect('/stock/list');
     }
     else{
       return res.redirect('/auth/logout');

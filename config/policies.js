@@ -33,7 +33,7 @@ module.exports.policies = {
   },
   StockController:{
   	'*':['isLoggedIn', 'isAdmin'],
-  	index:'isLoggedIn',
+  	list:['isLoggedIn', 'isUser'],
     purchase:['isLoggedIn', 'isUser']
   },
   /*
