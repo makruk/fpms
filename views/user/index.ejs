@@ -65,6 +65,7 @@
 					</div>
 
 					<input type="submit" value="検索" class="large">
+					<input type="button" id="reset" value="リセット" class="large">
 				</fieldset>
 			</form>
 			</div>
@@ -100,4 +101,11 @@
 			</table>
 
 		</div>
-
+		<script>
+		$(document).ready(function(){
+			$("#reset").click(function(){
+				$('input[type="radio"], input[type="checkbox"], select').removeAttr('checked').removeAttr('selected');
+				$('input[type="text"]').val("");
+			});
+		});
+		</script>
