@@ -58,15 +58,26 @@ module.exports = {
     var user_id=req.session.user_id;
     var id;
     var stocks=req.allParams();
+    this.query="?";
+    for(var i in stocks){
+      this.query+=i+'='+stocks[i]+'&';
+    }
+    this.error={};
     if(req.method === "GET"){
       this.stocks=[];
+      var cash=0;
       for(var i in stocks){
         Stock.findOne({id:parseInt(i.slice(2))}).exec(function(err, s){
           if(err)return;
-          s.param=stocks[i];
+          s.param=parseInt(stocks[i]);
           this.stocks.push(s);
+          cash+=s.price*s.param;
+          if(s.number < s.param){
+            this.error[s.id]="在庫が足りません";
+          }
         });
       }
+      if(cash > req.session.balance)this.error.messages="預金が足りません";
       return res.view();
     }
     try{
@@ -78,11 +89,19 @@ module.exports = {
           if(stock === NaN || number === NaN) continue;
           Stock.findOne({id:stock}).exec(function(err, s){
             if(err)throw err;
-            s.number-=number;
-            Stock.update({id:s.id}, {number:s.number}, function(err){
+            if(s.number-number<0){
+              throw {messages:s.name+"の在庫が足りません"};
+            }
+
+            Stock.update({id:s.id}, {number:s.number-number}, function(err){
               if(err)throw err;
               User.payment(u.id, s.price*number, 2, s.name+"を購入", function(err){
-                if(err)throw err;
+                if(err){
+                  Stock.update({id:s.id}, {number:number}, function(err){
+                    if(err)StockLog.addLog(s.id, number, s.price, 0, "Rollback failed.");
+                  });
+                  throw err;
+                }
                 StockLog.addLog(s.id, number, s.price, 2, u.name+"が購入");
               });
             });
@@ -93,7 +112,7 @@ module.exports = {
     }
     catch(err){
       this.error=err;
-      return res.serverError(err);
+      return res.view();
     }
   }
 };

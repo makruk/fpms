@@ -30,11 +30,13 @@ module.exports.routes = {
 
 
   // Custom routes here...
+  '/stock/':'StockController.index',
   '/stock/purchase':'StockController.purchase',
   '/stock/create':'StockController.create',
   '/stock/:id':'StockController.stock',
   '/stock/:id/edit':'StockController.edit',
 
+  '/user/':'UserController.index',
   '/user/create':'UserController.create',
   '/user/mypage':'UserController.mypage',
   '/user/mypage/edit':'UserController.myedit',
@@ -43,6 +45,7 @@ module.exports.routes = {
   '/user/:id/edit':'UserController.edit',
   '/user/:id/password':'UserController.password',
 
+  '/request/':'RequestController.index',
   '/request/user_request':'RequestController.user_request',
 	'/request/reqsubmit':'RequestController.reqsubmit',
 	'/request/:id/feedsubmit':'RequestController.feedsubmit',

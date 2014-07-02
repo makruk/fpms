@@ -50,7 +50,7 @@ module.exports = {
       strkind="出金";
     }
     else if(kind == 2){
-      user.balance+=parseInt(cash);
+      user.balance-=parseInt(cash);
       strkind="購入";
     }
     if(user.balance<user.limit){
@@ -69,14 +69,21 @@ module.exports = {
     });
   },
   beforeCreate:function(attrs, next){
-    var bcrypt=require('bcrypt');
-    bcrypt.genSalt(10, function(err, salt){
-      if(err)return next(err);
-      bcrypt.hash(attrs.password, salt, function(err, hash){
-        if(err)return next(err);
-        attrs.password=hash;
-        next();
-      });
+    User.findOne({user_id:attrs.user_id}).exec(function(err, u){
+      if(!u){
+        var bcrypt=require('bcrypt');
+        bcrypt.genSalt(10, function(err, salt){
+          if(err)return next(err);
+          bcrypt.hash(attrs.password, salt, function(err, hash){
+            if(err)return next(err);
+            attrs.password=hash;
+            next();
+          });
+        });
+      }
+      else{
+        next(new Error("Conflict user_id."));
+      }
     });
   },
   beforeUpdate:function(attrs, next){

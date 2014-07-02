@@ -1,4 +1,14 @@
 <div class="container">
+<% if(error.messages){ %>
+  <div class="panel">
+    <div class="panel-header bg-red fg-white">
+      Error
+    </div>
+    <div class="panel-content">
+      <%= error.messages %>
+    </div>
+  </div>
+<% } %>
 <h1>Purchase Confirm</h1>
 <form action="/stock/purchase/" method="post">
 <div>
@@ -17,19 +27,22 @@
 </thead>
 <tbody>
 <% for(var i=0;i<stocks.length;i++){ %>
-  <tr>
+  <tr<% if(error[stocks[i].id]){ %> class="error"<% } %>>
     <th><img src="image/stock1.jpeg" alt="写真"></th>
     <th><%= stocks[i].name %></th>
     <th><%= stocks[i].category %></th>
     <th><%= stocks[i].price %>円</th>
     <th><%= stocks[i].number %>個</th>
-    <th><%= stocks[i].param %><input type="hidden"　name="id<%= stocks[i].id %>" value="<%= stocks[i].param %>">個</th>
+    <th><%= stocks[i].param %><input type="hidden" name="id<%= stocks[i].id %>" value="<%= stocks[i].param %>">個</th>
   </tr>
 <% } %>
 </tbody>
 </table>
+<% if(Object.keys(error).length === 0){ %>
 <p>上記の通り購入します、よろしいですか？</p>
 <input type="submit" value="購入" class="large default">
-<a href="/stock/"><button type="button" class="large">キャンセル</button></a>
+<% } %>
+
+<a href="/stock/<%= query %>"><button type="button" class="large">キャンセル</button></a>
 </form>
 </div>

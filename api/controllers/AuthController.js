@@ -32,6 +32,7 @@ module.exports = {
             if(correct && found.permission<=9){
               req.session.user_id=user_id;
               req.session.permission=found.permission;
+              req.session.balance=found.balance;
                 return res.redirect("/auth/");
             }
             else{
