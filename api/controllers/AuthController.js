@@ -53,6 +53,7 @@ module.exports = {
   },
   logout:function(req, res){
     req.session.user_id=void 0;
+    req.session.limit=void 0;
     req.session.permission=void 0;
     res.redirect("/auth/login");
   }

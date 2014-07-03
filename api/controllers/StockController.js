@@ -88,11 +88,11 @@ module.exports = {
           this.stocks.push(s);
           cash+=s.price*s.param;
           if(s.number < s.param){
-            this.error[s.id]="在庫が足りません";
+            this.error["id"+s.id]="在庫が足りません";
           }
         });
       }
-      if(cash > req.session.balance)this.error.messages="預金が足りません";
+      if(cash > req.session.balance + req.session.limit)this.error.messages="預金が足りません";
       return res.view();
     }
     try{

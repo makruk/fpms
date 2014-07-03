@@ -7,8 +7,50 @@
     </ul>
  
     <div class="frames">
-        <div class="frame" id="_page_1">Empty!</div>
-        <div class="frame" id="_page_2">Empty!</div>
+        <div class="frame" id="_page_1">
+          <table class="table stripped">
+            <thead>
+              <th class="text-left">ID</th>
+              <th class="text-left">ユーザー</th>
+              <th class="text-left">金額</th>
+              <th class="text-left">種類</th>
+              <th class="text-left">備考</th>
+            </thead>
+            <tbody>
+              <% for(var i=0;i<userLog.length;i++){ %>
+                <tr>
+                  <td><%= userLog[i].id %></td>
+                  <td><%= userLog[i].user_id %></td>
+                  <td><%= userLog[i].cash %>円</td>
+                  <td><%= userLog[i].kind %></td>
+                  <td><%= userLog[i].note %></td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+        <div class="frame" id="_page_2">
+          <table class="table stripped">
+            <thead>
+              <th class="text-left">ID</th>
+              <th class="text-left">個数</th>
+              <th class="text-left">金額</th>
+              <th class="text-left">種類</th>
+              <th class="text-left">備考</th>
+            </thead>
+            <tbody>
+              <% for(var i=0;i<stockLog.length;i++){ %>
+                <tr>
+                  <td><%= stockLog[i].id %></td>
+                  <td><%= stockLog[i].number %>個</td>
+                  <td><%= stockLog[i].price %>円</td>
+                  <td><%= stockLog[i].kind %></td>
+                  <td><%= stockLog[i].note %></td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
     </div>
 </div>
   </div>
