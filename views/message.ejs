@@ -10,6 +10,15 @@
 <% } %>
 <script>
   var error={<% for(var i in error){ %><%= i %>:"<%= error[i] %>",<% } %>};
+  $(function(){
+    for(var i in error){
+      var dom=$("[name="+i+"]");
+      if(dom.length){
+        dom.attr("data-state","error");
+        dom.attr("data-hint", error[i]);
+      }
+    }
+  });
 </script>
 
 <% } %>

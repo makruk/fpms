@@ -56,7 +56,7 @@ module.exports = {
     }
     if(user.balance < -user.limit){
       UserLog.addLog(user.id, 0, 0, "Balance too less.["+note+"]", cb);
-      if(cb)return cb("預金が少なすぎます.");
+      if(cb)return cb({messages:"預金が少なすぎます."});
       return;
     }
     User.update({id:user.id}, {balance:user.balance}).exec(function(err, u){
