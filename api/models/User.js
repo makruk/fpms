@@ -14,7 +14,7 @@ module.exports = {
     grade:{type:"integer"},
     balance:{type:"integer"},
     permission:{type:"integer"},
-    limit:{type:"integer"},
+    limit:{type:"integer", min:0},
     UserLog:{
       collection:"UserLog",
       via:"user"
@@ -30,6 +30,10 @@ module.exports = {
   },
   payment:function(id, cash, kind, note, cb){
     if(cash == 0)return;
+    if(cash<0){
+      if(cb)cb({messages:"不正な金額が入力されました"});
+      return;
+    }
     var user, strkind;
     if(typeof id === 'string'){
       User.findOne({user_id:id}).exec(function(err, f){
@@ -43,17 +47,14 @@ module.exports = {
     }
     if(kind == 1){
       user.balance+=parseInt(cash);
-      strkind="入金";
     }
     else if(kind == 0){
       user.balance-=parseInt(cash);
-      strkind="出金";
     }
     else if(kind == 2){
       user.balance-=parseInt(cash);
-      strkind="購入";
     }
-    if(user.balance<user.limit){
+    if(user.balance < -user.limit){
       UserLog.addLog(user.id, 0, 0, "Balance too less.["+note+"]", cb);
       if(cb)return cb("預金が少なすぎます.");
       return;
@@ -64,7 +65,7 @@ module.exports = {
         if(cb)return cb(err);
       }
       else{
-        UserLog.addLog(user.id, cash, strkind, note, cb);
+        UserLog.addLog(user.id, cash, kind, note, cb);
       }
     });
   },

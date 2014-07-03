@@ -24,6 +24,13 @@ module.exports = {
       }
       if(cb)return cb(void 0, add);
     });
+  },
+  beforeValidate:function(attrs, next){
+    if(attrs.kind){
+      if(attrs.kind === 0)attrs.kind="紛失";
+      else if(attrs.kind === 1)attrs.kind="入荷";
+      else if(attrs.kind === 2)attrs.kind="購入";
+    }
   }
 };
 
