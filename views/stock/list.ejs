@@ -2,7 +2,7 @@
 <h1>Stock List</h1>
 
 <div class="input-control select span4">
-  <select>
+  <select class="category" data-col="カテゴリ">
     <option value="">--カテゴリ--</option>
     <% for(var i=0;i<category.length;i++){ %>
     <option value="<%= category[i].name %>"><%= category[i].name %></option>
@@ -11,7 +11,7 @@
 </div>
 
 <form action="/stock/purchase">
-<table class="table striped bordered hovered">
+<table class="table striped bordered hovered" id="main-table">
 <thead>
   <tr>
     <th>写真</th>
@@ -38,3 +38,10 @@
 <input type="submit" value="購入" class="info large">
 </form>
 </div>
+
+<script src="/js/table/multifilter.min.js"></script>
+<script>
+  $('.category').multifilter({
+    'target':$('#main-table')
+  });
+</script>
