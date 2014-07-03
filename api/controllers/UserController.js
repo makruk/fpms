@@ -4,7 +4,7 @@
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
-var errorHandler=require('../services/error.js');
+var errorHandler=require('../services/errorHandler.js');
 module.exports = {
 	
   index:function(req, res){
