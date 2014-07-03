@@ -18,7 +18,7 @@
 </thead>
 <tbody>
 <% for(var i=0;i<stocks.length;i++){ %>
-  <tr<% if(error["id"+stocks[i].id]){ %> class="error"<% } %>>
+  <tr<% if(error["id"+stocks[i].id]){ %> class="bg-red fg-white"<% } %>>
     <th><img src="image/stock1.jpeg" alt="写真"></th>
     <th><%= stocks[i].name %></th>
     <th><%= stocks[i].category %></th>
