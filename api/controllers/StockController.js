@@ -8,7 +8,6 @@
 module.exports = {
 
   index:function(req, res){
-    this.params=req.allParams();
     this.order=(req.param('order')=='ASC' ?" ASC":" DESC");
     this.sort=req.param('sort') || "id";
     Stock.find({sort: this.sort+this.order}).exec(function(err,found){
@@ -65,6 +64,7 @@ module.exports = {
     var id=req.param('id');
     this.id = id;
     this.changenumber = changenumber;
+      console.log(id);
     this.number = number;
     if(req.method==="GET")return res.view();
     for(var i=0; id.length>i; i++){
@@ -79,49 +79,13 @@ module.exports = {
     return res.redirect("/stock/");
   },
    add:function(req, res){
-    var id;
-    var stocks=req.allParams();
-    this.query="?";
-    for(var i in stocks){
-      if(stocks[i] === '0' || stocks[i] === ''){
-        delete stocks[i];
-        continue;
-      }
-      this.query+=i+'='+stocks[i]+'&';
-    }
-    this.error={};
-    if(Object.keys(stocks).length === 0)res.redirect("/stock/");
-    if(req.method === "GET"){
-      this.stocks=[];
-      var cash=0;
-      for(var i in stocks){
-        Stock.findOne({id:parseInt(i.slice(2))}).exec(function(err, s){
-          if(err)return;
-          s.param=parseInt(stocks[i]);
-          this.stocks.push(s);
-          cash+=s.price*s.param;
-        });
-      }
-      return res.view();
-    }
-    try{
-        if(err)throw err;
-        for(var i in stocks){
-          var stock=parseInt(i.slice(2));
-          var number=parseInt(stocks[i]);
-          if(stock === NaN || number === NaN) continue;
-                console.log(number);
-          Stock.findOne({id:stock}).exec(function(err, s){
-                  console.log(err);
-            Stock.update({id:s.id}, {number:s.number+number}, function(err){
-              });
-            });
-          }
-        return res.redirect("/stock/");
-    }
-    catch(err){
-      this.error=err;
-      return res.view();
-    }
-  }
-  }
+    Stock.find({}).exec(function(err,found){
+      this.stocks = found;
+    });
+    var number=req.param('number');
+    var id=req.param('id');
+    this.number = number;
+    this.id = id;
+    if(req.method==="GET")return res.view();
+    return res.redirect("/stock/");
+  },

@@ -37,7 +37,7 @@
     <td> 個</td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
-    <td><input type="text" name="id<%= stocks[i].id %>" class="size1" value="<%= params['id'+stocks[i].id] || 0 %>">個</td>
+    <td><input type="text" name="number" class="size1" value="0"><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
   </tr>
   <% } %>
 </tbody>
