@@ -62,11 +62,19 @@ module.exports = {
     var number=req.param('number');
     var reason=req.param('reason');
     var id=req.param('id');
+    this.id = id;
     this.changenumber = changenumber;
+      console.log(id);
     this.number = number;
     if(req.method==="GET")return res.view();
-    for(var i=0; changenumber.length>i; i++){
-      Stock.update({id:parseInt(stocks[i].id,10), number:parseInt(changenumber[i],10)}).exec(function(err){});
+    for(var i=0; id.length>i; i++){
+      var s=parseInt(id[i]);
+      var n=parseInt(changenumber[i]);
+      if(n != NaN){
+      Stock.update({id:s}, {number:n}).exec(function(err){
+        console.log(err);
+      });
+    }
     };
     return res.redirect("/stock/");
   },
@@ -80,5 +88,4 @@ module.exports = {
     this.id = id;
     if(req.method==="GET")return res.view();
     return res.redirect("/stock/");
-  }
-};
+  },
