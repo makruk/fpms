@@ -64,7 +64,6 @@ module.exports = {
     var id=req.param('id');
     this.id = id;
     this.changenumber = changenumber;
-      console.log(id);
     this.number = number;
     if(req.method==="GET")return res.view();
     for(var i=0; id.length>i; i++){
@@ -72,7 +71,6 @@ module.exports = {
       var n=parseInt(changenumber[i]);
       if(n != NaN){
       Stock.update({id:s}, {number:n}).exec(function(err){
-        console.log(err);
       });
     }
     };
@@ -87,5 +85,14 @@ module.exports = {
     this.number = number;
     this.id = id;
     if(req.method==="GET")return res.view();
+    for(var i=0; id.length>i; i++){
+      var s=parseInt(id[i]);
+      var n=parseInt(number[i]);
+      if(n != NaN){
+      Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err){
+      });
+    }
+    }
     return res.redirect("/stock/");
-  },
+  }
+}
