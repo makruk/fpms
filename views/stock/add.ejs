@@ -1,6 +1,9 @@
 <div class="container">
 <p>以下の通り入荷します</p>
-<form action="/stock/" method="post">
+<form action="/stock/add/" method="post">
+<div>
+
+</div>
 <table class="table striped bordered hovered">
 <thead>
   <tr>
@@ -13,31 +16,19 @@
   </tr>
 </thead>
 <tbody>
-<%var cost=0;%>
-  <% for(var i=0;i<number.length;i++){ %>
-  <% if(number[i]!= 0 && number[i]!= ""){ %>
-  <tr>
-    <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
-    <td><%= stocks[i].name %></a></td>
-    <td><%= stocks[i].category %></td>
-    <td><%= stocks[i].price %>円</td>
-    <td><%= stocks[i].number %>個</td>
-    <td><%= number[i] %>個</td>
-    <%cost += number[i]*stocks[i].price%>
-  <% } %>
+<% for(var i=0;i<stocks.length;i++){ %>
+  <tr<% if(error["id"+stocks[i].id]){ %> class="bg-red fg-white"<% } %>>
+    <th><img src="image/stock1.jpeg" alt="写真"></th>
+    <th><%= stocks[i].name %></th>
+    <th><%= stocks[i].category %></th>
+    <th><%= stocks[i].price %>円</th>
+    <th><%= stocks[i].number %>個</th>
+    <th><%= stocks[i].param %><input type="hidden" name="id<%= stocks[i].id %>" value="<%= stocks[i].param %>">個</th>
   </tr>
-  <% } %>
-  <tr>
-    <td></td>
-    <td></td>
-    <td>計</td>
-    <td><%= cost %>円</td>
-    <td></td>
-    <td></td>
-  </tr>
+<% } %>
 </tbody>
 </table>
 		<input type="submit" value="確認" class = "button large info">
-		<input type="button" value="キャンセル" onClick="location.href='/stock/'" class = "button large">
+<a href="/stock/"><button type="button" class="large">キャンセル</button></a>
 </form>
 </div>
