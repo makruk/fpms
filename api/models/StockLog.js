@@ -27,9 +27,12 @@ module.exports = {
   },
   beforeValidate:function(attrs, next){
     if(attrs.kind){
-      if(attrs.kind === 0)attrs.kind="紛失";
+      if(attrs.kind === 0)attrs.kind="追加";
       else if(attrs.kind === 1)attrs.kind="入荷";
       else if(attrs.kind === 2)attrs.kind="購入";
+      else if(attrs.kind === 3)attrs.kind="過多";
+      else if(attrs.kind === 4)attrs.kind="過小";
+      else if(attrs.kind === 5)attrs.kind="その他";
     }
   }
 };

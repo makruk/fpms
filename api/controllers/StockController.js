@@ -36,8 +36,13 @@ module.exports = {
     var buy_price=req.param('buy_price');
     var photo=req.param('photo');
     var category=req.param('category');
-    Stock.create({name:name, price:price, number:0, category:category}).exec(function(err){
-       if(err)console.log(err);
+    Stock.create({name:name, price:price, number:0, category:category}).exec(function(err, r){
+       if(err){
+         console.log(err);
+       }
+       else{
+         StockLog.addLog(r.id, 0, r.price, 0, r.name+"を追加");
+       }
     });
     return res.redirect("/stock/");
   },
@@ -51,7 +56,14 @@ module.exports = {
     var photo=req.param('photo');
     var category=req.param('category');
     var id=req.param('id');
-    Stock.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err){});
+    Stock.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err, r){
+      if(err){
+        console.log(err);
+      }
+      else{
+        StockLog.addLog(r.id, 5, r.price, r.number, r.name+"を編集");
+      }
+    });
     return res.redirect("/stock/"+id+"/");
   },
   loss:function(req, res){
@@ -78,9 +90,14 @@ module.exports = {
       var s=parseInt(id[i]);
       var n=parseInt(changenumber[i]);
       if(n != NaN){
-        Stock.update({id:s}, {number:n}).exec(function(err){
-      });
-    }
+        Stock.update({id:s}, {number:n}).exec(function(err, r){
+          if(err){
+          }
+          else{
+            StockLog.addLog(r.id, n, r.price, (n<r.number?3:4), reason);
+          }
+        });
+      }
     };
     return res.redirect("/stock/");
   },
@@ -97,7 +114,12 @@ module.exports = {
       var s=parseInt(id[i]);
       var n=parseInt(number[i]);
       if(n != NaN){
-        Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err){
+        Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err, r){
+          if(err){
+          }
+          else{
+            StockLog.addLog(r.id, n, r.price, 1, r.name+"を入荷");
+          }
         });
       }
     }
