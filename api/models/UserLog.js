@@ -31,12 +31,13 @@ module.exports = {
       if(cb)return cb(void 0, add);
     });
   },
-  beforeValidate:function(attrs, next){
-    if(attrs.kind){
-      if(attrs.kind === 0)attrs.kind="出金";
-      else if(attrs.kind === 1)attrs.kind="入金";
-      else if(attrs.kind === 2)attrs.kind="購入";
+  beforeCreate:function(attrs, next){
+    if(typeof attrs.kind !== "undefined"){
+      if(attrs.kind == 0)attrs.kind="出金";
+      else if(attrs.kind == 1)attrs.kind="入金";
+      else if(attrs.kind == 2)attrs.kind="購入";
     }
+    return next();
   }
 };
 

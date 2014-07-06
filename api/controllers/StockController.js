@@ -19,10 +19,19 @@ module.exports = {
     return res.view();
   },
   stock:function(req, res){
-    Stock.findOne({id:req.param('id')}).exec(function(err, found){
+    var id=req.param('id');
+    Stock.findOne({id:id}).exec(function(err, found){
       if(found===void 0)return res.notFound();
       if(err)return res.serverError();
       this.stock=found;
+      StockLog.findTop({or:[{kind:"追加"},{kind:"編集"}], stock:id}, function(err, f){
+        if(err){
+          this.stock.buy_price=0;
+        }
+        else{
+          this.stock.buy_price=f.price;
+        }
+      });
       return res.view();
     });
   },
@@ -50,21 +59,34 @@ module.exports = {
     Category.find({}).exec(function(err, found){
       if(!err)this.category=found;
     });
-    var name=req.param('name');
-    var price=req.param('price');
-    var number=req.param('number');
-    var photo=req.param('photo');
-    var category=req.param('category');
     var id=req.param('id');
-    Stock.update({id:id}, {name:name, price:price, number:number, photo:photo, category:category}).exec(function(err, r){
-      if(err){
-        console.log(err);
-      }
-      else{
-        StockLog.addLog(r.id, 5, r.price, r.number, r.name+"を編集");
-      }
+    Stock.findOne({id:id}).exec(function(err, found){
+      if(found===void 0)return res.notFound();
+      if(err)return res.serverError();
+      this.stock=found;
+      StockLog.findTop({or:[{kind:"追加"},{kind:"編集"}], stock:id}, function(err, f){
+        if(err){
+          this.stock.buy_price=0;
+        }
+        else{
+          this.stock.buy_price=f.price;
+        }
+      });
+      if(req.method=="GET")return res.view();
+      var name=req.param('name');
+      var price=req.param('price');
+      var category=req.param('category');
+      var buy_price=req.param('buy_price');
+      Stock.update({id:id}, {name:name, price:price,  category:category}).exec(function(err, r){
+        if(err){
+          console.log(err);
+        }
+        else{
+          StockLog.addLog(r[0].id, 0, buy_price, 5, r[0].name+"を編集");
+        }
+      });
+      return res.redirect("/stock/"+id+"/");
     });
-    return res.redirect("/stock/"+id+"/");
   },
   loss:function(req, res){
     this.order=(req.param('order')=='ASC' ?" ASC":" DESC");
@@ -94,7 +116,7 @@ module.exports = {
           if(err){
           }
           else{
-            StockLog.addLog(r.id, n, r.price, (n<r.number?3:4), reason);
+            StockLog.addLog(r[0].id, n, r[0].price, (n<r[0].number?3:4), reason);
           }
         });
       }
@@ -118,7 +140,7 @@ module.exports = {
           if(err){
           }
           else{
-            StockLog.addLog(r.id, n, r.price, 1, r.name+"を入荷");
+            StockLog.addLog(r[0].id, n, r[0].price, 1, r[0].name+"を入荷");
           }
         });
       }
