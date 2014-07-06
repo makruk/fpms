@@ -70,13 +70,13 @@ module.exports = {
       var s=parseInt(id[i]);
       var n=parseInt(changenumber[i]);
       if(n != NaN){
-      Stock.update({id:s}, {number:n}).exec(function(err){
+        Stock.update({id:s}, {number:n}).exec(function(err){
       });
     }
     };
     return res.redirect("/stock/");
   },
-   add:function(req, res){
+  add:function(req, res){
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
     });
@@ -89,9 +89,9 @@ module.exports = {
       var s=parseInt(id[i]);
       var n=parseInt(number[i]);
       if(n != NaN){
-      Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err){
-      });
-    }
+        Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err){
+        });
+      }
     }
     return res.redirect("/stock/");
   }
