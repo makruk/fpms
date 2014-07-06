@@ -1,50 +1,51 @@
+
 		<div class="container">
-			<h1>ユーザーの検索</h1>
-			<div class="panel" data-role="panel">
+			<h1>Search Users</h1>
+			<div class="panel collapsed" data-role="panel">
 			<div class="panel-header bg-lightBlue fg-white">
 			条件
 			</div>
-			<div class="panel-content">
+			<div class="panel-content" style="display:none;">
 			<form action="/user/" method="get">
 				<fieldset>
 					<label>名前</label>
 					<div class="input-control text" data-role="input-control">
-						<input type="text" name="name" class="span10">
+						<input type="text" name="name" value="<%= name%>" class="span10">
 					</div>
 					<label>学年</label>
 					<div class="input-control checkbox" data-role="input-control">
 						<label class="inline-block">
-							<input type="checkbox" name="grade" value="1" />
+							<input type="checkbox" name="grade" value="1" <% if(grade.indexOf('1') != -1 ){%>checked<%}%>/>
 							<span class="check"></span>
 							B4
 						</label>
 						<label class="inline-block">
-							<input type="checkbox" name="grade" value="2" />
+							<input type="checkbox" name="grade" value="2" <% if(grade.indexOf('2') != -1 ){%>checked<%}%>/>
 							<span class="check"></span>
 							M1
 						</label>
 						<label class="inline-block">
-							<input type="checkbox" name="grade" value="3" />
+							<input type="checkbox" name="grade" value="3" <% if(grade.indexOf('3') != -1 ){%>checked<%}%>/>
 							<span class="check"></span>
 							M2
 						</label>
 						<label class="inline-block">
-							<input type="checkbox" name="grade" value="4" />
+							<input type="checkbox" name="grade" value="4" <% if(grade.indexOf('4') != -1 ){%>checked<%}%>/>
 							<span class="check"></span>
 							その他
 						</label>
 					</div>
 					<label>残高</label>
 					<div class="input-control text" data-role="input-control">
-						<input type="text" name="from_balance" class="size5">円～
-						<input type="text" name="to_balance" class="size5">円
+						<input type="text" name="from_balance" value="<%= from_balance %>"class="size5">円～
+						<input type="text" name="to_balance" value="<%= to_balance %>" class="size5">円
 					</div>
 					<label>ソート方法</label>
 					<div class="input-control select span6">
     				<select name="sort">
-							<option value="name">名前</option>
-							<option value="grade">学年</option>
-							<option value="balance">残高</option>
+							<option value="name" <% if(this.sort==="name"){%>selected<%}%>>名前</option>
+							<option value="grade" <% if(this.sort==="grade"){%>selected<%}%>>学年</option>
+							<option value="balance" <% if(this.sort==="balance"){%>selected<%}%>>残高</option>
 						</select>
 					</div>
 
@@ -64,24 +65,26 @@
 					</div>
 
 					<input type="submit" value="検索" class="large">
+					<input type="button" id="reset" value="リセット" class="large">
 				</fieldset>
 			</form>
 			</div>
 			</div>
 
 			<h2>検索結果</h2>
+	  <div class="place-right"><a href="/user/alledit"><button class="info span 2">一括編集</button></a></div>
       <div class="place-right"><a href="/user/create"><button class="default span 2">新規登録</button></a></div>
-			<table class="table striped bordered hovered">
+			<table class="table striped bordered hovered sortable">
 				<thead>
 					<tr>
-						<th class="text-left"><a href="search.html" class="fg-black">名前<i class="icon-menu"></i></a></th>
-						<th class="text-left"><a href="search.html" class="fg-black">学年<i class="icon-menu"></i></a></th>
-						<th class="text-left"><a href="search_sort.html" class="fg-black">残高<i class="icon-menu"></i></a></th>
+						<th class="text-left">名前<i class="icon-menu"></i></th>
+						<th class="text-left">学年<i class="icon-menu"></i></th>
+						<th class="text-left">残高<i class="icon-menu"></i></th>
 					</tr>
 				</thead>
 				<tbody>
 					<% for(var i=0; i<found.length; i++){ %>
-					<tr class=""><td><a href="/user/<%= found[i].user_id %>"><%= found[i].name %></a></td><td>
+					<tr class="<% if(found[i].permission==10 || found[i].permission==11){ %>error<%}%>"><td><a href="/user/<%= found[i].user_id %>"><%= found[i].name %></a></td><td>
 						<% switch(found[i].grade){
 								case 1: %>
 									B4<% break; 
@@ -98,4 +101,11 @@
 			</table>
 
 		</div>
-
+		<script>
+		$(document).ready(function(){
+			$("#reset").click(function(){
+				$('input[type="radio"], input[type="checkbox"], select').removeAttr('checked').removeAttr('selected');
+				$('input[type="text"]').val("");
+			});
+		});
+		</script>

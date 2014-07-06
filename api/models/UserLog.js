@@ -9,10 +9,33 @@ module.exports = {
 
   attributes: {
     cash:{type:"integer"},
-    kind:{type:"integer"},
+    kind:{type:"string"},
     note:{type:"string"},
     user:{
-      model:"User"
+      model:"User",
+    },
+  },
+
+  //static method
+  addLog: function(user, cash, kind, note, cb){
+    if(typeof user === "string"){
+      User.findOne({user_id:user}).exec(function(err, f){
+        user=f.id;
+      });
+    }
+    UserLog.create({cash:cash, kind:kind, note:note, user:user}).exec(function(err, add){
+      if(err){
+        UserLog.create({cash:0, kind:"", note:"Error occured!! cash=["+cash+"]kind=["+kind+"]user=["+user+"]"});
+        if(cb)return cb(err);
+      }
+      if(cb)return cb(void 0, add);
+    });
+  },
+  beforeValidate:function(attrs, next){
+    if(attrs.kind){
+      if(attrs.kind === 0)attrs.kind="出金";
+      else if(attrs.kind === 1)attrs.kind="入金";
+      else if(attrs.kind === 2)attrs.kind="購入";
     }
   }
 };

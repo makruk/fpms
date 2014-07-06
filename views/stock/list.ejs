@@ -1,0 +1,40 @@
+<div class="container">
+<h1>Stock List</h1>
+
+<div class="input-control select span4">
+  <select>
+    <option value="">--カテゴリ--</option>
+    <% for(var i=0;i<category.length;i++){ %>
+    <option value="<%= category[i].name %>"><%= category[i].name %></option>
+    <% } %>
+  </select>
+</div>
+
+<form action="/stock/purchase">
+<table class="table striped bordered hovered">
+<thead>
+  <tr>
+    <th>写真</th>
+    <th>商品名</th>
+    <th>カテゴリ</th>
+    <th>値段</th>
+    <th>在庫数</th>
+    <th>購入数</th>
+  </tr>
+</thead>
+<tbody>
+  <% for(var i=0;i<stocks.length;i++){ %>
+  <tr>
+    <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
+    <td><a href="/stock/<%= stocks[i].id %>"><%= stocks[i].name %></a></td>
+    <td><%= stocks[i].category %></td>
+    <td><%= stocks[i].price %></td>
+    <td><%= stocks[i].number %>個</td>
+    <td><input type="text" name="id<%= stocks[i].id %>" class="size1" value="<%= params['id'+stocks[i].id] || 0 %>">個</td>
+  </tr>
+  <% } %>
+</tbody>
+</table>
+<input type="submit" value="購入" class="info large">
+</form>
+</div>

@@ -1,5 +1,5 @@
 <div class="container">
-<h1>在庫リスト</h1>
+<h1>Stock List</h1>
 <div class="grid">
 <div class="row">
 <a href="loss/" class="place-right"><button class="danger span 2">在庫数の確認</button></a>
@@ -10,7 +10,10 @@
 <div class="input-control select span4">
 <form name="cate">
   <select>
-    <option value="0">--カテゴリ--</option>
+    <option value="">--カテゴリ--</option>
+    <% for(var i=0;i<category.length;i++){ %>
+    <option value="<%= category[i].name %>"><%= category[i].name %></option>
+    <% } %>
   </select>
 </form>
 </div>

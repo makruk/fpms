@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Routes
  *
  * Your routes map URLs to views and controllers.
@@ -26,35 +26,34 @@ module.exports.routes = {
   // default view engine) your home page.
   // 
   // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
-  '/': {
-    view: 'homepage'
-  },
+  '/': 'AuthController.index',
 
 
   // Custom routes here...
-  'get /auth/login':{view:'auth/login'},
-  'post /auth/login':'AuthController.login',
-
-  'get /user/create':{view:'user/create'},
-
-  'post /user/create':'UserController.create',
-
-  '/user/:id':'UserController.user',
-  '/user/:id/edit':'UserController.edit',
-
-
-  'get /stock/create':{view:'stock/create'},
+  '/stock/':'StockController.index',
+  '/stock/purchase':'StockController.purchase',
+  '/stock/create':'StockController.create',
+  '/stock/list':'StockController.list',
   '/stock/loss/reason':'StockController.reason',
   '/stock/loss':'StockController.loss',
   '/stock/add':'StockController.add',
+  '/stock/:id':'StockController.stock',
+  '/stock/:id/edit':'StockController.edit',
 
-  'post /stock/create':'StockController.create',
-  'get /stock/:id':'StockController.stock',
-  'get /stock/:id/edit':'StockController.edit',
+  '/user/':'UserController.index',
+  '/user/create':'UserController.create',
+  '/user/mypage':'UserController.mypage',
+  '/user/mypage/edit':'UserController.myedit',
+  '/user/alledit':'UserController.alledit',
+  '/user/:id':'UserController.user',
+  '/user/:id/edit':'UserController.edit',
+  '/user/:id/password':'UserController.password',
 
-
-  'get /request/:id':'RequestController.request',
-  'post /request/:id':'RequestController.feedback'
+  '/request/':'RequestController.index',
+  '/request/user_request':'RequestController.user_request',
+  '/request/reqsubmit':'RequestController.reqsubmit',
+  '/request/:id/feedsubmit':'RequestController.feedsubmit',
+  '/request/:id':'RequestController.request',
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 
   // against Sails route blueprints.  See `config/blueprints.js` for configuration options

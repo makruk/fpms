@@ -1,5 +1,5 @@
 		<div class="container">
-			<h1>User Info</h1>
+			<h1>My Page</h1>
 			<table class="table striped bordered hovered">
 				<tr class="text-left"><th>ユーザーID</th><td><%= user.user_id %></td>
 				<tr class="text-left"><th>名前</th><td><%= user.name %></td>
@@ -51,7 +51,7 @@ jQuery( function() {
 } );
 			</script>
 			<div style="margin-top: 20px">
-				<a href="/user/<%= user.user_id%>/edit"><button class="button large info">情報の変更</button></a>
+				<a href="/user/mypage/edit"><button class="button large info">情報の変更</button></a>
 			</div>
 
 		</div>

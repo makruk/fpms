@@ -16,8 +16,26 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': true
-
+  '*': true,
+  UserController:{
+  	'*': ['isLoggedIn','isAdmin'],
+  	mypage:'isLoggedIn',
+  	myedit:'isLoggedIn',
+    password:'isLoggedIn',
+  },
+  LogController:{
+  	'*': ['isLoggedIn','isAdmin'],
+  },
+  RequestController:{
+  	'*':['isLoggedIn','isAdmin'],
+	'user_request': ['isLoggedIn','isUser'],
+	'reqsubmit': ['isLoggedIn','isUser'],
+  },
+  StockController:{
+  	'*':['isLoggedIn', 'isAdmin'],
+  	list:['isLoggedIn', 'isUser'],
+    purchase:['isLoggedIn', 'isUser']
+  },
   /*
 	// Here's an example of adding some policies to a controller
 	RabbitController: {

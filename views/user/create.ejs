@@ -1,6 +1,6 @@
 ﻿<div class="container">
-    <h1>新規登録</h1>
-    <form action="/user/create" method="post">
+    <h1>New User</h1>
+    <form action="/user/create" method="post" id="create" onsubmit="return confirm();">
     <fieldset>
       <label>名前</label><div class="input-control text"><input name="name" type="text" class="size6"></div>
       <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" class="size6"></div>
@@ -38,6 +38,51 @@
       <label>ツケの上限</label><div class="input-control text"><input name="limit" type="text" class="size6">円</div>
     </fieldset>
     <input type="submit" class="large info" value="確認">
+    <a href="/user"><button class="large" type="button">キャンセル</button></a>
     </form>
-    <a href="/user"><button class="large">キャンセル</button></a>
   </div>
+
+<script>
+  var isConfirmDisplayed=false;
+  var confirm=function(){
+    var n_grade=$('#create input[name="grade"]:checked').val();
+
+    switch (n_grade){
+      case "1": n_grade="B4"; break;
+      case "2": n_grade="M1"; break;
+      case "3": n_grade="M2"; break;
+      case "4": n_grade="その他"; break;
+    }
+    var n_permission=$('#create select[name="permission"]').val();
+    switch (n_permission){
+      case "0": n_permission="購入者"; break;
+      case "1": n_permission="管理者"; break;
+    }
+
+    var name="<dt>名前</dt><dd>"+$('#create input[name="name"]').val()+"</dd>";
+    var user_id="<dt>ユーザーID</dt><dd>"+$('#create input[name="user_id"]').val()+"</dd>";
+    var grade="<dt>学年</dt><dd>"+n_grade+"</dd>";
+    var permission="<dt>権限</dt><dd>"+n_permission+"</dd>";
+    var limit="<dt>ツケの上限</dt><dd>"+$('#create input[name="limit"]').val()+"</dd>";
+
+
+    if(!isConfirmDisplayed){
+      $.Dialog({
+          shadow: true,
+          overlay: false,
+          icon: '<span class="icon-rocket"></span>',
+          title: '登録確認',
+          width: 500,
+          padding: 10,
+          content: '<p>以下の内容で登録します。よろしいですか?</p><dl>'+name+user_id+grade+permission+limit+'</dl><button class="large info" onclick="$(\'#create\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          onShow:function(){isConfirmDisplayed=true;},
+      });
+      $.Dialog.close=(function(){
+        var context=$.Dialog;
+        var origin=$.Dialog.close;
+        return (function(){isConfirmDisplayed=false;origin.call(context);});
+      })();
+      return false;
+    }
+  }
+</script>

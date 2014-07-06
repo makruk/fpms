@@ -1,0 +1,15 @@
+<% if(this.error){ if(error.messages){ %>
+  <div class="panel container">
+    <div class="panel-header bg-red fg-white">
+      Error
+    </div>
+    <div class="panel-content">
+      <%= error.messages %>
+    </div>
+  </div>
+<% } %>
+<script>
+  var error={<% for(var i in error){ %><%= i %>:"<%= error[i] %>",<% } %>};
+</script>
+
+<% } %>
