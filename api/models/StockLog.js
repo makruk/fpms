@@ -33,6 +33,16 @@ module.exports = {
       else cb({messages:"not found"});
     });
   },
+  findOneWeek:function(criteria, cb){
+    if(!cb)return;
+    var today=new Date();
+    var oneWeekAgo=new Date();
+    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+    StockLog.find(criteria).where({createdAt:{'>':oneWeekAgo, '<':today}}).exec(function(err, f){
+      if(err)return cb(err);
+      cb(err, f);
+    });
+  },
   beforeCreate:function(attrs, next){
     if(typeof attrs.kind !== "undefined"){
       if(attrs.kind == 0)attrs.kind="追加";

@@ -13,6 +13,14 @@ module.exports = {
     Stock.find({sort: this.sort+this.order}).exec(function(err,found){
       this.stocks = found;
     });
+    for(var i=0;i<stocks.length;i++){
+      this.stocks[i].proceeds=0;
+      StockLog.findOneWeek({stock:stocks[i].id, kind:"購入"}, function(err, f){
+        for(var j=0;j<f.length;j++){
+          this.stocks[i].proceeds+=f[j].number;
+        }
+      });
+    }
     Category.find({}).exec(function(err, found){
       if(!err)this.category=found;
     });
@@ -73,6 +81,7 @@ module.exports = {
         }
       });
       if(req.method=="GET")return res.view();
+
       var name=req.param('name');
       var price=req.param('price');
       var category=req.param('category');
