@@ -34,6 +34,9 @@ module.exports.routes = {
   '/stock/purchase':'StockController.purchase',
   '/stock/create':'StockController.create',
   '/stock/list':'StockController.list',
+  '/stock/loss/reason':'StockController.reason',
+  '/stock/loss':'StockController.loss',
+  '/stock/add':'StockController.add',
   '/stock/:id':'StockController.stock',
   '/stock/:id/edit':'StockController.edit',
 
@@ -48,8 +51,8 @@ module.exports.routes = {
 
   '/request/':'RequestController.index',
   '/request/user_request':'RequestController.user_request',
-	'/request/reqsubmit':'RequestController.reqsubmit',
-	'/request/:id/feedsubmit':'RequestController.feedsubmit',
+  '/request/reqsubmit':'RequestController.reqsubmit',
+  '/request/:id/feedsubmit':'RequestController.feedsubmit',
   '/request/:id':'RequestController.request',
 
   // If a request to a URL doesn't match any of the custom routes above, it is matched 

@@ -1,0 +1,48 @@
+<div class="container">
+<p>以下の通り入荷します</p>
+<form action="/stock/add/" method="post">
+<table class="table striped bordered hovered">
+<thead>
+  <tr>
+    <th>写真</th>
+    <th>商品名</th>
+    <th>カテゴリ</th>
+    <th>値段</th>
+    <th>在庫数</th>
+    <th>入荷数</th>
+  </tr>
+</thead>
+<tbody>
+<%var cost=0;%>
+  <% for(var i=0;i<stocks.length;i++){ %>
+  <% if(number && number[i]!= "0" && number[i]!= ""){ %>
+  <tr>
+    <% var s = parseInt(id[i])-1; %>
+    <td><img src="<%= stocks[s].photo %>" alt="<%= stocks[s].name %>"></td>
+    <td><%= stocks[s].name %></td>
+    <td><%= stocks[s].category %></td>
+    <td><%= stocks[s].price %>円</td>
+    <td><%= stocks[s].number %>個</td>
+    <td><%= number[i] %>個</td>
+    <%cost += number[i]*stocks[s].price%>
+    <input type="text" name="id" value="<%= stocks[s].id %>" hidden>
+    <input type="text" name="number" value="<%= number[i] %>" hidden>
+  </tr>
+  <% } %>
+  <% } %>
+<tfoot>
+  <tr>
+    <td></td>
+    <td></td>
+    <td class="text-right">計</td>
+    <td><%= cost %>円</td>
+    <td></td>
+    <td></td>
+  </tr>
+</tfoot>
+</tbody>
+</table>
+		<input type="submit" value="確認" class = "button large info">
+		<input type="button" value="キャンセル" onClick="location.href='/stock/'" class = "button large">
+</form>
+</div>

@@ -2,30 +2,32 @@
 <h1>Stock List</h1>
 <div class="grid">
 <div class="row">
-<a href="search_loss.html" class="place-right"><button class="danger span 2">在庫数の確認</button></a>
+<a href="loss/" class="place-right"><button class="danger span 2">在庫数の確認</button></a>
 <a href="create/"><button class="default span 2">新規登録</button></a>
 </div>
 </div>
 
 <div class="input-control select span4">
+<form name="cate">
   <select>
     <option value="">--カテゴリ--</option>
     <% for(var i=0;i<category.length;i++){ %>
     <option value="<%= category[i].name %>"><%= category[i].name %></option>
     <% } %>
   </select>
+</form>
 </div>
 
-<form action="/stock/add">
+<form action="/stock/add/">
 <table class="table striped bordered hovered">
 <thead>
   <tr>
     <th>写真</th>
-    <th>商品名</th>
-    <th>カテゴリ</th>
-    <th>週間売上</th>
-    <th>値段</th>
-    <th>在庫数</th>
+    <th><a href="/stock/?sort=name&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">商品名<i class="icon-menu"></i></a></th>
+    <th><a href="/stock/?sort=category&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">カテゴリ<i class="icon-menu"></i></a></th>
+    <th><a href="/stock/?sort=&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">週間売上<i class="icon-menu"></i></a></th>
+    <th><a href="/stock/?sort=price&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">値段<i class="icon-menu"></i></a></th>
+    <th><a href="/stock/?sort=number&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">在庫数<i class="icon-menu"></i></a></th>
     <th>入荷数</th>
   </tr>
 </thead>
@@ -33,12 +35,12 @@
   <% for(var i=0;i<stocks.length;i++){ %>
   <tr>
     <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
-    <td><a href="/stock/<%= stocks[i].id %>"><%= stocks[i].name %></a></td>
+    <td><a href="/stock/<%= stocks[i].id %>/"><%= stocks[i].name %></a></td>
     <td><%= stocks[i].category %></td>
-    <td> 個</td>
-    <td><%= stocks[i].price %></td>
+    <td><%= stocks[i].proceeds %> 個</td>
+    <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
-    <td><input type="text" name="id<%= stocks[i].id %>" class="size1" value="0">個</td>
+    <td><input type="text" name="number" class="size1" value="0"><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
   </tr>
   <% } %>
 </tbody>

@@ -1,0 +1,39 @@
+<div class="container">
+<h1>在庫数の確認</h1>
+<div class="grid">
+<div class="row">
+<a href="/stock/" class="place-right"><button class="success span 2">商品の検索</button></a>
+</div>
+</div>
+
+<form action="/stock/loss/reason/">
+<table class="table striped bordered hovered">
+<thead>
+  <tr>
+    <th>写真</th>
+    <th><a href="/stock/loss/?sort=name&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">商品名<i class="icon-menu"></i></a></th>
+    <th><a href="/stock/loss/?sort=category&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">カテゴリ<i class="icon-menu"></i></a></th>
+    <th><a href="/stock/loss/?sort=&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">週間売上<i class="icon-menu"></i></a></th>
+    <th><a href="/stock/loss/?sort=price&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">値段<i class="icon-menu"></i></a></th>
+    <th><a href="/stock/loss/?sort=number&order=<%if(order==" DESC"){ %>ASC<% }else{ %>DESC<% } %>" class="fg-black">在庫数<i class="icon-menu"></i></a></th>
+    <th>現在の在庫数</th>
+  </tr>
+</thead>
+<tbody>
+  <% for(var i=0;i<stocks.length;i++){ %>
+  <tr>
+    <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
+    <td><%= stocks[i].name %></a></td>
+    <td><%= stocks[i].category %></td>
+    <td> 個</td>
+    <td><%= stocks[i].price %>円</td>
+    <td><%= stocks[i].number %>個</td>
+    <td><input type="text" name="changenumber" class="size1" value=""><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
+  </tr>
+  <% } %>
+</tbody>
+</table>
+<input type="submit" value="登録" class="large info">
+<input type="button" onClick="javascript:location.href='/stock/';" value="キャンセル" class="large">
+</form>
+</div>
