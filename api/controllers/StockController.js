@@ -24,15 +24,15 @@ module.exports = {
     });
   },
   create:function(req, res){
-  	var name=req.param('name');
-	var price=req.param('price');
-	var buy_price=req.param('buy_price');
-	var photo=req.param('photo');
-	var category=req.param('category');
-	Stock.create({name:name, price:price, number:0, category:category}).exec(function(err){
-          if(err)console.log(err);
-        });
-  	return res.redirect("/stock/");
+    var name=req.param('name');
+    var price=req.param('price');
+    var buy_price=req.param('buy_price');
+    var photo=req.param('photo');
+    var category=req.param('category');
+    Stock.create({name:name, price:price, number:0, category:category}).exec(function(err){
+      if(err)console.log(err);
+    });
+    return res.redirect("/stock/");
   },
    edit:function(req, res){
    	if(req.method=="GET") return res.view();
