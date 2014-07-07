@@ -8,18 +8,16 @@
 </div>
 
 <div class="input-control select span4">
-<form name="cate">
-  <select>
+  <select class="category" data-col="カテゴリ">
     <option value="">--カテゴリ--</option>
     <% for(var i=0;i<category.length;i++){ %>
     <option value="<%= category[i].name %>"><%= category[i].name %></option>
     <% } %>
   </select>
-</form>
 </div>
 
 <form action="/stock/add/" id="add_stock">
-<table class="table striped bordered hovered">
+<table class="table striped bordered hovered" id="main-table">
 <thead>
   <tr>
     <th>写真</th>
@@ -48,8 +46,12 @@
 <input type="submit" value="入荷" class="info large">
 </form>
 </div>
+<script src="/js/table/multifilter.min.js"></script>
 <script>
 jQuery(document).ready(function(){
    jQuery("#add_stock").validationEngine();
+  $('.category').multifilter({
+    'target':$('#main-table')
+  });
 });
 </script>
