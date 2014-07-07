@@ -9,8 +9,8 @@
 <option value="<%= category[i].name %>">
 <% } %>
 </datalist>
-	<label>仕入れ値</label><div class="input-control text"><input type="number" value="" name="buy_price" class="size6  validate[required,custom[integer],min[0]]"></div>
-	<label>販売価格</label><div class="input-control text"><input type="number" value="" name="price" class="size6  validate[required],custom[integer],min[0]"></div>
+	<label>仕入れ値</label><div class="input-control text"><input type="number" value="" name="buy_price" class="size6 validate[required,custom[integer],min[1]]"></div>
+	<label>販売価格</label><div class="input-control text"><input type="number" value="" name="price" class="size6 validate[required,custom[integer],min[1]]"></div>
 	<label>画像のアップロード</label><div><input type="file" name="photo" size="30" /></div>
 	<p></p>
 		<input type="submit" value="確認" class = "button large info">
