@@ -112,10 +112,15 @@ module.exports = {
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
     });
-    var changenumber=req.param('changenumber');
-    var number=req.param('number');
-    var reason=req.param('reason');
-    var id=req.param('id');
+    var Obj2Arr=function(obj){
+      if(obj instanceof Array)return obj;
+      else return [obj];
+    }
+    var changenumber=Obj2Arr(req.param('changenumber'));
+    var number=Obj2Arr(req.param('number'));
+    var reason=Obj2Arr(req.param('reason'));
+    var id=Obj2Arr(req.param('id'));
+
     this.id = id;
     this.changenumber = changenumber;
     this.number = number;
@@ -141,8 +146,12 @@ module.exports = {
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
     });
-    var number=req.param('number');
-    var id=req.param('id');
+    var Obj2Arr=function(obj){
+      if(obj instanceof Array)return obj;
+      else return [obj];
+    }
+    var number=Obj2Arr(req.param('number'));
+    var id=Obj2Arr(req.param('id'));
     this.number = number;
     this.id = id;
     if(req.method==="GET")return res.view();
