@@ -10,7 +10,7 @@
   </select>
 </div>
 
-<form action="/stock/purchase">
+<form action="/stock/purchase" id="purchase_stock">
 <table class="table striped bordered hovered" id="main-table">
 <thead>
   <tr>
@@ -30,7 +30,7 @@
     <td><%= stocks[i].category %></td>
     <td><%= stocks[i].price %></td>
     <td><%= stocks[i].number %>個</td>
-    <td><input type="text" name="id<%= stocks[i].id %>" class="size1" value="<%= params['id'+stocks[i].id] || 0 %>">個</td>
+    <td><input type="text" name="id<%= stocks[i].id %>" class="size1 validate[optional,custom[integer],min[0],max[<%= stocks[i].number %>]]" value="<%= params['id'+stocks[i].id] || 0 %>">個</td>
   </tr>
   <% } %>
 </tbody>
@@ -41,6 +41,9 @@
 
 <script src="/js/table/multifilter.min.js"></script>
 <script>
+jQuery(document).ready(function(){
+   jQuery("#purchase_stock").validationEngine();
+});
   $('.category').multifilter({
     'target':$('#main-table')
   });
