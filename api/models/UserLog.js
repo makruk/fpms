@@ -9,7 +9,10 @@ module.exports = {
 
   attributes: {
     cash:{type:"integer"},
-    kind:{type:"string"},
+    kind:{
+      type:"string",
+      enum:["入金","出金","購入"]
+    },
     note:{type:"string"},
     user:{
       model:"User",

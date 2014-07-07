@@ -29,7 +29,7 @@
 <% } %>
 </tbody>
 </table>
-<% if(Object.keys(req.session.error).length === 0){ %>
+<% if(Object.keys(req.session.error).length === 1){ %>
 <p>上記の通り購入します、よろしいですか？</p>
 <input type="submit" value="購入" class="large default">
 <% } %>
