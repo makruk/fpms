@@ -35,9 +35,21 @@ module.exports = {
     return res.view();
   },
   user:function(req, res){
-    var id=req.param('id')
+    var id=req.param('id');
     User.findOne({user_id:id}).exec(function findOneCB(err, found){
       this.user=found;
+    });
+    this.log=[];
+    UserLog.find({user:this.user.id}).sort("id ASC").exec(function(err, f){
+      if(err)return;
+      var balance=0;
+      for(var i=0;i<f.length;i++){
+        if(f[i].kind == "入金")balance+=f[i].cash;
+        else if(f[i].kind == "出金" || f[i].kind == "購入")balance-=f[i].cash;
+        var date=new Date(f[i].createdAt);
+        var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+        this.log.push({balance:balance, date:strdate, note:f[i].note});
+      }
     });
     return res.view();
   },
@@ -128,6 +140,18 @@ module.exports = {
     var id=req.session.user_id;
     User.findOne({user_id:id}).exec(function findOneCB(err, found){
       this.user=found;
+    });
+    this.log=[];
+    UserLog.find({user:this.user.id}).sort("id ASC").exec(function(err, f){
+      if(err)return;
+      var balance=0;
+      for(var i=0;i<f.length;i++){
+        if(f[i].kind == "入金")balance+=f[i].cash;
+        else if(f[i].kind == "出金" || f[i].kind == "購入")balance-=f[i].cash;
+        var date=new Date(f[i].createdAt);
+        var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+        this.log.push({balance:balance, date:strdate, note:f[i].note});
+      }
     });
     return res.view();
   },

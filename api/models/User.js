@@ -47,12 +47,15 @@ module.exports = {
     }
     if(kind == 1){
       user.balance+=parseInt(cash);
+      strkind="入金";
     }
     else if(kind == 0){
       user.balance-=parseInt(cash);
+      strkind="出金";
     }
     else if(kind == 2){
       user.balance-=parseInt(cash);
+      strkind="購入";
     }
     if(user.balance < -user.limit){
       UserLog.addLog(user.id, 0, 0, "Balance too less.["+note+"]");
@@ -61,11 +64,11 @@ module.exports = {
     }
     User.update({id:user.id}, {balance:user.balance}).exec(function(err, u){
       if(err){
-        UserLog.addLog(user.id, cash, kind, "Failed by DB error.["+note+"]", cb);
+        UserLog.addLog(user.id, cash, "その他", "Failed by DB error.["+note+"]", cb);
         if(cb)return cb(err);
       }
       else{
-        UserLog.addLog(user.id, cash, kind, note, cb);
+        UserLog.addLog(user.id, cash, strkind, note, cb);
       }
     });
   },
