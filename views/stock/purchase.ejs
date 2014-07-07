@@ -18,7 +18,7 @@
 </thead>
 <tbody>
 <% for(var i=0;i<stocks.length;i++){ %>
-  <tr<% if(error["id"+stocks[i].id]){ %> class="bg-red fg-white"<% } %>>
+  <tr id="id<%= stocks[i].id %>">
     <th><img src="image/stock1.jpeg" alt="写真"></th>
     <th><%= stocks[i].name %></th>
     <th><%= stocks[i].category %></th>
@@ -29,7 +29,7 @@
 <% } %>
 </tbody>
 </table>
-<% if(Object.keys(error).length === 0){ %>
+<% if(Object.keys(req.session.error).length === 0){ %>
 <p>上記の通り購入します、よろしいですか？</p>
 <input type="submit" value="購入" class="large default">
 <% } %>

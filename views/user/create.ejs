@@ -2,10 +2,10 @@
     <h1>New User</h1>
     <form action="/user/create" method="post" id="create" onsubmit="return confirm();">
     <fieldset>
-      <label>名前</label><div class="input-control text"><input name="name" type="text" class="size6"></div>
-      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" class="size6"></div>
-      <label>パスワード</label><div class="input-control text"><input name="password" type="password" class="size6"></div>
-      <label>パスワードの確認</label><div class="input-control text"><input name="password_confirm" type="password" class="size6"></div>
+      <label>名前</label><div class="input-control text"><input name="name" type="text" class="size6 validate[required,maxSize[20]]"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" class="size6 validate[required,maxSize[20]]"></div>
+      <label>パスワード</label><div class="input-control text"><input name="password" type="password" id="password" class="size6 validate[required,maxSize[20]]"></div>
+      <label>パスワードの確認</label><div class="input-control text"><input name="password_confirm" type="password" class="size6 validate[required,equals[password]]"></div>
       <label>学年</label>
        <label class="input-control radio margin5" data-role="input-control">
          <input type="radio" name="grade" value="1" checked/>
@@ -35,7 +35,7 @@
           <option value="0">購入者</option>
         </select>
       </div>
-      <label>ツケの上限</label><div class="input-control text"><input name="limit" type="text" class="size6">円</div>
+      <label>ツケの上限</label><div class="input-control text"><input name="limit" type="text" class="size6 validate[required,custom[integer],min[0]]">円</div>
     </fieldset>
     <input type="submit" class="large info" value="確認">
     <a href="/user"><button class="large" type="button">キャンセル</button></a>
@@ -43,8 +43,12 @@
   </div>
 
 <script>
+  $(document).ready(function(){
+    $("#create").validationEngine();
+  });
   var isConfirmDisplayed=false;
   var confirm=function(){
+    if(!$("#create").validationEngine('validate'))return false;
     var n_grade=$('#create input[name="grade"]:checked').val();
 
     switch (n_grade){

@@ -1,15 +1,31 @@
-<% if(this.error){ if(error.messages){ %>
+<% if(req.session.error){ if(req.session.error.messages){ %>
   <div class="panel container">
     <div class="panel-header bg-red fg-white">
       Error
     </div>
     <div class="panel-content">
-      <%= error.messages %>
+      <%= req.session.error.messages %>
     </div>
   </div>
 <% } %>
 <script>
-  var error={<% for(var i in error){ %><%= i %>:"<%= error[i] %>",<% } %>};
+  var error={<% for(var i in req.session.error){ %><%= i %>:"<%= req.session.error[i] %>",<% } %>};
+  var element={<% for(var i in req.session.error.element){ %><%= i %>:"<%= req.session.error.element[i] %>",<% } %>}
+  $(function(){
+    for(var i in error){
+      var dom=$("[name="+i+"]");
+      if(dom.length){
+        dom.attr("data-state","error");
+        dom.attr("data-hint", error[i]);
+      }
+    }
+    for(var i in element){
+      var dom=$("#"+i);
+      if(dom.length){
+        dom.attr("class", "bg-red fg-white");
+      }
+    }
+  });
 </script>
 
 <% } %>
