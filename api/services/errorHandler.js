@@ -17,7 +17,7 @@ module.exports={
       case "integer":return "整数を入力してください　";
       case "number":return "数字を入力してください　";
       case "unique":return "重複しています　";
-      case "min":return "値が大きすぎます　";
+      case "max":return "値が大きすぎます　";
       case "min":return "値が小さすぎます　";
       case "maxLength":return "長すぎます　";
       case "minLength":return "短すぎます　";

@@ -1,4 +1,6 @@
 module.exports = function(req, res, next) {
+  req.session.error={};
+  req.session.error.element={};
   if (req.session.user_id !== void 0) {
     if(req.session.permission === 0){
       User.findOne({user_id:req.session.user_id}).exec(function(err, f){

@@ -56,7 +56,7 @@ module.exports = {
     }
 		User.create({name:name, user_id:user_id, password:password, grade:grade, permission:permission, balance:balance, limit:limit}).exec(function(err){
       if(err){
-        this.error=errorHandler.responce(err);
+        req.session.error=errorHandler.responce(err);
         return res.view();
       }
       else{
@@ -81,7 +81,7 @@ module.exports = {
       var money=parseInt(req.param('money')) || 0;
       var inOut=req.param('inOut');
       if(money<0){
-        thie.error={money:"入出金額は0以上の整数を入力してください"};
+        req.session.error={money:"入出金額は0以上の整数を入力してください"};
         return res.view();
       }
       var ban=req.param('ban');
@@ -106,7 +106,7 @@ module.exports = {
       }
       User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit,  permission:this.user.permission}).exec(function(err, updated){
         if(err){
-          this.error=errorHandler.response(err);
+          req.session.error=errorHandler.response(err);
           return res.view();
         }
         else{
@@ -137,7 +137,7 @@ module.exports = {
 
       User.update({user_id:id},{name:name, user_id:user_id, grade:grade}).exec(function(err, updated){
         if(err){
-          this.error=errorHandler.response(err);
+          req.session.error=errorHandler.response(err);
           return res.view();
         }
         else{
@@ -164,7 +164,7 @@ module.exports = {
     }
     User.update({user_id:id},{password:password}).exec(function(err, updated){
       if(err){
-        this.error=errorHandler.response(err);
+        req.session.error=errorHandler.response(err);
         return res.view();
       }
       else{
@@ -200,7 +200,7 @@ module.exports = {
         }
         User.update({user_id:this.found[i].user_id},{grade:grade}).exec(function(err, updated){
           if(err){
-            this.error=errorHandler.response(err);
+            req.session.error=errorHandler.response(err);
             return res.view();
           }
         });
@@ -236,7 +236,7 @@ module.exports = {
         }
         User.update({user_id:this.found[i].user_id},{permission:permission}).exec(function(err, updated){
           if(err){
-            this.error=errorHandler.response(err);
+            req.session.error=errorHandler.response(err);
             return res.view();
           }
         });

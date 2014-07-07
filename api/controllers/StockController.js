@@ -178,7 +178,6 @@ module.exports = {
       }
       this.query+=i+'='+stocks[i]+'&';
     }
-    this.error={};
     if(Object.keys(stocks).length === 0)res.redirect("/stock/list");
     if(req.method === "GET"){
       this.stocks=[];
@@ -190,11 +189,11 @@ module.exports = {
           this.stocks.push(s);
           cash+=s.price*s.param;
           if(s.number < s.param){
-            this.error["id"+s.id]="在庫が足りません";
+            req.session.error.element["id"+s.id]="在庫が足りません";
           }
         });
       }
-      if(cash > req.session.balance + req.session.limit)this.error.messages="預金が足りません";
+      if(cash > req.session.balance + req.session.limit)req.session.error.messages="預金が足りません";
       return res.view();
     }
     try{
@@ -228,7 +227,7 @@ module.exports = {
       });
     }
     catch(err){
-      this.error=err;
+      req.session.error=err;
       return res.view();
     }
   }
