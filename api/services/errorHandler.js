@@ -1,9 +1,6 @@
 module.exports={
   response:function(err){
-    var res={};
-    console.log(err.errors);
-    console.log(err.messages);
-    console.log(err.rules);
+    var res=err;
     for(var i in err.rules){
       res[i]="";
       for(var j=0;j<err.rules[i].length;j++){

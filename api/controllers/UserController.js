@@ -112,7 +112,7 @@ module.exports = {
             User.payment(user_id, money, inOut, note || "残高調整", function(err){
               if(err){
                 err["money"]="預金が少なすぎます！";
-                req.session.error=err;
+                req.session.error=errorHandler.response(err);
                 return res.view();
               }
               else{

@@ -5,6 +5,7 @@
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
 
+var errorHandler=require('../services/errorHandler.js');
 module.exports = {
 
   index:function(req, res){
@@ -55,13 +56,14 @@ module.exports = {
     var category=req.param('category');
     Stock.create({name:name, price:price, number:0, category:category}).exec(function(err, r){
        if(err){
-         console.log(err);
+         req.session.error=errorHandler.responce(err);
+         return res.view();
        }
        else{
          StockLog.addLog(r.id, 0, r.price, 0, r.name+"を追加");
+         return res.redirect("/stock/");
        }
     });
-    return res.redirect("/stock/");
   },
   edit:function(req, res){
     Category.find({}).exec(function(err, found){
@@ -88,13 +90,14 @@ module.exports = {
       var buy_price=req.param('buy_price');
       Stock.update({id:id}, {name:name, price:price,  category:category}).exec(function(err, r){
         if(err){
-          console.log(err);
+          req.session.error=errorHandler.responce(err);
+          return res.view();
         }
         else{
           StockLog.addLog(r[0].id, 0, buy_price, 5, r[0].name+"を編集");
+          return res.redirect("/stock/"+id+"/");
         }
       });
-      return res.redirect("/stock/"+id+"/");
     });
   },
   loss:function(req, res){
@@ -123,14 +126,16 @@ module.exports = {
       if(n != NaN){
         Stock.update({id:s}, {number:n}).exec(function(err, r){
           if(err){
+            req.session.error=errorHandler.responce(err);
+            return res.view();
           }
           else{
             StockLog.addLog(r[0].id, n, r[0].price, (n<r[0].number?3:4), reason);
+            return res.redirect("/stock/");
           }
         });
       }
     };
-    return res.redirect("/stock/");
   },
   add:function(req, res){
     Stock.find({}).exec(function(err,found){
@@ -147,14 +152,16 @@ module.exports = {
       if(n != NaN){
         Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err, r){
           if(err){
+            req.session.error=errorHandler.responce(err);
+            return res.view();
           }
           else{
             StockLog.addLog(r[0].id, n, r[0].price, 1, r[0].name+"を入荷");
+            return res.redirect("/stock/");
           }
         });
       }
     }
-    return res.redirect("/stock/");
   },
   list:function(req, res){
     this.params=req.allParams();
@@ -227,7 +234,7 @@ module.exports = {
       });
     }
     catch(err){
-      req.session.error=err;
+      req.session.error=errorHandler.responce(err);
       return res.view();
     }
   }

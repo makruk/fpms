@@ -55,6 +55,8 @@ module.exports = {
     req.session.user_id=void 0;
     req.session.limit=void 0;
     req.session.permission=void 0;
+    req.session.error={};
+    req.session.error.element={};
     res.redirect("/auth/login");
   }
 };
