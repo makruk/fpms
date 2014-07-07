@@ -26,11 +26,11 @@
   <% for(var i=0;i<stocks.length;i++){ %>
   <tr>
     <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
-    <td><a href="/stock/<%= stocks[i].id %>"><%= stocks[i].name %></a></td>
+    <td><a id="stock<%= stocks[i].id %>" href="#"><%= stocks[i].name %></a></td>
     <td><%= stocks[i].category %></td>
     <td><%= stocks[i].price %></td>
     <td><%= stocks[i].number %>個</td>
-    <td><input type="text" name="id<%= stocks[i].id %>" class="size1 validate[optional,custom[integer],min[0],max[<%= stocks[i].number %>]]" value="<%= params['id'+stocks[i].id] || 0 %>">個</td>
+    <td><input type="text" min="0" max="<%= stocks[i].number %>" name="id<%= stocks[i].id %>" class="size1 validate[optional,custom[integer],min[0],max[<%= stocks[i].number %>]]" value="<%= params['id'+stocks[i].id] || 0 %>" id="id<%= stocks[i].id %>">個</td>
   </tr>
   <% } %>
 </tbody>
@@ -42,9 +42,32 @@
 <script src="/js/table/multifilter.min.js"></script>
 <script>
 jQuery(document).ready(function(){
-   jQuery("#purchase_stock").validationEngine();
-});
+  jQuery("#purchase_stock").validationEngine();
   $('.category').multifilter({
     'target':$('#main-table')
   });
+
+<% for(var i=0;i<stocks.length;i++){ %>
+  $("#stock<%= stocks[i].id %>").on('click', function(){
+    $.Dialog({
+      title:"<%= stocks[i].name %>",
+      overlay: true,
+      shadow: true,
+      flat: true,
+      width:"308px",
+      height:"450px",
+      content:'<img src="" alt="<%= stocks[i].name %>"><dl><dt>値段</dt><dd><%= stocks[i].price %>円</dd><dt>購入数</dt><dd><form><input id="stock<%= stocks[i].id %>_buy" type="number" min="0" step="1" class="size1" value="'+$("#id<%= stocks[i].id %>").val()+'" disabled="disabled">個</form><div class="button-set"><button type="button" id="up<%= stocks[i].id %>" class="large size2" value="+"><i class=" icon-plus-2"></i></button><button type="button" class="large size2" id="down<%= stocks[i].id %>"><i class=" icon-minus-2"></i></button></div></dd></dl>',
+    });
+    $("#up<%= stocks[i].id %>").click(function(){
+      if($("#stock<%= stocks[i].id %>_buy").val()<<%= stocks[i].number %>)$("#stock<%= stocks[i].id %>_buy").val(parseInt($("#stock<%= stocks[i].id %>_buy").val())+1);
+      $("#id<%= stocks[i].id %>").val($("#stock<%= stocks[i].id %>_buy").val());
+    });
+    $("#down<%= stocks[i].id %>").click(function(){
+      if($("#stock<%= stocks[i].id %>_buy").val()>0)$("#stock<%= stocks[i].id %>_buy").val(parseInt($("#stock<%= stocks[i].id %>_buy").val())-1);
+      $("#id<%= stocks[i].id %>").val($("#stock<%= stocks[i].id %>_buy").val());
+    });
+  });
+<% } %>
+});
+
 </script>
