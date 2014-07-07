@@ -80,6 +80,7 @@ module.exports = {
       var balance=this.user.balance;
       var money=parseInt(req.param('money')) || 0;
       var inOut=req.param('inOut');
+      var note=req.param('note');
       if(money<0){
         req.session.error={money:"入出金額は1以上の整数を入力してください"};
         return res.view();
@@ -101,16 +102,24 @@ module.exports = {
           this.user.permission=1;
         }
       }
-      if(inOut == 1 || inOut == 0){
-        User.payment(user_id, money, inOut, "残高調整");
-      }
       User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit,  permission:this.user.permission}).exec(function(err, updated){
         if(err){
           req.session.error=errorHandler.response(err);
           return res.view();
         }
         else{
-          return res.redirect('/user/'+user_id);
+          if(inOut == 1 || inOut == 0){
+            User.payment(user_id, money, inOut, note || "残高調整", function(err){
+              if(err){
+                err["money"]="預金が少なすぎます！";
+                req.session.error=err;
+                return res.view();
+              }
+              else{
+                return res.redirect('/user/'+user_id);
+              }
+            });
+          }
         }
       });
     }
