@@ -18,7 +18,7 @@
 </form>
 </div>
 
-<form action="/stock/add/">
+<form action="/stock/add/" id="add_stock">
 <table class="table striped bordered hovered">
 <thead>
   <tr>
@@ -40,7 +40,7 @@
     <td><%= stocks[i].proceeds %> 個</td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
-    <td><input type="text" name="number" class="size1" value="0"><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
+    <td><input type="text" name="number" class="size1 validate[optional,custom[integer],min[0]]" value="0"><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
   </tr>
   <% } %>
 </tbody>
@@ -48,3 +48,8 @@
 <input type="submit" value="入荷" class="info large">
 </form>
 </div>
+<script>
+jQuery(document).ready(function(){
+   jQuery("#add_stock").validationEngine();
+});
+</script>
