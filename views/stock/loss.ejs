@@ -6,7 +6,7 @@
 </div>
 </div>
 
-<form action="/stock/loss/reason/">
+<form action="/stock/loss/reason/" id="loss_stock">
 <table class="table striped bordered hovered">
 <thead>
   <tr>
@@ -28,7 +28,7 @@
     <td> 個</td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
-    <td><input type="text" name="changenumber" class="size1" value=""><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
+    <td><input type="text" name="changenumber" class="size1 validate[optional,custom[integer],min[0]]" value=""><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
   </tr>
   <% } %>
 </tbody>
@@ -37,3 +37,8 @@
 <input type="button" onClick="javascript:location.href='/stock/';" value="キャンセル" class="large">
 </form>
 </div>
+<script>
+jQuery(document).ready(function(){
+   jQuery("#loss_stock").validationEngine();
+});
+</script>
