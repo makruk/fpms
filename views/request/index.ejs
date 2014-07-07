@@ -8,22 +8,23 @@
 			<form action="/request">
 				<fieldset>
 					<div class="clearfix">
-						<label>状態</label>
+						<label>フィードバック</label>
 						<div class="input-control radio inline-block" data-role="input-control">
 							<label class="inline-block">
 								<input type="radio" name="r1" value="0"  />
 								<span class="check"></span>
-									フィードバック無し
+									なし
 							</label>
 							<label class="inline-block">
 								<input type="radio" name="r1" value="1" />
 								<span class="check"></span>
-									フィードバック有り
+									あり
 							</label>
 						</div>
 					</div>
 					<div class="input-control checkbox" data-role="input-control">
 						<label class="inline-block">
+							<label>状態</label>
 							<input type="checkbox" name="grade" value="1" <% if(gradecheck.indexOf('1') != -1 ){%>checked<%}%> />
 							<span class="check"></span>
 								<i class="icon-thumbs-up"></i>
@@ -43,7 +44,7 @@
 						</label>
 					</div>
 					<div>
-						<input type="submit" value="リクエスト検索" class="large">
+						<input type="submit" value="検索" class="large">
 						<button type="button" class="large" id="reset">リセット</button>
 					</div>
 				</fieldset>

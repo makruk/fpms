@@ -2317,7 +2317,8 @@ a {
   display: block;
   float: left;
   margin: 0;
-  margin-right: 2px;
+  margin-right: 10px;
+  margin-bottom: 7px;
 }
 .metro .button-set .button.active,
 .metro .button-set button.active {
@@ -5715,6 +5716,7 @@ a {
   background-color: #ffffff;
   display: block;
   float: left;
+  margin-top: 10px;
   margin-left: 5px;
   position: relative;
 }
@@ -8400,7 +8402,7 @@ a {
 .metro [data-role=panel] .panel-header:after {
   font-family: metroSysIcons;
   content: "\e000";
-  float: right;
+  float: left;
   color: inherit;
   -webkit-transform: rotate(180deg);
   -moz-transform: rotate(180deg);
