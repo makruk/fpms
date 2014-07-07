@@ -119,6 +119,7 @@ module.exports = {
     var changenumber=Obj2Arr(req.param('changenumber'));
     var number=Obj2Arr(req.param('number'));
     var reason=Obj2Arr(req.param('reason'));
+    var notes=Obj2Arr(req.param('notes'));
     var id=Obj2Arr(req.param('id'));
 
     this.id = id;
@@ -135,7 +136,7 @@ module.exports = {
             return res.view();
           }
           else{
-            StockLog.addLog(r[0].id, n, r[0].price, (n<r[0].number?3:4), reason);
+            StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?3:4), notes[i]);
             return res.redirect("/stock/");
           }
         });
