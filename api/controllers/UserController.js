@@ -81,7 +81,7 @@ module.exports = {
       var money=parseInt(req.param('money')) || 0;
       var inOut=req.param('inOut');
       if(money<0){
-        thie.error={money:"入出金額は1以上の整数を入力してください"};
+        thie.error={money:"入出金額は0以上の整数を入力してください"};
         return res.view();
       }
       var ban=req.param('ban');

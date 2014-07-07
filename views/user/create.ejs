@@ -2,9 +2,9 @@
     <h1>New User</h1>
     <form action="/user/create" method="post" id="create" onsubmit="return confirm();">
     <fieldset>
-      <label>名前</label><div class="input-control text"><input name="name" type="text" class="size6 validate[required]"></div>
-      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" class="size6 validate[required]"></div>
-      <label>パスワード</label><div class="input-control text"><input name="password" type="password" id="password" class="size6 validate[required]"></div>
+      <label>名前</label><div class="input-control text"><input name="name" type="text" class="size6 validate[required,maxSize[20]]"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" class="size6 validate[required,maxSize[20]]"></div>
+      <label>パスワード</label><div class="input-control text"><input name="password" type="password" id="password" class="size6 validate[required,maxSize[20]]"></div>
       <label>パスワードの確認</label><div class="input-control text"><input name="password_confirm" type="password" class="size6 validate[required,equals[password]]"></div>
       <label>学年</label>
        <label class="input-control radio margin5" data-role="input-control">

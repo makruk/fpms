@@ -2,8 +2,8 @@
   <h1>Edit Info</h1>
   <form action="/user/<%= user.user_id %>/edit" method="post" id="edit" onsubmit="return confirm();">
     <fieldset>
-      <label>名前</label><div class="input-control text"><input name="name" type="text" value=<%= user.name %> class="size6 validate[required]"></div>
-      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" value=<%= user.user_id %> class="size6 validate[required]"></div>
+      <label>名前</label><div class="input-control text"><input name="name" type="text" value=<%= user.name %> class="size6 validate[required,maxSize[20]]"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" value=<%= user.user_id %> class="size6 validate[required,maxSize[20]]"></div>
       <label>学年</label>
        <label class="input-control radio margin5" data-role="input-control">
          <input type="radio" name="grade" value="1" <% if(user.grade==1){%>checked<%}%>/>
@@ -39,7 +39,7 @@
 						</select>する
 			</div>
       <div class="input-control text" data-role="input-control">
-        <input type="text" class="size4" placeholder="備考" />
+        <input type="text" class="size4 validate[optional,maxSize[140]" placeholder="備考" />
       </div>
 
       <div class="input-control checkbox" data-role="input-control">
