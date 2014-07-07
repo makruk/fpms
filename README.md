@@ -2,6 +2,12 @@
 
 Sailsについて困ったときは[Sails beta docs](http://beta.sailsjs.org/#/documentation)を読もう
 
+validationEngine.js…
+
+[日本語で説明されているページ](http://welcustom.net/jquery-validation-engine/)
+
+[詳しい説明(GitHub)](https://github.com/posabsolute/jQuery-Validation-Engine)
+
 ## How to install Node.js, Sails.js
 
 ### Ubuntu
