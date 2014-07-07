@@ -10,7 +10,10 @@ module.exports = {
   attributes: {
     number:{type:"integer"},
     price:{type:"integer"},
-    kind:{type:"string"},
+    kind:{
+      type:"string",
+      enum:["追加","入荷","購入","過少","過多","編集","その他"]
+    },
     note:{type:"string"},
     stock:{
       model:"Stock"
@@ -19,7 +22,7 @@ module.exports = {
   addLog:function(stock, number, price, kind, note, cb){
     StockLog.create({number:number,price:price, kind:kind, note:note, stock:stock}).exec(function(err, add){
       if(err){
-        StockLog.create({number:0, kind:"", price:0, note:"Error occured!! numder=["+numder+"]price=["+price+"]kind=["+kind+"]stock=["+stock+"]"})
+        StockLog.create({number:0, kind:"", price:0, note:"Error occured!! number=["+number+"]price=["+price+"]kind=["+kind+"]stock=["+stock+"]"})
         if(cb)return cb(err);
       }
       if(cb)return cb(void 0, add);
@@ -43,17 +46,5 @@ module.exports = {
       cb(err, f);
     });
   },
-  beforeCreate:function(attrs, next){
-    if(typeof attrs.kind !== "undefined"){
-      if(attrs.kind == 0)attrs.kind="追加";
-      else if(attrs.kind == 1)attrs.kind="入荷";
-      else if(attrs.kind == 2)attrs.kind="購入";
-      else if(attrs.kind == 3)attrs.kind="過多";
-      else if(attrs.kind == 4)attrs.kind="過小";
-      else if(attrs.kind == 5)attrs.kind="編集";
-      else if(attrs.kind == 6)attrs.kind="その他";
-    }
-    return next();
-  }
 };
 

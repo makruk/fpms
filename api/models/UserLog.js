@@ -11,7 +11,7 @@ module.exports = {
     cash:{type:"integer"},
     kind:{
       type:"string",
-      enum:["入金","出金","購入"]
+      enum:["入金","出金","購入","その他"]
     },
     note:{type:"string"},
     user:{

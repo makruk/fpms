@@ -29,9 +29,33 @@ module.exports = {
   },
   stock:function(req, res){
     var id=req.param('id');
+
     Stock.findOne({id:id}).exec(function(err, found){
       if(found===void 0)return res.notFound();
       if(err)return res.serverError();
+      this.log=[];
+      StockLog.find({stock:id, kind:"購入"}).sort("id ASC").exec(function(err, f){
+        if(err || f.length===0)return;
+        var date=new Date(f[0].createdAt);
+        var log=[];
+        var num=0;
+        for(var i=0;i<f.length;i++){
+          var d=new Date(f[i].createdAt);
+          if(d.getFullYear()==date.getFullYear() && d.getMonth()==date.getMonth() && d.getDate()==date.getDate()){
+            num+=f[i].number;
+          }
+          else{
+            var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate();
+            log.push({date:strdate, number:num});
+            date=d;
+            num=0;
+          }
+        }
+        var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate();
+        log.push({date:strdate, number:num});
+
+        this.log=log;
+      });
       this.stock=found;
       StockLog.findTop({or:[{kind:"追加"},{kind:"編集"}], stock:id}, function(err, f){
         if(err){
@@ -56,11 +80,11 @@ module.exports = {
     var category=req.param('category');
     Stock.create({name:name, price:price, number:0, category:category}).exec(function(err, r){
        if(err){
-         req.session.error=errorHandler.responce(err);
+         req.session.error=errorHandler.response(err);
          return res.view();
        }
        else{
-         StockLog.addLog(r.id, 0, r.price, 0, r.name+"を追加");
+         StockLog.addLog(r.id, 0, r.price, "追加", r.name+"を追加");
          return res.redirect("/stock/");
        }
     });
@@ -90,11 +114,11 @@ module.exports = {
       var buy_price=req.param('buy_price');
       Stock.update({id:id}, {name:name, price:price,  category:category}).exec(function(err, r){
         if(err){
-          req.session.error=errorHandler.responce(err);
+          req.session.error=errorHandler.response(err);
           return res.view();
         }
         else{
-          StockLog.addLog(r[0].id, 0, buy_price, 5, r[0].name+"を編集");
+          StockLog.addLog(r[0].id, 0, buy_price, "編集", r[0].name+"を編集");
           return res.redirect("/stock/"+id+"/");
         }
       });
@@ -132,11 +156,11 @@ module.exports = {
       if(n != NaN){
         Stock.update({id:s}, {number:n}).exec(function(err, r){
           if(err){
-            req.session.error=errorHandler.responce(err);
+            req.session.error=errorHandler.response(err);
             return res.view();
           }
           else{
-            StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?3:4), notes[i]);
+            StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過多":"過少"), notes[i]);
             return res.redirect("/stock/");
           }
         });
@@ -162,11 +186,11 @@ module.exports = {
       if(n != NaN){
         Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err, r){
           if(err){
-            req.session.error=errorHandler.responce(err);
+            req.session.error=errorHandler.response(err);
             return res.view();
           }
           else{
-            StockLog.addLog(r[0].id, n, r[0].price, 1, r[0].name+"を入荷");
+            StockLog.addLog(r[0].id, n, r[0].price, "入荷", r[0].name+"を入荷");
             return res.redirect("/stock/");
           }
         });
@@ -231,11 +255,11 @@ module.exports = {
               User.payment(u.id, s.price*number, 2, s.name+"を購入", function(err){
                 if(err){
                   Stock.update({id:s.id}, {number:number}, function(err){
-                    if(err)StockLog.addLog(s.id, number, s.price, 0, "Rollback failed.");
+                    if(err)StockLog.addLog(s.id, number, s.price, "その他", "Rollback failed.");
                   });
                   throw err;
                 }
-                StockLog.addLog(s.id, number, s.price, 2, u.name+"が購入");
+                StockLog.addLog(s.id, number, s.price, "購入", u.name+"が購入");
               });
             });
           });
@@ -244,7 +268,8 @@ module.exports = {
       });
     }
     catch(err){
-      req.session.error=errorHandler.responce(err);
+      for(var i in err)console.log(i+":"+err[i]);
+      req.session.error=errorHandler.response(err);
       return res.view();
     }
   }

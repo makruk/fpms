@@ -47,7 +47,7 @@ module.exports = {
         if(f[i].kind == "入金")balance+=f[i].cash;
         else if(f[i].kind == "出金" || f[i].kind == "購入")balance-=f[i].cash;
         var date=new Date(f[i].createdAt);
-        var strdate=date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+        var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
         this.log.push({balance:balance, date:strdate, note:f[i].note});
       }
     });
@@ -149,7 +149,7 @@ module.exports = {
         if(f[i].kind == "入金")balance+=f[i].cash;
         else if(f[i].kind == "出金" || f[i].kind == "購入")balance-=f[i].cash;
         var date=new Date(f[i].createdAt);
-        var strdate=date.getFullYear()+"-"+date.getMonth()+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
+        var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate()+" "+date.getHours()+":"+date.getMinutes();
         this.log.push({balance:balance, date:strdate, note:f[i].note});
       }
     });
