@@ -19,7 +19,7 @@
 <tbody>
 <% for(var i=0;i<stocks.length;i++){ %>
   <tr id="id<%= stocks[i].id %>">
-    <th class="text-center"><img src="/photos/<%= stocks[s].id %>.png" alt="写真"></th>
+    <th class="text-center"><img src="/photos/<%= stocks[i].id %>.png" alt="写真"></th>
     <th><%= stocks[i].name %></th>
     <th><%= stocks[i].category %></th>
     <th><%= stocks[i].price %>円</th>
@@ -31,7 +31,7 @@
 </table>
 <% if(Object.keys(req.session.error).length === 1){ %>
 <p>上記の通り購入します、よろしいですか？</p>
-<input type="submit" value="購入" class="large default">
+<input type="submit" value="購入" class="large info">
 <% } %>
 
 <a href="/stock/list<%= query %>"><button type="button" class="large">キャンセル</button></a>

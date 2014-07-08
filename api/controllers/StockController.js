@@ -210,7 +210,7 @@ module.exports = {
             return res.view();
           }
           else{
-            StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過多":"過少"), notes[i]);
+            StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過少":"過多"), notes[i]);
             return res.redirect("/stock/");
           }
         });
