@@ -84,7 +84,7 @@ module.exports = {
          return res.view();
        }
        else{
-         StockLog.addLog(r.id, 0, r.price, "追加", r.name+"を追加");
+         StockLog.addLog(r.id, 0, buy_price, "追加", r.name+"を追加");
             var pngHeader="iVBORw0KGgo";
             var file=req.param("base64");
             file=file.slice(file.indexOf(",")+1);
