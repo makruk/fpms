@@ -36,7 +36,7 @@ module.exports = {
 			}
 		}
 		
-		Request.find({where:{or:checkview,responce:checkfeed},sort:'id DESC'}).exec(function findCB(err,found){
+		Request.find({where:{or:checkview,responce:checkfeed},sort:'id DESC'}).populate('favUser').exec(function findCB(err,found){
 			this.requests = found;
 		});
 		for(var i = 0; i < this.requests.length;i++){
@@ -102,7 +102,7 @@ module.exports = {
 		/*自分の投稿のチェックをif文で検索*/
 		/*r1checker及びr2checkerはリクエスト検索後のチェックを保持するため*/
 		if(req.param('r1') == '1'){
-			Request.find({where:{User:id,responce:checkfeed},sort:'id DESC'}).exec(function (err,found){
+			Request.find({where:{User:id,responce:checkfeed},sort:'id DESC'}).populate('favUser').exec(function (err,found){
 				this.requests = found;
 				this.requests.r1checker = 1;
 				if(req.param('r2') == '1'){
@@ -112,7 +112,7 @@ module.exports = {
 				}
 			});
 		}else{
-			Request.find({where:{responce:checkfeed},sort:'id DESC'}).exec(function (err,found){
+			Request.find({where:{responce:checkfeed},sort:'id DESC'}).populate('favUser').exec(function (err,found){
 			
 				this.requests = found;
 				this.requests.r1checker = 0;
@@ -128,6 +128,9 @@ module.exports = {
 	reqsubmit:function(req,res){
     if(req.method == 'GET')return res.view();
 		var request = req.param('request');
+		if(request == ""){
+			return res.redirect("/request/user_request");
+		}
 		var user_id = req.session.user_id;
 
 		var id;
@@ -136,6 +139,25 @@ module.exports = {
 		});
 		Request.create({request:request,review:0,User:id})
 		.exec(function(err){});
+		return res.redirect("/request/user_request");
+	},
+
+	/*いいね管理(追加のほう)、いいね数表示はリクエスト表示の部分にあります*/
+	evaluation:function(req,res){
+		var request_id = req.param('id');
+		var user_id = req.session.user_id;
+		var neweva;
+		var id
+
+		User.findOne({user_id:user_id}).exec(function(err,found){
+			id = found.id;
+		});
+
+		Request.findOne({id:request_id}).exec(function(err,found){
+			found.favUser.add(id);
+			found.save(function(err){});
+		});
+
 		return res.redirect("/request/user_request");
 	}
 };

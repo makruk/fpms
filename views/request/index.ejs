@@ -83,7 +83,7 @@
 								未評価
 							<%}%>
 					</td>
-					<td>3</td>
+					<td><%= requests[i].favUser.length %></td>
 					<td><a href="/request/<%= requests[i].id %>"><button class="button">詳細</button></a>
 							<button class="button danger" onclick="destroy(<%= requests[i].id %>);">削除</button></td>
 				</tr>	
