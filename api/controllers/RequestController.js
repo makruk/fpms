@@ -123,6 +123,14 @@ module.exports = {
 				}
 			});
 		}
+
+		for(var i = 0; i < this.requests.length;i++){
+			var id= this.requests[i].User;
+			User.findOne({id:id}).exec(function find(err,found){
+				this.requests[i].user_id = found.user_id;
+			});
+		}
+
 	  return res.view();
   },
 	reqsubmit:function(req,res){

@@ -46,13 +46,19 @@
 						<% for(var i = 0; i < requests.length; i++){%>
 
 <!--ユーザによって色を変える　別ユーザーのとき灰色 未完成　-->
-
+						<%if (requests[i].user_id == session.user_id){ %>
 							<div class="balloon">
 								<div class="padding20">
 									<%= requests[i].createdAt %>
 									<p><%= requests[i].request %></p>
-
-	<!--ボタン直す いいねをあとで作る　未完成 -->
+						<%}%>
+						<%if (requests[i].user_id != session.user_id){ %>
+							<div class="balloon bg-grayLighter">
+								<div class="padding20">
+									<%= requests[i].createdAt %>
+									<p><%= requests[i].request %></p>
+						<%}%>
+	<!--ボタン直す いいねをあとで作る　完成 -->
 									<div class="toolbar">
 										<a href="/request/evaluation/<%= requests[i].id %>"><button type="button"><i class="icon-star-3"><%= requests[i].favUser.length %>いいね</i></button></a>
 									</div>
