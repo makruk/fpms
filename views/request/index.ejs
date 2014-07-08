@@ -11,12 +11,12 @@
 						<label>フィードバック</label>
 						<div class="input-control radio inline-block" data-role="input-control">
 							<label class="inline-block">
-								<input type="radio" name="r1" value="0"  />
+								<input type="radio" name="r1" value="0" <% if(r1 == '0'){ %> checked<% } %> />
 								<span class="check"></span>
 									なし
 							</label>
 							<label class="inline-block">
-								<input type="radio" name="r1" value="1" />
+								<input type="radio" name="r1" value="1" <% if(r1 == '1'){ %> checked<% } %> />
 								<span class="check"></span>
 									あり
 							</label>

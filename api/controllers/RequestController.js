@@ -10,6 +10,7 @@ module.exports = {
   index:function(req, res){
 
 		/*フィードバックの有無のチェック*/
+		this.r1=req.param('r1');
 		var checkfeed = {contains:""};
 		if(req.param('r1') == '0'){
 			checkfeed = "";
