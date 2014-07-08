@@ -72,5 +72,13 @@
           + Use a different preprocessor, like TypeScript
 
     -->
+    <script>
+      $(function(){
+        $("img").error(function(){
+          $(this).hide();
+          $(this).after("<i class='icon-image header'></i>");
+        });
+      });
+    </script>
   </body>
 </html>

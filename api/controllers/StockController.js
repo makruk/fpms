@@ -4,7 +4,7 @@
  * @description ::
  * @docs        :: http://sailsjs.org/#!documentation/controllers
  */
-
+var fs=require("fs");
 var errorHandler=require('../services/errorHandler.js');
 module.exports = {
 
@@ -76,15 +76,36 @@ module.exports = {
     var name=req.param('name');
     var price=req.param('price');
     var buy_price=req.param('buy_price');
-    var photo=req.param('photo');
     var category=req.param('category');
+
     Stock.create({name:name, price:price, number:0, category:category}).exec(function(err, r){
        if(err){
          req.session.error=errorHandler.response(err);
          return res.view();
        }
        else{
-         StockLog.addLog(r.id, 0, r.price, "追加", r.name+"を追加");
+         StockLog.addLog(r.id, 0, buy_price, "追加", r.name+"を追加");
+            var pngHeader="iVBORw0KGgo";
+            var file=req.param("base64");
+            file=file.slice(file.indexOf(",")+1);
+            if(file.substring(0, pngHeader.length) === pngHeader){
+              var blob=new Buffer(file, 'base64');
+              fs.stat('./.tmp/public/photos', function(err, stats){
+                if(stats && stats.isDirectory()){
+                  fs.writeFile('./.tmp/public/photos/'+r.id+'.png', blob, function(err){if(err)console.log(err);});
+                  fs.writeFile('./assets/photos/'+r.id+'.png', blob, function(err){if(err)console.log("please make directory:/assets/photos");});
+                }
+                else{
+                  fs.mkdir('./.tmp/public/photos', 0777, function(err){
+                    fs.writeFile('./.tmp/public/photos/'+r.id+'.png', function(err){if(err)console.log(err);});
+                    fs.writeFile('./assets/photos/'+r.id+'.png', blob, function(err){if(err)console.log("please make directory:/assets/photos");});
+                  });
+                }
+              });
+            }
+            else{
+              return res.serverError("invalid file type!");
+            }
          return res.redirect("/stock/");
        }
     });
@@ -119,6 +140,27 @@ module.exports = {
         }
         else{
           StockLog.addLog(r[0].id, 0, buy_price, "編集", r[0].name+"を編集");
+          var pngHeader="iVBORw0KGgo";
+          var file=req.param("base64");
+          file=file.slice(file.indexOf(",")+1);
+          if(file.substring(0, pngHeader.length) === pngHeader){
+            var blob=new Buffer(file, 'base64');
+            fs.stat('./.tmp/public/photos', function(err, stats){
+              if(stats && stats.isDirectory()){
+                fs.writeFile('./.tmp/public/photos/'+r[0].id+'.png', blob, function(err){if(err)console.log(err);});
+                fs.writeFile('./assets/photos/'+r[0].id+'.png', blob, function(err){if(err)console.log("please make directory:/assets/photos");});
+              }
+              else{
+                fs.mkdir('./.tmp/public/photos', 0777, function(err){
+                  fs.writeFile('./.tmp/public/photos/'+r[0].id+'.png', function(err){if(err)console.log(err);});
+                  fs.writeFile('./assets/photos/'+r[0].id+'.png', blob, function(err){if(err)console.log("please make directory:/assets/photos");});
+                });
+              }
+            });
+          }
+          else{
+            return res.serverError("invalid file type!");
+          }
           return res.redirect("/stock/"+id+"/");
         }
       });
@@ -130,6 +172,14 @@ module.exports = {
     Stock.find({sort: this.sort+this.order}).exec(function(err,found){
       this.stocks = found;
     });
+    for(var i=0;i<stocks.length;i++){
+      this.stocks[i].proceeds=0;
+      StockLog.findOneWeek({stock:stocks[i].id, kind:"購入"}, function(err, f){
+        for(var j=0;j<f.length;j++){
+          this.stocks[i].proceeds+=f[j].number;
+        }
+      });
+    }
     return res.view();
   },
   reason:function(req, res){
@@ -160,7 +210,7 @@ module.exports = {
             return res.view();
           }
           else{
-            StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過多":"過少"), notes[i]);
+            StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過少":"過多"), notes[i]);
             return res.redirect("/stock/");
           }
         });
