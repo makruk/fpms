@@ -18,7 +18,7 @@
   <% if(number[i] && number[i]!= "0" && number[i]!= ""){ %>
   <tr>
     <% var s = parseInt(id[i])-1; %>
-    <td><img src="<%= stocks[s].photo %>" alt="<%= stocks[s].name %>"></td>
+    <td class="text-center"><img src="/photos/<%= stocks[s].id %>.png" alt="<%= stocks[s].name %>"></td>
     <td><%= stocks[s].name %></td>
     <td><%= stocks[s].category %></td>
     <td><%= stocks[s].price %>円</td>

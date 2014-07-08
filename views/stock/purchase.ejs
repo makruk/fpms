@@ -19,7 +19,7 @@
 <tbody>
 <% for(var i=0;i<stocks.length;i++){ %>
   <tr id="id<%= stocks[i].id %>">
-    <th><img src="image/stock1.jpeg" alt="写真"></th>
+    <th class="text-center"><img src="/photos/<%= stocks[s].id %>.png" alt="写真"></th>
     <th><%= stocks[i].name %></th>
     <th><%= stocks[i].category %></th>
     <th><%= stocks[i].price %>円</th>

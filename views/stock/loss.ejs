@@ -22,10 +22,10 @@
 <tbody>
   <% for(var i=0;i<stocks.length;i++){ %>
   <tr>
-    <td><img src="<%= stocks[i].photo %>" alt="<%= stocks[i].name %>"></td>
+    <td class="text-center"><img src="/photos/<%= stocks[i].id %>.png" alt="<%= stocks[i].name %>"></td>
     <td><%= stocks[i].name %></a></td>
     <td><%= stocks[i].category %></td>
-    <td> 個</td>
+    <td><%= stocks[i].proceeds %> 個</td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
     <td><input type="text" name="changenumber" class="size1 validate[optional,custom[integer],min[0]]" value=""><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
