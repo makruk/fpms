@@ -12,7 +12,7 @@
 	<label>仕入れ値</label><div class="input-control text"><input type="text" value="<%= stock.buy_price %>" name="buy_price" class="size6 validate[required,custom[integer],min[1]]"></div>
 	<label>販売価格</label><div class="input-control text"><input type="text" value="<%= stock.price %>" name="price" class="size6 validate[required,custom[integer],min[1]]"></div>
   <canvas id="photo" width="300" height="250" style="border:solid 1px black;cursor:move"></canvas>
-  <div><input type="range" width="300" max="100" min="1" step="1" id="scale" style="cursor:e-resize"></div>
+  <div class="slider span5" data-role="slider" id="slider"></div>
   <input type="hidden" id="base64" name="base64">
   <label>画像のアップロード</label><div class="input-control"><input type="file" name="file" id="file"></div>
     <div>
@@ -25,7 +25,7 @@
 <script>
 jQuery(document).ready(function(){
   (function(){
-    var scale=document.getElementById("scale");
+    var scale=25;
     var img=new Image();
     var cvs=document.getElementById('photo');
     var ctx=cvs.getContext('2d');
@@ -35,7 +35,6 @@ jQuery(document).ready(function(){
     previousImage.onload=function(){
       ctx.drawImage(previousImage, 0, 0);
       img=previousImage;
-      scale.value=25;
     };
     previousImage.onerror=function(){
       ctx.font='20px Segoe UI Light_, Open Sans Light, Verdana, Arial, Helvetica, sans-serif';
@@ -44,14 +43,19 @@ jQuery(document).ready(function(){
     };
     previousImage.src="/photos/<%= stock.id %>.png";
     var draw=function(){
-      w=img.width*(scale.value/50)*2;
-      h=img.height*(scale.value/50)*2;
+      w=img.width*(scale/50)*2;
+      h=img.height*(scale/50)*2;
       ctx.clearRect(0, 0, cvs.width, cvs.height);
       ctx.drawImage(img, offsetX, offsetY, w, h);
-    }
-    scale.oninput=function(){
-      draw();
     };
+    $("#slider").slider({
+      position:25,
+      accuracy:1,
+      min:1,
+      max:100,
+      showHint:true,
+      change:function(value, slider){scale=value;draw();}
+    });
     cvs.addEventListener("mousedown", function(e){
       mx=e.screenX;
       my=e.screenY;
@@ -59,8 +63,8 @@ jQuery(document).ready(function(){
     }, false);
     document.addEventListener("mousemove", function(e){
       if(stat){
-        w=img.width*(scale.value/50)*2;
-        h=img.height*(scale.value/50)*2;
+        w=img.width*(scale/50)*2;
+        h=img.height*(scale/50)*2;
         ctx.clearRect(0, 0, cvs.width, cvs.height);
         ctx.drawImage(img, offsetX+e.screenX-mx, offsetY+e.screenY-my, w, h);
       }
