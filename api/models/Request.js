@@ -11,7 +11,6 @@ module.exports = {
     request:{type:"string"},
     responce:{type:"string", defaultsTo:""},
     review:{type:"integer"},
-		evaluation:{type:"integer"},
     User:{
       model:"User"
     },

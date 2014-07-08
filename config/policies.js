@@ -30,6 +30,7 @@ module.exports.policies = {
   	'*':['isLoggedIn','isAdmin'],
 	'user_request': ['isLoggedIn','isUser'],
 	'reqsubmit': ['isLoggedIn','isUser'],
+	'evaluation': ['isLoggedIn','isUser'],
   },
   StockController:{
   	'*':['isLoggedIn', 'isAdmin'],

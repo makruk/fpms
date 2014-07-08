@@ -20,7 +20,7 @@
 		</form>
 
 <!-- リクエスト表示および　リクエスト検索 ほぼok -->
-		<form = action="/request/user_request">
+		<form action="/request/user_request">
 			<fieldset>
 				<div class="panel">
 					<div class="panel-header bg-lightBlue fg-white">
@@ -46,15 +46,21 @@
 						<% for(var i = 0; i < requests.length; i++){%>
 
 <!--ユーザによって色を変える　別ユーザーのとき灰色 未完成　-->
-
+						<%if (requests[i].user_id == session.user_id){ %>
 							<div class="balloon">
 								<div class="padding20">
 									<%= requests[i].createdAt %>
 									<p><%= requests[i].request %></p>
-
-	<!--ボタン直す いいねをあとで作る　未完成 -->
+						<%}%>
+						<%if (requests[i].user_id != session.user_id){ %>
+							<div class="balloon bg-grayLighter">
+								<div class="padding20">
+									<%= requests[i].createdAt %>
+									<p><%= requests[i].request %></p>
+						<%}%>
+	<!--ボタン直す いいねをあとで作る　完成 -->
 									<div class="toolbar">
-										<button><i class="icon-star-3">いいね</i></button>
+										<a href="/request/evaluation/<%= requests[i].id %>"><button type="button"><i class="icon-star-3"><%= requests[i].favUser.length %>いいね</i></button></a>
 									</div>
 								</div>
 							</div>
@@ -96,6 +102,9 @@
 <script>
   var isConfirmDisplayed=false;
   var confirm=function(){
+		if($('#request_check input[name="request"]').val() == ""){
+			return false;
+		}
     var request="<dt>リクエスト内容</dt><dd>"+$('#request_check input[name="request"]').val()+"</dd>";
     if(!isConfirmDisplayed){
       $.Dialog({
