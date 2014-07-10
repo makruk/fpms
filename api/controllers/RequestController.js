@@ -104,8 +104,8 @@ module.exports = {
 			if(req.param('r1') == '1'){
 				query.User=id;
 			}
-			Request.find({where:query,sort:'id DESC'}).populate('favUser').exec(function (err,found){
-				this.requests = found;
+			Request.find({where:query,sort:'id DESC'}).populate('favUser').exec(function (err,rf){
+				this.requests = rf;
 				if(req.param('r1') == '1'){
 					this.requests.r1checker = 1;
 				}
@@ -119,8 +119,8 @@ module.exports = {
 				}
 				for(var i = 0; i < this.requests.length;i++){
 					var id= this.requests[i].User;
-					User.findOne({id:id}).exec(function find(err,found){
-						this.requests[i].user_id = found.user_id;
+					User.findOne({id:id}).exec(function find(err,uf){
+						if(!err)this.requests[i].user_id = uf.user_id;
 					});
 				}
 				return res.view();
