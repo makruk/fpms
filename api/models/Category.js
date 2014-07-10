@@ -16,12 +16,14 @@ module.exports = {
       Stock.find({}).exec(function(err, found){
         if(err)if(cb)return cb(err);
         for(var i=0;i<found.length;i++){
-          if(found[i].category && tmp[found[i].category]===void 0){
-            tmp[found[i].category]=true;
-            Category.create({name:found[i].category}).exec(function(err){
-              if(err)console.log(err);
-            });
-          }
+          (function(i){
+            if(found[i].category && tmp[found[i].category]===void 0){
+              tmp[found[i].category]=true;
+              Category.create({name:found[i].category}).exec(function(err){
+                if(err)console.log(err);
+              });
+            }
+          })(i);
         }
       });
     });
