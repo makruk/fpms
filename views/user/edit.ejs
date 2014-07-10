@@ -114,7 +114,7 @@
     }
     if(n_ban!=''){
       $("<dt />").text("BAN").appendTo($content);
-      $("<dd />").text(n_ban).appendTo($content);
+      $("<dd />").html(n_ban).appendTo($content);
     }
     if(!isConfirmDisplayed){
       $.Dialog({

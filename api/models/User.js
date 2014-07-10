@@ -29,7 +29,10 @@ module.exports = {
     }
   },
   payment:function(id, cash, kind, note, cb){
-    if(cash == 0)return;
+    if(cash == 0){
+      if(cb)cb(void 0);
+      return;
+    }
     if(cash<0){
       if(cb)cb({messages:"不正な金額が入力されました"});
       return;
