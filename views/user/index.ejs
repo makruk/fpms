@@ -76,12 +76,12 @@
 			</div>
 
 			<h2>検索結果</h2>
-			<table class="table striped bordered hovered sortable">
+			<table id="myTable" class="table striped bordered hovered tablesorter">
 				<thead>
 					<tr>
 						<th class="text-left">名前<i class="icon-menu"></i></th>
 						<th class="text-left">学年<i class="icon-menu"></i></th>
-						<th class="text-left">残高<i class="icon-menu"></i></th>
+						<th class="text-left">残高　（円）<i class="icon-menu"></i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -97,17 +97,20 @@
 								case 4: %>
 									その他
 						<% } %>
-					</td><td><%= found[i].balance %>円</td></tr>
+					</td><td><%= found[i].balance %></td></tr>
 					<% } %>
 				</tbody>
 			</table>
 
 		</div>
+		<script src="/js/table/jquery.tablesorter.min.js"></script>
 		<script>
 		$(document).ready(function(){
 			$("#reset").click(function(){
 				$('input[type="radio"], input[type="checkbox"], select').removeAttr('checked').removeAttr('selected');
 				$('input[type="text"]').val("");
+				
 			});
+			$("#myTable").tablesorter();
 		});
 		</script>
