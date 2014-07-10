@@ -90,18 +90,7 @@ module.exports = {
             file=file.slice(file.indexOf(",")+1);
             if(file.substring(0, pngHeader.length) === pngHeader){
               var blob=new Buffer(file, 'base64');
-              fs.stat('./.tmp/public/photos', function(err, stats){
-                if(stats && stats.isDirectory()){
-                  fs.writeFile('./.tmp/public/photos/'+r.id+'.png', blob, function(err){if(err)console.log(err);});
-                  fs.writeFile('./assets/photos/'+r.id+'.png', blob, function(err){if(err)console.log("please make directory:/assets/photos");});
-                }
-                else{
-                  fs.mkdir('./.tmp/public/photos', 0777, function(err){
-                    fs.writeFile('./.tmp/public/photos/'+r.id+'.png', function(err){if(err)console.log(err);});
-                    fs.writeFile('./assets/photos/'+r.id+'.png', blob, function(err){if(err)console.log("please make directory:/assets/photos");});
-                  });
-                }
-              });
+              fs.writeFile('./photos/'+r.id+'.png', blob, function(err){if(err)console.log(err);});
             }
             else{
               return res.serverError("invalid file type!");
@@ -145,18 +134,7 @@ module.exports = {
           file=file.slice(file.indexOf(",")+1);
           if(file.substring(0, pngHeader.length) === pngHeader){
             var blob=new Buffer(file, 'base64');
-            fs.stat('./.tmp/public/photos', function(err, stats){
-              if(stats && stats.isDirectory()){
-                fs.writeFile('./.tmp/public/photos/'+r[0].id+'.png', blob, function(err){if(err)console.log(err);});
-                fs.writeFile('./assets/photos/'+r[0].id+'.png', blob, function(err){if(err)console.log("please make directory:/assets/photos");});
-              }
-              else{
-                fs.mkdir('./.tmp/public/photos', 0777, function(err){
-                  fs.writeFile('./.tmp/public/photos/'+r[0].id+'.png', function(err){if(err)console.log(err);});
-                  fs.writeFile('./assets/photos/'+r[0].id+'.png', blob, function(err){if(err)console.log("please make directory:/assets/photos");});
-                });
-              }
-            });
+            fs.writeFile('./photos/'+r.id+'.png', blob, function(err){if(err)console.log(err);});
           }
           else{
             return res.serverError("invalid file type!");
