@@ -52,11 +52,10 @@ module.exports = {
               num=0;
             }
           }
+          var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate();
+          log.push({date:strdate, number:num});
+          this.log=log;
         }
-        var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate();
-        log.push({date:strdate, number:num});
-
-        this.log=log;
         this.stock=found;
         StockLog.findTop({or:[{kind:"追加"},{kind:"編集"}], stock:id}, function(err, f){
           if(err || (!f.price)){
