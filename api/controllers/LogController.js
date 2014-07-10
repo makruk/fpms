@@ -12,12 +12,10 @@ module.exports = {
         this.stockLog=sl;
       }
       else this.stockLog=["Loading error!"];
-      UserLog.find({where:{}, sort:"id DESC"}).exec(function(err, ul){
+      UserLog.find({where:{}, sort:"id DESC"}).populate('user').exec(function(err, ul){
         if(!err){
           for(var i=0;i<ul.length;i++){
-            User.findOne({id:ul[i].user}).exec(function(err, u){
-              ul[i].user_id=u.user_id;
-            });
+            ul[i].user_id=ul.user.user_id;
           }
           this.userLog=ul;
         }
