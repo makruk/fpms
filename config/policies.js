@@ -16,7 +16,13 @@ module.exports.policies = {
 
   // Default policy for all controllers and actions
   // (`true` allows public access) 
-  '*': true,
+  '*': false,
+  AuthController:{
+    '*':true
+  },
+  PhotosController:{
+    '*': 'isLoggedIn'
+  },
   UserController:{
   	'*': ['isLoggedIn','isAdmin'],
   	mypage:'isLoggedIn',

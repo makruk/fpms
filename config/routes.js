@@ -28,8 +28,9 @@ module.exports.routes = {
   // (Alternatively, remove this and add an `index.html` file in your `assets` directory)
   '/': 'AuthController.index',
 
-
   // Custom routes here...
+  '/photos/:file':'PhotosController.download',
+
   '/stock/':'StockController.index',
   '/stock/purchase':'StockController.purchase',
   '/stock/create':'StockController.create',
