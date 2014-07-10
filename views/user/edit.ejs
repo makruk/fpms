@@ -2,8 +2,8 @@
   <h1>Edit Info</h1>
   <form action="/user/<%= user.user_id %>/edit" method="post" id="edit" onsubmit="return confirm();">
     <fieldset>
-      <label>名前</label><div class="input-control text"><input name="name" type="text" value=<%= user.name %> class="size6 validate[required,maxSize[20]]"></div>
-      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" value=<%= user.user_id %> class="size6 validate[required,maxSize[20]]"></div>
+      <label>名前</label><div class="input-control text"><input name="name" type="text" value="<%= user.name %>" class="size6 validate[required,maxSize[20]]"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" value="<%= user.user_id %>" class="size6 validate[required,maxSize[20]]"></div>
       <label>学年</label>
        <label class="input-control radio margin5" data-role="input-control">
          <input type="radio" name="grade" value="1" <% if(user.grade==1){%>checked<%}%>/>
@@ -25,7 +25,7 @@
            <span class="check"></span>
              その他
        </label>
-     <label>ツケの上限</label><div class="input-control text"><input name="limit" type="text" value=<%= user.limit %> class="size6 validate[required,custom[integer],min[0]]">円</div>
+     <label>ツケの上限</label><div class="input-control text"><input name="limit" type="number" value="<%= user.limit || 0 %>" class="size6 validate[required,custom[integer],min[0]]">円</div>
 
 			<p><%= user.name %>さんの現在の残高 : <%= user.balance %>円</p>
 			<div class="input-control text" data-role="input-control">
@@ -99,21 +99,23 @@
         n_ban="このアカウントの凍結を解除する";
       }
     }
-
-    var name="<dt>名前</dt><dd>"+$('#edit input[name="name"]').val()+"</dd>";
-    var user_id="<dt>ユーザーID</dt><dd>"+$('#edit input[name="user_id"]').val()+"</dd>";
-    var grade="<dt>学年</dt><dd>"+n_grade+"</dd>";
-    var limit="<dt>ツケの上限</dt><dd>"+$('#edit input[name="limit"]').val()+"円"+"</dd>";
-    var money="<dt>入出金</dt><dd>"+$('#edit input[name="money"]').val()+n_inOut+"</dd>";
-    var ban="<dt>BAN</dt><dd>"+n_ban+"</dd>";
-
-    if($('#edit input[name="money"]').val()==''){
-      money='';
+    var $content=$("<div />");
+    $("<dt />").text("名前").appendTo($content);
+    $("<dd />").text($('#edit input[name="name"]').val()).appendTo($content);
+    $("<dt />").text("ユーザーID").appendTo($content);
+    $("<dd />").text($('#edit input[name="user_id"]').val()).appendTo($content);
+    $("<dt />").text("学年").appendTo($content);
+    $("<dd />").text(n_grade).appendTo($content);
+    $("<dt />").text("ツケの上限").appendTo($content);
+    $("<dd />").text($('#edit input[name="limit"]').val()+"円").appendTo($content);
+    if($('#edit input[name="money"]').val() !== ''){
+      $("<dt />").text("入出金").appendTo($content);
+      $("<dd />").text($('#edit input[name="money"]').val()+n_inOut).appendTo($content);
     }
-    if(n_ban==''){
-      ban='';
+    if(n_ban!=''){
+      $("<dt />").text("BAN").appendTo($content);
+      $("<dd />").text(n_ban).appendTo($content);
     }
-
     if(!isConfirmDisplayed){
       $.Dialog({
           shadow: true,
@@ -122,7 +124,7 @@
           title: '変更確認',
           width: 500,
           padding: 10,
-          content: '<p>以下の内容で変更します。よろしいですか?</p><dl>'+name+user_id+grade+limit+money+ban+'</dl><button class="large info" onclick="$(\'#edit\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          content: '<p>以下の内容で変更します。よろしいですか?</p><dl>'+$content.html()+'</dl><button class="large info" onclick="$(\'#edit\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
           onShow:function(){isConfirmDisplayed=true;},
       });
       $.Dialog.close=(function(){

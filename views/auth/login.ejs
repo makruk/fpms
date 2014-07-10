@@ -14,12 +14,13 @@
             <label>Password</label>
             <div class="input-control password" data-role="input-control">
               <input type="password" placeholder="type password" name="password">
+              <input type="hidden" value="<%= _csrf %>" name="_csrf">
             </div>
             <input type="submit" value="Login" class="large">
             <input type="reset" value="Reset" class="large">
           </div>
         </div>
       </fieldset>
-    </div>
-  </form>
+    </form>
+  </div>
 </div>

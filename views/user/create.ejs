@@ -32,10 +32,10 @@
       <div class="input-control select size6">
         <select name="permission">
           <option value="1">管理者</option>
-          <option value="0">購入者</option>
+          <option value="0" selected>購入者</option>
         </select>
       </div>
-      <label>ツケの上限</label><div class="input-control text"><input name="limit" type="text" class="size6 validate[required,custom[integer],min[0]]">円</div>
+      <label>ツケの上限</label><div class="input-control text"><input name="limit" type="number" value="0" class="size6 validate[required,custom[integer],min[0]]">円</div>
     </fieldset>
     <input type="submit" class="large info" value="確認">
     <a href="/user"><button class="large" type="button">キャンセル</button></a>
@@ -63,12 +63,16 @@
       case "1": n_permission="管理者"; break;
     }
 
-    var name="<dt>名前</dt><dd>"+$('#create input[name="name"]').val()+"</dd>";
-    var user_id="<dt>ユーザーID</dt><dd>"+$('#create input[name="user_id"]').val()+"</dd>";
-    var grade="<dt>学年</dt><dd>"+n_grade+"</dd>";
-    var permission="<dt>権限</dt><dd>"+n_permission+"</dd>";
-    var limit="<dt>ツケの上限</dt><dd>"+$('#create input[name="limit"]').val()+"</dd>";
 
+    var $content=$("<div />");
+    $("<dt />").text("名前").appendTo($content);
+    $("<dd />").text($('#create input[name="name"]').val()).appendTo($content);
+    $("<dt />").text("ユーザーID").appendTo($content);
+    $("<dd />").text($('#create input[name="user_id"]').val()).appendTo($content);
+    $("<dt />").text("学年").appendTo($content);
+    $("<dd />").text(n_grade).appendTo($content);
+    $("<dt />").text("ツケの上限").appendTo($content);
+    $("<dd />").text($('#create input[name="limit"]').val()+"円").appendTo($content);
 
     if(!isConfirmDisplayed){
       $.Dialog({
@@ -78,7 +82,7 @@
           title: '登録確認',
           width: 500,
           padding: 10,
-          content: '<p>以下の内容で登録します。よろしいですか?</p><dl>'+name+user_id+grade+permission+limit+'</dl><button class="large info" onclick="$(\'#create\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          content: '<p>以下の内容で登録します。よろしいですか?</p><dl>'+$content.html()+'</dl><button class="large info" onclick="$(\'#create\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
           onShow:function(){isConfirmDisplayed=true;},
       });
       $.Dialog.close=(function(){
