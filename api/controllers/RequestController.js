@@ -100,39 +100,32 @@ module.exports = {
 
 			/*自分の投稿のチェックをif文で検索*/
 			/*r1checker及びr2checkerはリクエスト検索後のチェックを保持するため*/
+			var query={responce:checkfeed};
 			if(req.param('r1') == '1'){
-				Request.find({where:{User:id,responce:checkfeed},sort:'id DESC'}).populate('favUser').exec(function (err,found){
-					this.requests = found;
+				query.User=id;
+			}
+			Request.find({where:query,sort:'id DESC'}).populate('favUser').exec(function (err,found){
+				this.requests = found;
+				if(req.param('r1') == '1'){
 					this.requests.r1checker = 1;
-					if(req.param('r2') == '1'){
-						this.requests.r2checker = 1;
-					}else{
-						this.requests.r2checker = 0;
-					}
-				});
-			}else{
-				Request.find({where:{responce:checkfeed},sort:'id DESC'}).populate('favUser').exec(function (err,found){
-				
-					this.requests = found;
+				}
+				else{
 					this.requests.r1checker = 0;
-					if(req.param('r2') == '1'){
-						this.requests.r2checker = 1;
-					}else{
-						this.requests.r2checker = 0;
-					}
-				});
-			}
-
-			for(var i = 0; i < this.requests.length;i++){
-				var id= this.requests[i].User;
-				User.findOne({id:id}).exec(function find(err,found){
-					this.requests[i].user_id = found.user_id;
-				});
-			}
-
-		  return res.view();
+				}
+				if(req.param('r2') == '1'){
+					this.requests.r2checker = 1;
+				}else{
+					this.requests.r2checker = 0;
+				}
+				for(var i = 0; i < this.requests.length;i++){
+					var id= this.requests[i].User;
+					User.findOne({id:id}).exec(function find(err,found){
+						this.requests[i].user_id = found.user_id;
+					});
+				}
+				return res.view();
+			});
 		});
-
   },
 	reqsubmit:function(req,res){
     if(req.method == 'GET')return res.view();
