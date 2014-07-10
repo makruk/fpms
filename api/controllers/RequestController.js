@@ -118,12 +118,13 @@ module.exports = {
 					this.requests.r2checker = 0;
 				}
 				for(var i = 0; i < this.requests.length;i++){
-					var id= this.requests[i].User;
-					User.findOne({id:id}).exec(function find(err,uf){
-						if(!err)this.requests[i].user_id = uf.user_id;
-					});
+					(function(i){
+						User.findOne({id:this.requests[i].User}).exec(function find(err,uf){
+							if(!err)this.requests[i].user_id = uf.user_id;
+							if(i===this.requests.length-1)return res.view();
+						});
+					})(i);
 				}
-				return res.view();
 			});
 		});
   },
