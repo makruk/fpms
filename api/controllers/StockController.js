@@ -35,20 +35,22 @@ module.exports = {
       if(err)return res.serverError();
       this.log=[];
       StockLog.find({stock:id, kind:"購入"}).sort("id ASC").exec(function(err, f){
-        if(err || f.length===0)return;
-        var date=new Date(f[0].createdAt);
-        var log=[];
-        var num=0;
-        for(var i=0;i<f.length;i++){
-          var d=new Date(f[i].createdAt);
-          if(d.getFullYear()==date.getFullYear() && d.getMonth()==date.getMonth() && d.getDate()==date.getDate()){
-            num+=f[i].number;
-          }
-          else{
-            var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate();
-            log.push({date:strdate, number:num});
-            date=d;
-            num=0;
+        if(err || f.length===0);
+        else{
+          var date=new Date(f[0].createdAt);
+          var log=[];
+          var num=0;
+          for(var i=0;i<f.length;i++){
+            var d=new Date(f[i].createdAt);
+            if(d.getFullYear()==date.getFullYear() && d.getMonth()==date.getMonth() && d.getDate()==date.getDate()){
+              num+=f[i].number;
+            }
+            else{
+              var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate();
+              log.push({date:strdate, number:num});
+              date=d;
+              num=0;
+            }
           }
         }
         var strdate=date.getFullYear()+"-"+(1+date.getMonth())+"-"+date.getDate();
