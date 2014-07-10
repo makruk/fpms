@@ -294,8 +294,8 @@ module.exports = {
                   throw err;
                 }
                 StockLog.addLog(s.id, number, s.price, "購入", u.name+"が購入");
+                return res.redirect("/stock/list");
               });
-              return res.redirect("/stock/list");
             });
           });
         }
