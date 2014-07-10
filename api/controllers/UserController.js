@@ -119,6 +119,9 @@ module.exports = {
             return res.view();
           }
           else{
+            if(req.session.user_id====id){
+              req.session.user_id=user_id;
+            }
             if(inOut == 1 || inOut == 0){
               User.payment(user_id, money, inOut, note || "残高調整", function(err){
                 if(err){
@@ -173,6 +176,7 @@ module.exports = {
             return res.view();
           }
           else{
+            req.session.user_id=user_id;
             return res.redirect('/user/mypage');
           }
         });
