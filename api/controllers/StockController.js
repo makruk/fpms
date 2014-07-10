@@ -13,19 +13,19 @@ module.exports = {
     this.sort=req.param('sort') || "id";
     Stock.find({sort: this.sort+this.order}).exec(function(err,found){
       this.stocks = found;
-    });
-    for(var i=0;i<stocks.length;i++){
-      this.stocks[i].proceeds=0;
-      StockLog.findOneWeek({stock:stocks[i].id, kind:"購入"}, function(err, f){
-        for(var j=0;j<f.length;j++){
-          this.stocks[i].proceeds+=f[j].number;
-        }
+      for(var i=0;i<stocks.length;i++){
+        this.stocks[i].proceeds=0;
+        StockLog.findOneWeek({stock:stocks[i].id, kind:"購入"}, function(err, f){
+          for(var j=0;j<f.length;j++){
+            this.stocks[i].proceeds+=f[j].number;
+          }
+        });
+      }
+      Category.find({}).exec(function(err, found){
+        if(!err)this.category=found;
+        return res.view();
       });
-    }
-    Category.find({}).exec(function(err, found){
-      if(!err)this.category=found;
     });
-    return res.view();
   },
   stock:function(req, res){
     var id=req.param('id');
@@ -64,8 +64,8 @@ module.exports = {
         else{
           this.stock.buy_price=f.price;
         }
+        return res.view();
       });
-      return res.view();
     });
   },
   create:function(req, res){
@@ -79,24 +79,26 @@ module.exports = {
     var category=req.param('category');
 
     Stock.create({name:name, price:price, number:0, category:category}).exec(function(err, r){
-       if(err){
-         req.session.error=errorHandler.response(err);
-         return res.view();
-       }
-       else{
-         StockLog.addLog(r.id, 0, buy_price, "追加", r.name+"を追加");
-            var pngHeader="iVBORw0KGgo";
-            var file=req.param("base64");
-            file=file.slice(file.indexOf(",")+1);
-            if(file.substring(0, pngHeader.length) === pngHeader){
-              var blob=new Buffer(file, 'base64');
-              fs.writeFile('./photos/'+r.id+'.png', blob, function(err){if(err)console.log(err);});
-            }
-            else{
-              return res.serverError("invalid file type!");
-            }
-         return res.redirect("/stock/");
-       }
+      if(err){
+        req.session.error=errorHandler.response(err);
+        return res.view();
+      }
+      else{
+        StockLog.addLog(r.id, 0, buy_price, "追加", r.name+"を追加");
+        var pngHeader="iVBORw0KGgo";
+        var file=req.param("base64");
+        file=file.slice(file.indexOf(",")+1);
+        if(file.substring(0, pngHeader.length) === pngHeader){
+          var blob=new Buffer(file, 'base64');
+          fs.writeFile('./photos/'+r.id+'.png', blob, function(err){
+            if(err)console.log(err);
+              return res.redirect("/stock/");
+          });
+        }
+        else{
+          return res.serverError("invalid file type!");
+        }
+      }
     });
   },
   edit:function(req, res){
@@ -134,12 +136,16 @@ module.exports = {
           file=file.slice(file.indexOf(",")+1);
           if(file.substring(0, pngHeader.length) === pngHeader){
             var blob=new Buffer(file, 'base64');
-            fs.writeFile('./photos/'+r.id+'.png', blob, function(err){if(err)console.log(err);});
+            fs.writeFile('./photos/'+r.id[0]+'.png', blob, function(err){
+              if(err){
+                console.log(err);
+              }
+              return res.redirect("/stock/"+id+"/");
+            });
           }
           else{
             return res.serverError("invalid file type!");
           }
-          return res.redirect("/stock/"+id+"/");
         }
       });
     });
@@ -149,16 +155,16 @@ module.exports = {
     this.sort=req.param('sort') || "id";
     Stock.find({sort: this.sort+this.order}).exec(function(err,found){
       this.stocks = found;
+      for(var i=0;i<stocks.length;i++){
+        this.stocks[i].proceeds=0;
+        StockLog.findOneWeek({stock:stocks[i].id, kind:"購入"}, function(err, f){
+          for(var j=0;j<f.length;j++){
+            this.stocks[i].proceeds+=f[j].number;
+          }
+        });
+        return res.view();
+      }
     });
-    for(var i=0;i<stocks.length;i++){
-      this.stocks[i].proceeds=0;
-      StockLog.findOneWeek({stock:stocks[i].id, kind:"購入"}, function(err, f){
-        for(var j=0;j<f.length;j++){
-          this.stocks[i].proceeds+=f[j].number;
-        }
-      });
-    }
-    return res.view();
   },
   reason:function(req, res){
     Stock.find({}).exec(function(err,found){
