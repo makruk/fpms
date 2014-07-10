@@ -15,7 +15,7 @@ module.exports = {
       UserLog.find({where:{}, sort:"id DESC"}).populate('user').exec(function(err, ul){
         if(!err){
           for(var i=0;i<ul.length;i++){
-            ul[i].user_id=ul.user.user_id;
+            ul[i].user_id=ul[i].user.user_id;
           }
           this.userLog=ul;
         }
