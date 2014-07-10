@@ -49,15 +49,12 @@
 </form>
 </div>
 <script src="/js/table/multifilter.min.js"></script>
-<script type="text/javascript" src="/js/table/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/js/table/jquery.tablesorter.min.js"></script>
 <script>
-$(document).ready(function()
-    {
-        $("#add_stock").tablesorter();
-    }
-);
+
 jQuery(document).ready(function(){
-   jQuery("#add_stock").validationEngine();
+  $("#main-table").tablesorter();
+  $("#add_stock").validationEngine();
   $('.category').multifilter({
     'target':$('#main-table')
   });
