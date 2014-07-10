@@ -9,7 +9,7 @@
 </div>
 
 <form action="/stock/loss/reason/" id="loss_stock">
-<table class="table striped bordered hovered">
+<table class="table striped bordered hovered" id="loss_table">
 <thead>
   <tr>
     <th>写真</th>
@@ -39,7 +39,14 @@
 <input type="button" onClick="javascript:location.href='/stock/';" value="キャンセル" class="large">
 </form>
 </div>
+<script type="text/javascript" src="/js/table/jquery.tablesorter.js"></script>
 <script>
+$(document).ready(function()
+    {
+        $("#loss_table").tablesorter();
+    }
+);
+
 jQuery(document).ready(function(){
    jQuery("#loss_stock").validationEngine();
 });

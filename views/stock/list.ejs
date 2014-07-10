@@ -40,7 +40,14 @@
 </div>
 
 <script src="/js/table/multifilter.min.js"></script>
+<script type="text/javascript" src="/js/table/jquery.tablesorter.js"></script>
 <script>
+$(document).ready(function()
+    {
+        $("#main-table").tablesorter();
+    }
+);
+
 jQuery(document).ready(function(){
   jQuery("#purchase_stock").validationEngine();
   $('.category').multifilter({
