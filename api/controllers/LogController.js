@@ -12,18 +12,18 @@ module.exports = {
         this.stockLog=sl;
       }
       else this.stockLog=["Loading error!"];
-    });
-    UserLog.find({where:{}, sort:"id DESC"}).exec(function(err, ul){
-      if(!err){
-        for(var i=0;i<ul.length;i++){
-          User.findOne({id:ul[i].user}).exec(function(err, u){
-            ul[i].user_id=u.user_id;
-          });
+      UserLog.find({where:{}, sort:"id DESC"}).exec(function(err, ul){
+        if(!err){
+          for(var i=0;i<ul.length;i++){
+            User.findOne({id:ul[i].user}).exec(function(err, u){
+              ul[i].user_id=u.user_id;
+            });
+          }
+          this.userLog=ul;
         }
-        this.userLog=ul;
-      }
-      else this.userLog=["Loading error!"];
+        else this.userLog=["Loading error!"];
+        return res.view();
+      });
     });
-    return res.view();
   }
 };

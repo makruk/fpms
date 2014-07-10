@@ -55,16 +55,16 @@ module.exports = {
         log.push({date:strdate, number:num});
 
         this.log=log;
-      });
-      this.stock=found;
-      StockLog.findTop({or:[{kind:"追加"},{kind:"編集"}], stock:id}, function(err, f){
-        if(err){
-          this.stock.buy_price=0;
-        }
-        else{
-          this.stock.buy_price=f.price;
-        }
-        return res.view();
+        this.stock=found;
+        StockLog.findTop({or:[{kind:"追加"},{kind:"編集"}], stock:id}, function(err, f){
+          if(err || (!f.price)){
+            this.stock.buy_price=0;
+          }
+          else{
+            this.stock.buy_price=f.price;
+          }
+          return res.view();
+        });
       });
     });
   },
@@ -117,36 +117,35 @@ module.exports = {
         else{
           this.stock.buy_price=f.price;
         }
-      });
-      if(req.method=="GET")return res.view();
-
-      var name=req.param('name');
-      var price=req.param('price');
-      var category=req.param('category');
-      var buy_price=req.param('buy_price');
-      Stock.update({id:id}, {name:name, price:price,  category:category}).exec(function(err, r){
-        if(err){
-          req.session.error=errorHandler.response(err);
-          return res.view();
-        }
-        else{
-          StockLog.addLog(r[0].id, 0, buy_price, "編集", r[0].name+"を編集");
-          var pngHeader="iVBORw0KGgo";
-          var file=req.param("base64");
-          file=file.slice(file.indexOf(",")+1);
-          if(file.substring(0, pngHeader.length) === pngHeader){
-            var blob=new Buffer(file, 'base64');
-            fs.writeFile('./photos/'+r.id[0]+'.png', blob, function(err){
-              if(err){
-                console.log(err);
-              }
-              return res.redirect("/stock/"+id+"/");
-            });
+        if(req.method=="GET")return res.view();
+        var name=req.param('name');
+        var price=req.param('price');
+        var category=req.param('category');
+        var buy_price=req.param('buy_price');
+        Stock.update({id:id}, {name:name, price:price,  category:category}).exec(function(err, r){
+          if(err){
+            req.session.error=errorHandler.response(err);
+            return res.view();
           }
           else{
-            return res.serverError("invalid file type!");
+            StockLog.addLog(r[0].id, 0, buy_price, "編集", r[0].name+"を編集");
+            var pngHeader="iVBORw0KGgo";
+            var file=req.param("base64");
+            file=file.slice(file.indexOf(",")+1);
+            if(file.substring(0, pngHeader.length) === pngHeader){
+              var blob=new Buffer(file, 'base64');
+              fs.writeFile('./photos/'+r[0].id+'.png', blob, function(err){
+                if(err){
+                  console.log(err);
+                }
+                return res.redirect("/stock/"+id+"/");
+              });
+            }
+            else{
+              return res.serverError("invalid file type!");
+            }
           }
-        }
+        });
       });
     });
   },
@@ -169,77 +168,77 @@ module.exports = {
   reason:function(req, res){
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
-    });
-    var Obj2Arr=function(obj){
-      if(obj instanceof Array)return obj;
-      else return [obj];
-    }
-    var changenumber=Obj2Arr(req.param('changenumber'));
-    var number=Obj2Arr(req.param('number'));
-    var reason=Obj2Arr(req.param('reason'));
-    var notes=Obj2Arr(req.param('notes'));
-    var id=Obj2Arr(req.param('id'));
-
-    this.id = id;
-    this.changenumber = changenumber;
-    this.number = number;
-    if(req.method==="GET")return res.view();
-    for(var i=0; id.length>i; i++){
-      var s=parseInt(id[i]);
-      var n=parseInt(changenumber[i]);
-      if(n != NaN){
-        Stock.update({id:s}, {number:n}).exec(function(err, r){
-          if(err){
-            req.session.error=errorHandler.response(err);
-            return res.view();
-          }
-          else{
-            StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過少":"過多"), notes[i]);
-            return res.redirect("/stock/");
-          }
-        });
+      var Obj2Arr=function(obj){
+        if(obj instanceof Array)return obj;
+        else return [obj];
       }
-    };
+      var changenumber=Obj2Arr(req.param('changenumber'));
+      var number=Obj2Arr(req.param('number'));
+      var reason=Obj2Arr(req.param('reason'));
+      var notes=Obj2Arr(req.param('notes'));
+      var id=Obj2Arr(req.param('id'));
+
+      this.id = id;
+      this.changenumber = changenumber;
+      this.number = number;
+      if(req.method==="GET")return res.view();
+      for(var i=0; id.length>i; i++){
+        var s=parseInt(id[i]);
+        var n=parseInt(changenumber[i]);
+        if(n != NaN){
+          Stock.update({id:s}, {number:n}).exec(function(err, r){
+            if(err){
+              req.session.error=errorHandler.response(err);
+              return res.view();
+            }
+            else{
+              StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過少":"過多"), notes[i]);
+              return res.redirect("/stock/");
+            }
+          });
+        }
+      };
+    });
   },
   add:function(req, res){
     Stock.find({}).exec(function(err,found){
       this.stocks = found;
-    });
-    var Obj2Arr=function(obj){
-      if(obj instanceof Array)return obj;
-      else return [obj];
-    }
-    var number=Obj2Arr(req.param('number'));
-    var id=Obj2Arr(req.param('id'));
-    this.number = number;
-    this.id = id;
-    if(req.method==="GET")return res.view();
-    for(var i=0; id.length>i; i++){
-      var s=parseInt(id[i]);
-      var n=parseInt(number[i]);
-      if(n != NaN){
-        Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err, r){
-          if(err){
-            req.session.error=errorHandler.response(err);
-            return res.view();
-          }
-          else{
-            StockLog.addLog(r[0].id, n, r[0].price, "入荷", r[0].name+"を入荷");
-            return res.redirect("/stock/");
-          }
-        });
+      var Obj2Arr=function(obj){
+        if(obj instanceof Array)return obj;
+        else return [obj];
       }
-    }
+      var number=Obj2Arr(req.param('number'));
+      var id=Obj2Arr(req.param('id'));
+      this.number = number;
+      this.id = id;
+      if(req.method==="GET")return res.view();
+      for(var i=0; id.length>i; i++){
+        var s=parseInt(id[i]);
+        var n=parseInt(number[i]);
+        if(n != NaN){
+          Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err, r){
+            if(err){
+              req.session.error=errorHandler.response(err);
+              return res.view();
+            }
+            else{
+              StockLog.addLog(r[0].id, n, r[0].price, "入荷", r[0].name+"を入荷");
+              return res.redirect("/stock/");
+            }
+          });
+        }
+      }
+    });
   },
   list:function(req, res){
     this.params=req.allParams();
     Category.find({}).exec(function(err, found){
       if(!err)this.category=found;
+      Stock.find({}).exec(function(err,found){
+        this.stocks = found;
+        return res.view();
+      });
     });
-    Stock.find({}).exec(function(err,found){
-      this.stocks = found;
-    });
-    return res.view();
   },
   purchase:function(req, res){
     var user_id=req.session.user_id;
@@ -295,10 +294,10 @@ module.exports = {
                 }
                 StockLog.addLog(s.id, number, s.price, "購入", u.name+"が購入");
               });
+              return res.redirect("/stock/list");
             });
           });
         }
-        return res.redirect("/stock/list");
       });
     }
     catch(err){
