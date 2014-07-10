@@ -1,4 +1,5 @@
 module.exports = function(req, res, next) {
+  if(req.ip==="127.0.0.1")return next();
   var ipAddr = req.headers["x-forwarded-for"];
   if (ipAddr){
     var list = ipAddr.split(",");
