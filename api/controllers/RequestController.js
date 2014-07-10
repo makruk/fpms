@@ -104,7 +104,7 @@ module.exports = {
 			if(req.param('r1') == '1'){
 				query.User=id;
 			}
-			Request.find({where:query,sort:'id DESC'}).populate('favUser').exec(function (err,rf){
+			Request.find({where:query,sort:'id DESC'}).populate('favUser').populate('User').exec(function (err,rf){
 				this.requests = rf;
 				if(req.param('r1') == '1'){
 					this.requests.r1checker = 1;
@@ -118,12 +118,8 @@ module.exports = {
 					this.requests.r2checker = 0;
 				}
 				for(var i = 0; i < this.requests.length;i++){
-					(function(i){
-						User.findOne({id:this.requests[i].User}).exec(function find(err,uf){
-							if(!err)this.requests[i].user_id = uf.user_id;
-							if(i===this.requests.length-1)return res.view();
-						});
-					})(i);
+					if(!err)this.requests[i].user_id = this.requests[i].User.user_id;
+					if(i===this.requests.length-1)return res.view();
 				}
 			});
 		});
