@@ -37,13 +37,10 @@ module.exports = {
 			}
 		}
 		
-		Request.find({where:{or:checkview,responce:checkfeed},sort:'id DESC'}).populate('favUser').exec(function findCB(err,found){
+		Request.find({where:{or:checkview,responce:checkfeed},sort:'id DESC'}).populate('favUser').populate('User').exec(function findCB(err,found){
 			this.requests = found;
 			for(var i = 0; i < this.requests.length;i++){
-				var id= this.requests[i].User;
-				User.findOne({id:id}).exec(function find(err,found){
-					this.requests[i].user_name = found.name;
-				});
+				this.requests[i].user_name = this.requests[i].User.name;
 			}
 			return res.view();
 		});
