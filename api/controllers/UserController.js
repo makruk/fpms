@@ -119,7 +119,7 @@ module.exports = {
             return res.view();
           }
           else{
-            if(req.session.user_id====id){
+            if(req.session.user_id===id){
               req.session.user_id=user_id;
             }
             if(inOut == 1 || inOut == 0){

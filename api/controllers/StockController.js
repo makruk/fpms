@@ -259,54 +259,69 @@ module.exports = {
     if(req.method === "GET"){
       this.stocks=[];
       var cash=0;
+      var cnt=0, limit=Object.keys(stocks).length;
       for(var i in stocks){
-        Stock.findOne({id:parseInt(i.slice(2))}).exec(function(err, s){
-          if(err)return;
-          s.param=parseInt(stocks[i]);
-          this.stocks.push(s);
-          cash+=s.price*s.param;
-          if(s.number < s.param){
-            req.session.error.element["id"+s.id]="在庫が足りません";
+        (function(i){
+          Stock.findOne({id:parseInt(i.slice(2))}).exec(function(err, s){
+            if(err)return;
+            s.param=parseInt(stocks[i]);
+            this.stocks.push(s);
+            cash+=s.price*s.param;
+            if(s.number < s.param){
+              req.session.error.element["id"+s.id]="在庫が足りません";
+            }
+          });
+          cnt++;
+          if(cnt>=limit){
+            if(cash > req.session.balance + req.session.limit)req.session.error.messages="預金が足りません";
+            return res.view();
+          }
+        })(i);
+      }
+    }
+    else{
+      try{
+        User.findOne({user_id:user_id}).exec(function(err, u){
+          if(err)throw err;
+          var cnt=0, limit=Object.keys(stocks).length;
+          for(var i in stocks){
+            (function(i){
+              var stock=parseInt(i.slice(2));
+              var number=parseInt(stocks[i]);
+              if(stock === NaN || number === NaN) return;
+              Stock.findOne({id:stock}).exec(function(err, s){
+                if(err)throw err;
+                if(s.number-number<0){
+                  throw {messages:s.name+"の在庫が足りません"};
+                }
+
+                Stock.update({id:s.id}, {number:s.number-number}, function(err){
+                  if(err)throw err;
+                  User.payment(u.id, s.price*number, 2, s.name+"を購入", function(err){
+                    if(err){
+                      Stock.update({id:s.id}, {number:number}, function(err){
+                        if(err)StockLog.addLog(s.id, number, s.price, "その他", "Rollback failed.");
+                      });
+                      throw err;
+                    }
+                    StockLog.addLog(s.id, number, s.price, "購入", u.name+"が購入");
+                  });
+                });
+              });
+
+              cnt++;
+              if(cnt>=limit){
+                return res.redirect("/stock/list");
+              }
+            })(i);
           }
         });
       }
-      if(cash > req.session.balance + req.session.limit)req.session.error.messages="預金が足りません";
-      return res.view();
-    }
-    try{
-      User.findOne({user_id:user_id}).exec(function(err, u){
-        if(err)throw err;
-        for(var i in stocks){
-          var stock=parseInt(i.slice(2));
-          var number=parseInt(stocks[i]);
-          if(stock === NaN || number === NaN) continue;
-          Stock.findOne({id:stock}).exec(function(err, s){
-            if(err)throw err;
-            if(s.number-number<0){
-              throw {messages:s.name+"の在庫が足りません"};
-            }
-
-            Stock.update({id:s.id}, {number:s.number-number}, function(err){
-              if(err)throw err;
-              User.payment(u.id, s.price*number, 2, s.name+"を購入", function(err){
-                if(err){
-                  Stock.update({id:s.id}, {number:number}, function(err){
-                    if(err)StockLog.addLog(s.id, number, s.price, "その他", "Rollback failed.");
-                  });
-                  throw err;
-                }
-                StockLog.addLog(s.id, number, s.price, "購入", u.name+"が購入");
-                return res.redirect("/stock/list");
-              });
-            });
-          });
-        }
-      });
-    }
-    catch(err){
-      for(var i in err)console.log(i+":"+err[i]);
-      req.session.error=errorHandler.response(err);
-      return res.view();
+      catch(err){
+        for(var i in err)console.log(i+":"+err[i]);
+        req.session.error=errorHandler.response(err);
+        return res.view();
+      }
     }
   }
 };
