@@ -52,7 +52,7 @@ module.exports = {
 	/*管理者側、リクエスト詳細ページ*/
 	request:function(req,res){
 			var id = req.param('id');
-		Request.findOne({id:id}).exec(function (err,found){
+		Request.findOne({id:id}).populate('favUser').exec(function (err,found){
 			this.request = found;
 		});
 
