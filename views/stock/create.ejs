@@ -89,10 +89,17 @@ jQuery(document).ready(function(){
   var confirm=function(){
     if(!$("#create_stock").validationEngine('validate'))return false;
     $("#base64").val(document.getElementById('photo').toDataURL());
-    var name="<dt>商品名</dt><dd>"+$('#create_stock input[name="name"]').val()+"</dd>";
-    var category="<dt>カテゴリ</dt><dd>"+$('#create_stock input[name="category"]').val()+"</dd>";
-    var buy_price="<dt>仕入れ値</dt><dd>"+$('#create_stock input[name="buy_price"]').val()+"</dd>";
-    var price="<dt>販売価格</dt><dd>"+$('#create_stock input[name="price"]').val()+"</dd>";
+
+    var $content=$("<div />");
+    $("<dt />").text("商品名").appendTo($content);
+    $("<dd />").text($('#create_stock input[name="name"]').val()).appendTo($content);
+    $("<dt />").text("カテゴリ").appendTo($content);
+    $("<dd />").text($('#create_stock input[name="category"]').val()).appendTo($content);
+    $("<dt />").text("仕入れ値").appendTo($content);
+    $("<dd />").text($('#create_stock input[name="buy_price"]').val()+"円").appendTo($content);
+    $("<dt />").text("販売価格").appendTo($content);
+    $("<dd />").text($('#create_stock input[name="price"]').val()+"円").appendTo($content);
+
     if(!isConfirmDisplayed){
       $.Dialog({
           shadow: true,
@@ -101,7 +108,7 @@ jQuery(document).ready(function(){
           title: '新規登録確認',
           width: 500,
           padding: 10,
-          content: '<p>以下の内容で登録します。よろしいですか?</p><dl>'+name+category+buy_price+price+'</dl><button class="large info" onclick="$(\'#create_stock\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          content: '<p>以下の内容で登録します。よろしいですか?</p><dl>'+$content.html()+'</dl><button class="large info" onclick="$(\'#create_stock\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
           onShow:function(){isConfirmDisplayed=true;},
       });
       $.Dialog.close=(function(){
