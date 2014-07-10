@@ -48,8 +48,8 @@ module.exports = {
 
 	/*管理者側、リクエスト詳細ページ*/
 	request:function(req,res){
-			var id = req.param('id');
-		Request.findOne({id:id}).populate('User').exec(function (err,found){
+		var id = req.param('id');
+		Request.findOne({id:id}).populate('User').populate('favUser').exec(function (err,found){
 			this.request = found;
 			this.user=found.User;
 			return res.view();
