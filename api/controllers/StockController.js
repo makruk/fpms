@@ -184,21 +184,23 @@ module.exports = {
       this.number = number;
       if(req.method==="GET")return res.view();
       for(var i=0; id.length>i; i++){
-        var s=parseInt(id[i]);
-        var n=parseInt(changenumber[i]);
-        if(n != NaN){
-          Stock.update({id:s}, {number:n}).exec(function(err, r){
-            if(err){
-              req.session.error=errorHandler.response(err);
-              return res.view();
-            }
-            else{
-              StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過少":"過多"), notes[i]);
-              return res.redirect("/stock/");
-            }
-          });
-        }
+        (function(i){
+          var s=parseInt(id[i]);
+          var n=parseInt(changenumber[i]);
+          if(n != NaN){
+            Stock.update({id:s}, {number:n}).exec(function(err, r){
+              if(err){
+                req.session.error=errorHandler.response(err);
+                return res.view();
+              }
+              else{
+                StockLog.addLog(r[0].id, n, r[0].price, (n<this.stocks[r[0].id-1].number?"過少":"過多"), notes[i]);
+              }
+            });
+          }
+        })(i);
       };
+      return res.redirect("/stock/");
     });
   },
   add:function(req, res){
