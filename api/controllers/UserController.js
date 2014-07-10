@@ -223,20 +223,20 @@ module.exports = {
       User.find({}).exec(function findCB(err,found){
         this.found=found;
         for(i=0; this.found.length>i ;i++){
-          grade=this.found[i].grade;
-          switch (grade){
-            case 1: grade=2; break;
-            case 2: grade=3; break;
-            case 3: grade=4; break;
-          }
-          User.update({user_id:this.found[i].user_id},{grade:grade}).exec(function(err, updated){
-            if(err){
-              req.session.error=errorHandler.response(err);
-              return res.view();
+          (function(i){
+            grade=this.found[i].grade;
+            switch (grade){
+              case 1: grade=2; break;
+              case 2: grade=3; break;
+              case 3: grade=4; break;
             }
-          });
+            User.update({user_id:this.found[i].user_id},{grade:grade}).exec(function(err, updated){
+              if(err){
+                req.session.error=errorHandler.response(err);
+              }
+            });
+          })(i);
         }
-        return res.redirect('/user');
       });
     } else {
       this.grade=grade.toString();
@@ -258,22 +258,23 @@ module.exports = {
     User.find({where:{or:grade}}).exec(function findCB(err,found){
       this.found=found;
       for(var i=0; this.found.length>i; i++){
-        if(req.session.user_id!=this.found[i].user_id){
-          if(this.found[i].permission==1 || this.found[i]==11){
-            permission=11;
-          }
-          else {
-            permission=10;
-          }
-          User.update({user_id:this.found[i].user_id},{permission:permission}).exec(function(err, updated){
-            if(err){
-              req.session.error=errorHandler.response(err);
-              return res.view();
+        (function(i){
+          if(req.session.user_id!=this.found[i].user_id){
+            if(this.found[i].permission==1 || this.found[i]==11){
+              permission=11;
             }
-            return res.redirect('/user');
-          });
-        }
+            else {
+              permission=10;
+            }
+            User.update({user_id:this.found[i].user_id},{permission:permission}).exec(function(err, updated){
+              if(err){
+                req.session.error=errorHandler.response(err);
+              }
+            });
+          }
+        })(i);
       }
     });
+    return res.redirect('/user');
   }
 };
