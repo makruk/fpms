@@ -7,10 +7,9 @@ module.exports = function(req, res, next) {
     ipAddr = req.connection.remoteAddress;
   }
 
-
-  var part=req.ip.split(".");
+  var part=ipAddr.split(".");
   if(part[0] === "160" && part[1] === "252"){
     return next();
   }
-  return res.forbidden(req.ip+'You can access only from secure-net.'+ipAddr);
+  return res.forbidden('You can access only from secure-net. Your access is from:'+ipAddr);
 };
