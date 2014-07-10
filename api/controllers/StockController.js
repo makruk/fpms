@@ -215,22 +215,27 @@ module.exports = {
       this.number = number;
       this.id = id;
       if(req.method==="GET")return res.view();
-      for(var i=0; id.length>i; i++){
-        var s=parseInt(id[i]);
-        var n=parseInt(number[i]);
-        if(n != NaN){
-          Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err, r){
-            if(err){
-              req.session.error=errorHandler.response(err);
-              return res.view();
+      try{
+        for(var i=0; id.length>i; i++){
+          (function(i){
+            var s=parseInt(id[i]);
+            var n=parseInt(number[i]);
+            if(n != NaN){
+              Stock.update({id:s}, {number:n+stocks[s-1].number}).exec(function(err, r){
+                if(err)throw err;
+                else{
+                  StockLog.addLog(r[0].id, n, r[0].price, "入荷", r[0].name+"を入荷");
+                }
+              });
             }
-            else{
-              StockLog.addLog(r[0].id, n, r[0].price, "入荷", r[0].name+"を入荷");
-              return res.redirect("/stock/");
-            }
-          });
+          })(i);
         }
       }
+      catch(err){
+        req.session.error=errorHandler.response(err);
+        return res.view();
+      }
+      return res.redirect("/stock/");
     });
   },
   list:function(req, res){
