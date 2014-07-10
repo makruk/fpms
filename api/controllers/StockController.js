@@ -275,12 +275,12 @@ module.exports = {
             if(s.number < s.param){
               req.session.error.element["id"+s.id]="在庫が足りません";
             }
+            cnt++;
+            if(cnt>=limit){
+              if(cash > req.session.balance + req.session.limit)req.session.error.messages="預金が足りません";
+              return res.view();
+            }
           });
-          cnt++;
-          if(cnt>=limit){
-            if(cash > req.session.balance + req.session.limit)req.session.error.messages="預金が足りません";
-            return res.view();
-          }
         })(i);
       }
     }
@@ -310,14 +310,13 @@ module.exports = {
                       throw err;
                     }
                     StockLog.addLog(s.id, number, s.price, "購入", u.name+"が購入");
+                    cnt++;
+                    if(cnt>=limit){
+                      return res.redirect("/stock/list");
+                    }
                   });
                 });
               });
-
-              cnt++;
-              if(cnt>=limit){
-                return res.redirect("/stock/list");
-              }
             })(i);
           }
         });
