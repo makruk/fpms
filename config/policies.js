@@ -18,7 +18,7 @@ module.exports.policies = {
   // (`true` allows public access) 
   '*': false,
   AuthController:{
-    '*':true
+    '*':'isSecure'
   },
   PhotosController:{
     '*': 'isLoggedIn'
