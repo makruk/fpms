@@ -29,6 +29,15 @@ module.exports = {
       name: {
         required: 'you have to specify a name or else'
       }
+    },
+    oneWeekLog:function(){
+      var oneWeekAgo=new Date();
+      oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
+      var oneWeek=this.StockLog.filter(function(item, index){
+        if(new Date(item.createdAt) > oneWeekAgo)return true;
+        return false;
+      });
+      return oneWeek;
     }
   },
   afterUpdate:function(record, next){

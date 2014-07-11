@@ -37,7 +37,7 @@
     <td class="text-center"><img src="/photos/<%= stocks[i].id %>.png" alt="<%= stocks[i].name %>"></td>
     <td><a href="/stock/<%= stocks[i].id %>/"><%= stocks[i].name %></a></td>
     <td><%= stocks[i].category %></td>
-    <td><%= stocks[i].proceeds %> 個</td>
+    <td><%= stocks[i].proceeds %>個</td>
     <td><%= stocks[i].price %>円</td>
     <td><%= stocks[i].number %>個</td>
     <td><input type="text" name="number" class="size1 validate[optional,custom[integer],min[0]]" value="0"><input type="text" name="id" value="<%= stocks[i].id %>" hidden>個</td>
@@ -49,7 +49,8 @@
 </form>
 </div>
 <script src="/js/table/multifilter.min.js"></script>
-<script type="text/javascript" src="/js/table/jquery.tablesorter.min.js"></script>
+<script src="/js/table/metadata.js"></script>
+<script src="/js/table/jquery.tablesorter.min.js"></script>
 <script>
 
 jQuery(document).ready(function(){

@@ -33,6 +33,7 @@
           <table class="table stripped">
             <thead>
               <th class="text-left">ID</th>
+              <th class="text-left">商品名</th>
               <th class="text-left">個数</th>
               <th class="text-left">金額</th>
               <th class="text-left">種類</th>
@@ -42,6 +43,7 @@
               <% for(var i=0;i<stockLog.length;i++){ %>
                 <tr>
                   <td><%= stockLog[i].id %></td>
+                  <td><%= stockLog[i].stock.name %></td>
                   <td><%= stockLog[i].number %>個</td>
                   <td><%= stockLog[i].price %>円</td>
                   <td><%= stockLog[i].kind %></td>

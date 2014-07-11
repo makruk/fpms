@@ -7,7 +7,7 @@
 
 module.exports = {
 	index:function(req, res){
-    StockLog.find({where:{}, sort:"id DESC"}).exec(function(err, sl){
+    StockLog.find({where:{}, sort:"id DESC"}).populate('stock').exec(function(err, sl){
       if(!err){
         this.stockLog=sl;
       }

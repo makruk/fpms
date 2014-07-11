@@ -81,7 +81,7 @@
 					<tr>
 						<th class="text-left">名前<i class="icon-menu"></i></th>
 						<th class="text-left">学年<i class="icon-menu"></i></th>
-						<th class="text-left">残高　（円）<i class="icon-menu"></i></th>
+						<th class="text-left">残高<i class="icon-menu"></i></th>
 					</tr>
 				</thead>
 				<tbody>
@@ -97,7 +97,7 @@
 								case 4: %>
 									その他
 						<% } %>
-					</td><td><%= found[i].balance %></td></tr>
+					</td><td<% if(found[i].balance<0){ %> class="fg-red"<%}%>><%= found[i].balance %>円</td></tr>
 					<% } %>
 				</tbody>
 			</table>

@@ -17,7 +17,7 @@ module.exports = {
     note:{type:"string"},
     stock:{
       model:"Stock"
-    }
+    },
   },
   addLog:function(stock, number, price, kind, note, cb){
     StockLog.create({number:number,price:price, kind:kind, note:note, stock:stock}).exec(function(err, add){
@@ -34,16 +34,6 @@ module.exports = {
       if(err)return cb(err);
       else if(f.length)cb(void 0, f[0]);
       else cb({messages:"not found"});
-    });
-  },
-  findOneWeek:function(criteria, cb){
-    if(!cb)return;
-    var today=new Date();
-    var oneWeekAgo=new Date();
-    oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
-    StockLog.find(criteria).where({createdAt:{'>':oneWeekAgo, '<':today}}).exec(function(err, f){
-      if(err)return cb(err);
-      cb(err, f);
     });
   },
 };
