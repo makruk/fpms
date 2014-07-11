@@ -39,7 +39,6 @@ jQuery(document).ready(function(){
     previousImage.onerror=function(){
       ctx.font='20px Segoe UI Light_, Open Sans Light, Verdana, Arial, Helvetica, sans-serif';
       ctx.fillText("Image will visible here.", 50, 100);
-      ctx.fillText("Image is draggable and scalable.", 20, 150);
     };
     previousImage.src="/photos/<%= stock.id %>.png";
     var draw=function(){

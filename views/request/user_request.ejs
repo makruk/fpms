@@ -105,7 +105,9 @@
 		if($('#request_check input[name="request"]').val() == ""){
 			return false;
 		}
-    var request="<dt>リクエスト内容</dt><dd>"+$('#request_check input[name="request"]').val()+"</dd>";
+    var request=$("<div />");
+    $("<dt />").text("リクエスト内容").appendTo(request);
+    $("<dd />").text($('#request_check input[name="request"]').val()).appendTo(request);
     if(!isConfirmDisplayed){
       $.Dialog({
           shadow: true,
@@ -114,7 +116,7 @@
           title: 'リクエストの投稿確認',
           width: 500,
           padding: 10,
-          content: '<p>以下の内容で投稿します。よろしいですか?</p><dl>'+request+'</dl><button class="large info" onclick="$(\'#request_check\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
+          content: '<p>以下の内容で投稿します。よろしいですか?</p><dl>'+request.html()+'</dl><button class="large info" onclick="$(\'#request_check\').submit();">OK</button><button class="large" onclick="$.Dialog.close()">キャンセル</button>',
           onShow:function(){isConfirmDisplayed=true;},
       });
       $.Dialog.close=(function(){
