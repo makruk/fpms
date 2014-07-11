@@ -28,7 +28,7 @@
     <td class="text-center stock<%= stocks[i].id %>"><img src="/photos/<%= stocks[i].id %>.png" alt="<%= stocks[i].name %>"></td>
     <td class="stock<%= stocks[i].id %>"><a href="#"><%= stocks[i].name %></a></td>
     <td class="stock<%= stocks[i].id %>"><%= stocks[i].category %></td>
-    <td class="stock<%= stocks[i].id %>"><%= stocks[i].price %></td>
+    <td class="stock<%= stocks[i].id %>"><%= stocks[i].price %>円</td>
     <td class="stock<%= stocks[i].id %>"><%= stocks[i].number %>個</td>
     <td><input type="text" min="0" max="<%= stocks[i].number %>" name="id<%= stocks[i].id %>" class="size1 validate[optional,custom[integer],min[0],max[<%= stocks[i].number %>]]" value="<%= params['id'+stocks[i].id] || 0 %>" id="id<%= stocks[i].id %>">個</td>
   </tr>
@@ -40,7 +40,7 @@
 </div>
 
 <script src="/js/table/multifilter.min.js"></script>
-<script type="text/javascript" src="/js/table/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="/js/table/jquery.tablesorter.min.js"></script>
 <script>
 $(document).ready(function()
     {
@@ -61,8 +61,8 @@ jQuery(document).ready(function(){
       overlay: true,
       shadow: true,
       flat: true,
-      width:"308px",
-      height:"450px",
+      width:"300px",
+      height:"500px",
       content:'<img src="/photos/<%= stocks[i].id %>.png" alt="<%= stocks[i].name %>"><dl><dt>値段</dt><dd><%= stocks[i].price %>円</dd><dt>購入数</dt><dd><form><input id="stock<%= stocks[i].id %>_buy" type="number" min="0" step="1" class="size1" value="'+$("#id<%= stocks[i].id %>").val()+'" disabled="disabled">個</form><div class="button-set"><button type="button" id="up<%= stocks[i].id %>" class="large size2" value="+"><i class=" icon-plus-2"></i></button><button type="button" class="large size2" id="down<%= stocks[i].id %>"><i class=" icon-minus-2"></i></button></div></dd></dl>',
     });
     $("#up<%= stocks[i].id %>").click(function(){
