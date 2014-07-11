@@ -71,80 +71,80 @@ module.exports = {
   create:function(req, res){
     Category.find({}).exec(function(err, found){
       if(!err)this.category=found;
-    });
-    if(req.method == 'GET')return res.view();
-    var name=req.param('name');
-    var price=req.param('price');
-    var buy_price=req.param('buy_price');
-    var category=req.param('category');
+      if(req.method == 'GET')return res.view();
+      var name=req.param('name');
+      var price=req.param('price');
+      var buy_price=req.param('buy_price');
+      var category=req.param('category');
 
-    Stock.create({name:name, price:price, number:0, category:category}).exec(function(err, r){
-      if(err){
-        req.session.error=errorHandler.response(err);
-        return res.view();
-      }
-      else{
-        StockLog.addLog(r.id, 0, buy_price, "追加", r.name+"を追加");
-        var pngHeader="iVBORw0KGgo";
-        var file=req.param("base64");
-        file=file.slice(file.indexOf(",")+1);
-        if(file.substring(0, pngHeader.length) === pngHeader){
-          var blob=new Buffer(file, 'base64');
-          fs.writeFile('./photos/'+r.id+'.png', blob, function(err){
-            if(err)console.log(err);
-              return res.redirect("/stock/");
-          });
+      Stock.create({name:name, price:price, number:0, category:category}).exec(function(err, r){
+        if(err){
+          req.session.error=errorHandler.response(err);
+          return res.view();
         }
         else{
-          return res.serverError("invalid file type!");
+          StockLog.addLog(r.id, 0, buy_price, "追加", r.name+"を追加");
+          var pngHeader="iVBORw0KGgo";
+          var file=req.param("base64");
+          file=file.slice(file.indexOf(",")+1);
+          if(file.substring(0, pngHeader.length) === pngHeader){
+            var blob=new Buffer(file, 'base64');
+            fs.writeFile('./photos/'+r.id+'.png', blob, function(err){
+              if(err)console.log(err);
+                return res.redirect("/stock/");
+            });
+          }
+          else{
+            return res.serverError("invalid file type!");
+          }
         }
-      }
+      });
     });
   },
   edit:function(req, res){
     Category.find({}).exec(function(err, found){
       if(!err)this.category=found;
-    });
-    var id=req.param('id');
-    Stock.findOne({id:id}).exec(function(err, found){
-      if(found===void 0)return res.notFound();
-      if(err)return res.serverError();
-      this.stock=found;
-      StockLog.findTop({or:[{kind:"追加"},{kind:"編集"}], stock:id}, function(err, f){
-        if(err){
-          this.stock.buy_price=0;
-        }
-        else{
-          this.stock.buy_price=f.price;
-        }
-        if(req.method=="GET")return res.view();
-        var name=req.param('name');
-        var price=req.param('price');
-        var category=req.param('category');
-        var buy_price=req.param('buy_price');
-        Stock.update({id:id}, {name:name, price:price,  category:category}).exec(function(err, r){
+      var id=req.param('id');
+      Stock.findOne({id:id}).exec(function(err, found){
+        if(found===void 0)return res.notFound();
+        if(err)return res.serverError();
+        this.stock=found;
+        StockLog.findTop({or:[{kind:"追加"},{kind:"編集"}], stock:id}, function(err, f){
           if(err){
-            req.session.error=errorHandler.response(err);
-            return res.view();
+            this.stock.buy_price=0;
           }
           else{
-            StockLog.addLog(r[0].id, 0, buy_price, "編集", r[0].name+"を編集");
-            var pngHeader="iVBORw0KGgo";
-            var file=req.param("base64");
-            file=file.slice(file.indexOf(",")+1);
-            if(file.substring(0, pngHeader.length) === pngHeader){
-              var blob=new Buffer(file, 'base64');
-              fs.writeFile('./photos/'+r[0].id+'.png', blob, function(err){
-                if(err){
-                  console.log(err);
-                }
-                return res.redirect("/stock/"+id+"/");
-              });
+            this.stock.buy_price=f.price;
+          }
+          if(req.method=="GET")return res.view();
+          var name=req.param('name');
+          var price=req.param('price');
+          var category=req.param('category');
+          var buy_price=req.param('buy_price');
+          Stock.update({id:id}, {name:name, price:price,  category:category}).exec(function(err, r){
+            if(err){
+              req.session.error=errorHandler.response(err);
+              return res.view();
             }
             else{
-              return res.serverError("invalid file type!");
+              StockLog.addLog(r[0].id, 0, buy_price, "編集", r[0].name+"を編集");
+              var pngHeader="iVBORw0KGgo";
+              var file=req.param("base64");
+              file=file.slice(file.indexOf(",")+1);
+              if(file.substring(0, pngHeader.length) === pngHeader){
+                var blob=new Buffer(file, 'base64');
+                fs.writeFile('./photos/'+r[0].id+'.png', blob, function(err){
+                  if(err){
+                    console.log(err);
+                  }
+                  return res.redirect("/stock/"+id+"/");
+                });
+              }
+              else{
+                return res.serverError("invalid file type!");
+              }
             }
-          }
+          });
         });
       });
     });
