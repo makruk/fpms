@@ -18,7 +18,17 @@
 															<%if (request.review == 0){ %>
 																未評価
 															<%}%></td></tr>
-				<tr><td>いいね</td><td>3</td></tr>
+				<tr><td>いいね</td><td><%= request.favUser.length %></td></tr>
+				<% if(request.favUser.length != 0){%>
+					<tr><td>いいねuser</td><td>
+						<% for(var i = 0; i < request.favUser.length; i++){%>
+							<% if(i != 0){%>
+								,
+							<%}%>
+							<%= request.favUser[i].name %>
+						<%}%>
+					</td></tr>
+				<%}%>
 			</table>
 
 			<form action = "/request/<%= request.id %>/feedsubmit">
