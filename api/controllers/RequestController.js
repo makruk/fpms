@@ -113,8 +113,8 @@ module.exports = {
 				}
 				for(var i = 0; i < this.requests.length;i++){
 					if(!err)this.requests[i].user_id = this.requests[i].User.user_id;
-					if(i===this.requests.length-1)return res.view();
 				}
+				return res.view();
 			});
 		});
   },
