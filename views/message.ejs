@@ -8,6 +8,7 @@
     </div>
   </div>
 <% } %>
+<% if(Object.keys(req.session.error).length>1){ %>
 <script>
   var error={<% for(var i in req.session.error){ %><%= i %>:"<%= req.session.error[i] %>",<% } %>};
   var element={<% for(var i in req.session.error.element){ %><%= i %>:"<%= req.session.error.element[i] %>",<% } %>}
@@ -28,4 +29,4 @@
   });
 </script>
 
-<% } %>
+<% } } %>

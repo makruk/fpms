@@ -32,7 +32,6 @@ module.exports = {
       this.found=found;
       return res.view();
     });
-    
   },
   user:function(req, res){
     var id=req.param('id');
@@ -84,11 +83,11 @@ module.exports = {
         return res.view();
       }
       else{
-        var name=req.param('name');
-        var user_id=req.param('user_id');
-        var grade=req.param('grade');
-        var limit=req.param('limit');
-        var balance=this.user.balance;
+        found.name=req.param('name') ||found.name;
+        found.user_id=req.param('user_id') ||found.user_id;
+        found.grade=req.param('grade') ||found.grade;
+        found.limit=req.param('limit') ||found.limit;
+  
         var money=parseInt(req.param('money')) || 0;
         var inOut=req.param('inOut');
         var note=req.param('note');
@@ -113,7 +112,7 @@ module.exports = {
             this.user.permission=1;
           }
         }
-        User.update({user_id:id},{name:name, user_id:user_id, grade:grade, limit:limit,  permission:this.user.permission}).exec(function(err, updated){
+        found.save(function(err, saved){
           if(err){
             req.session.error=errorHandler.response(err);
             return res.view();
@@ -123,14 +122,14 @@ module.exports = {
               req.session.user_id=user_id;
             }
             if(inOut == 1 || inOut == 0){
-              User.payment(user_id, money, inOut, note || "残高調整", function(err){
+              User.payment(found.user_id, money, inOut, note || "残高調整", function(err){
                 if(err){
                   err["money"]="預金が少なすぎます！";
                   req.session.error=errorHandler.response(err);
                   return res.view();
                 }
                 else{
-                  return res.redirect('/user/'+user_id);
+                  return res.redirect('/user/'+found.user_id);
                 }
               });
             }
