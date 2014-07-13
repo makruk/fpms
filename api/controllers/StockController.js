@@ -152,17 +152,16 @@ module.exports = {
   loss:function(req, res){
     this.order=(req.param('order')=='ASC' ?" ASC":" DESC");
     this.sort=req.param('sort') || "id";
-    Stock.find({sort: this.sort+this.order}).exec(function(err,found){
+    Stock.find({sort: this.sort+this.order}).populate('StockLog').exec(function(err,found){
       this.stocks = found;
       for(var i=0;i<stocks.length;i++){
+        var log=stocks[i].oneWeekLog();
         this.stocks[i].proceeds=0;
-        StockLog.findOneWeek({stock:stocks[i].id, kind:"購入"}, function(err, f){
-          for(var j=0;j<f.length;j++){
-            this.stocks[i].proceeds+=f[j].number;
-          }
-        });
-        return res.view();
+        for(var j=0;j<log.length;j++){
+          this.stocks[i].proceeds+=log[j].number;
+        }
       }
+      return res.view();
     });
   },
   reason:function(req, res){
