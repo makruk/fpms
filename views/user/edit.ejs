@@ -3,7 +3,7 @@
   <form action="/user/<%= user.user_id %>/edit" method="post" id="edit" onsubmit="return confirm();">
     <fieldset>
       <label>名前</label><div class="input-control text"><input name="name" type="text" value="<%= user.name %>" class="size6 validate[required,maxSize[20]]"></div>
-      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" value="<%= user.user_id %>" class="size6 validate[required,maxSize[20]]"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" id="user_id" type="text" value="<%= user.user_id %>" class="size6 validate[required,maxSize[20],funcCall[isUnique]]"></div>
       <label>学年</label>
        <label class="input-control radio margin5" data-role="input-control">
          <input type="radio" name="grade" value="1" <% if(user.grade==1){%>checked<%}%>/>
@@ -60,21 +60,20 @@
       </form>
 			
 		</div>
+    <script src="/js/validation/rule.isunique.js"></script>
     <script>
+    var prev={};
   $(document).ready(function(){
     $("#edit").validationEngine();
+    prev.user_id='<%=user.user_id%>';
+    prev.name='<%=user.name%>';
+    prev.limit='<%=user.limit%>';
+    <% var g={"1":"B4", "2":"M1", "3":"M2", "4":"その他"} %>
+    prev.grade='<%=g[user.grade]%>';
   });
   var isConfirmDisplayed=false;
   var confirm=function(){
     if(!$("#edit").validationEngine('validate'))return false;
-    var n_grade=$('#edit input[name="grade"]:checked').val();
-
-    switch (n_grade){
-      case "1": n_grade="B4"; break;
-      case "2": n_grade="M1"; break;
-      case "3": n_grade="M2"; break;
-      case "4": n_grade="その他"; break;
-    }
     var n_permission=$('#edit select[name="permission"]').val();
     switch (n_permission){
       case "0": n_permission="購入者"; break;
@@ -100,14 +99,25 @@
       }
     }
     var $content=$("<div />");
-    $("<dt />").text("名前").appendTo($content);
-    $("<dd />").text($('#edit input[name="name"]').val()).appendTo($content);
-    $("<dt />").text("ユーザーID").appendTo($content);
-    $("<dd />").text($('#edit input[name="user_id"]').val()).appendTo($content);
-    $("<dt />").text("学年").appendTo($content);
-    $("<dd />").text(n_grade).appendTo($content);
-    $("<dt />").text("ツケの上限").appendTo($content);
-    $("<dd />").text($('#edit input[name="limit"]').val()+"円").appendTo($content);
+    var input={};
+    var caption={name:{before:"名前", after:""},user_id:{before:"ユーザーID", after:""},grade:{before:"学年", after:""},limit:{before:"ツケの上限", after:"円"}};
+    input.name=$('#edit input[name="name"]').val();
+    input.user_id=$('#edit input[name="user_id"]').val();
+    input.grade=$('#edit input[name="grade"]:checked').val();
+    input.limit=$('#edit input[name="limit"]').val();
+    switch (input.grade){
+      case "1": input.grade="B4"; break;
+      case "2": input.grade="M1"; break;
+      case "3": input.grade="M2"; break;
+      case "4": input.grade="その他"; break;
+      default: input.grade="";
+    }
+    for(var i in caption){
+      if(input[i] !== prev[i]){
+        $("<dt />").text(caption[i].before).appendTo($content);
+        $("<dd />").text(input[i]+caption[i].after).appendTo($content);
+      }
+    }
     if($('#edit input[name="money"]').val() !== ''){
       $("<dt />").text("入出金").appendTo($content);
       $("<dd />").text($('#edit input[name="money"]').val()+n_inOut).appendTo($content);

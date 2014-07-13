@@ -3,7 +3,7 @@
     <form action="/user/create" method="post" id="create" onsubmit="return confirm();">
     <fieldset>
       <label>名前</label><div class="input-control text"><input name="name" type="text" class="size6 validate[required,maxSize[20]]"></div>
-      <label>ユーザーID</label><div class="input-control text"><input name="user_id" type="text" class="size6 validate[required,maxSize[20]]"></div>
+      <label>ユーザーID</label><div class="input-control text"><input name="user_id" id="user_id" type="text" class="size6 validate[required,maxSize[20],funcCall[isUnique]]]"></div>
       <label>パスワード</label><div class="input-control text"><input name="password" type="password" id="password" class="size6 validate[required,maxSize[20]]"></div>
       <label>パスワードの確認</label><div class="input-control text"><input name="password_confirm" type="password" class="size6 validate[required,equals[password]]"></div>
       <label>学年</label>
@@ -41,7 +41,7 @@
     <a href="/user"><button class="large" type="button">キャンセル</button></a>
     </form>
   </div>
-
+<script src="/js/validation/rule.isunique.js"></script>
 <script>
   $(document).ready(function(){
     $("#create").validationEngine();

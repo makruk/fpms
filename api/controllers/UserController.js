@@ -7,6 +7,17 @@
 var errorHandler=require('../services/errorHandler.js');
 module.exports = {
 	
+  isUnique:function(req, res){
+    User.find({user_id:req.param("user_id")}).exec(function(err, f){
+      if(err)return res.serverError();
+      if(f.length>0){
+        return res.json({unique:false});
+      }
+      else{
+        return res.json({unique:true});
+      }
+    });
+  },
   index:function(req, res){
     this.name=req.param('name') || '';
     var grade=req.param('grade') || '';

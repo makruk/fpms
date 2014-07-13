@@ -42,6 +42,8 @@ module.exports.routes = {
   '/stock/:id/edit':'StockController.edit',
 
   '/user/':'UserController.index',
+  '/user/isUnique/:user_id':'UserController.isUnique',
+  '/user/isUnique':'UserController.isUnique',
   '/user/create':'UserController.create',
   '/user/mypage':'UserController.mypage',
   '/user/mypage/edit':'UserController.myedit',
