@@ -1,8 +1,5 @@
 # Food Product Management System
 
-Sails docs.(beta)[Sails beta docs](http://beta.sailsjs.org/#/documentation)
-
-
 ## How to install Node.js, Sails.js
 
 ### Ubuntu
@@ -49,3 +46,5 @@ Microsoft Visual Studio 2010が入っている場合、アンインストール�
     
 
 a [Sails](http://sailsjs.org) application
+
+[Sails beta docs](http://beta.sailsjs.org/#/documentation)
