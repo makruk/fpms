@@ -28,6 +28,7 @@ module.exports.policies = {
   	mypage:'isLoggedIn',
   	myedit:'isLoggedIn',
     password:'isLoggedIn',
+    isUnique:'isLoggedIn'
   },
   LogController:{
   	'*': ['isLoggedIn','isAdmin'],
