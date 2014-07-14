@@ -91,6 +91,8 @@ module.exports = {
   edit:function(req, res){
     var id=req.param('id');
     User.findOne({or:[{user_id:id},{id:id}]}).exec(function findOneCB(err, found){
+      if(found === void 0)return res.notFound();
+      if(err)return res.serverError();
       this.user=found;
       if(req.method==="GET"){
         return res.view();
