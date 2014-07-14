@@ -86,7 +86,7 @@
 				</thead>
 				<tbody>
 					<% for(var i=0; i<found.length; i++){ %>
-					<tr class="<% if(found[i].permission==10 || found[i].permission==11){ %>error<%}%>"><td><a href="/user/<%= found[i].user_id %>"><%= found[i].name %></a></td><td>
+					<tr class="<% if(found[i].permission==10 || found[i].permission==11){ %>error<%}%>"><td><a href="/user/<%= found[i].id %>"><%= found[i].name %></a></td><td>
 						<% switch(found[i].grade){
 								case 1: %>
 									B4<% break; 
