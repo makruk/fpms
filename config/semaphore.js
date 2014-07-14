@@ -1,3 +1,3 @@
 module.exports.semaphore={
-  payment:false,
+  payment:0,
 };

@@ -28,8 +28,9 @@ module.exports = {
     }
   },
   payment:function(id, cash, kind, note, cb){
-    if( !(sails.config.semaphore.payment=sails.config.semaphore.payment?sails.config.semaphore.payment:true) ){
-      while(sails.config.semaphore.payment);
+    console.log()
+    if(sails.config.semaphore.payment++ != 0 ){
+      while(sails.config.semaphore.payment != 0);
     }
     console.log("payment in:"+note);
     if(cash == 0){
@@ -69,6 +70,7 @@ module.exports = {
           UserLog.addLog(user.id, cash, strkind, note, cb);
         }
         console.log("payment out:"+note);
+        sails.config.semaphore.payment--;
       });
     });
   },
