@@ -60,7 +60,7 @@
 						<%}%>
 	<!--ボタン直す いいねをあとで作る　完成 -->
 									<div class="toolbar">
-										<a href="/request/evaluation/<%= requests[i].id %>"><button type="button"><i class="icon-star-3"><%= requests[i].favUser.length %>いいね</i></button></a>
+										<button type="button" onclick="location.href='/request/evaluation/<%= requests[i].id %>'"><i class="icon-star-3"><%= requests[i].favUser.length %>いいね</i></button>
 									</div>
 								</div>
 							</div>
