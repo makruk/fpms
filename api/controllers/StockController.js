@@ -287,8 +287,24 @@ module.exports = {
         User.findOne({user_id:user_id}).exec(function(err, u){
           if(err)throw err;
           var cnt=0, limit=Object.keys(stocks).length;
+          var itr={
+            _fn:[],
+            add:function(fn, arg){
+              this._fn.push({_fn:fn, _arg:arg});
+            },
+            next:function(){
+              if(this._fn.length===0){
+                return this.end();
+              }
+              var t=this._fn.shift();
+              t._fn(t._arg, this.next.bind(this));
+            },
+            end:function(){
+              return res.redirect("/stock/list");
+            }
+          };
           for(var i in stocks){
-            (function(i){
+            itr.add((function(i, next){
               var stock=parseInt(i.slice(2));
               var number=parseInt(stocks[i]);
               if(stock === NaN || number === NaN) return;
@@ -308,18 +324,17 @@ module.exports = {
                       throw err;
                     }
                     StockLog.addLog(s.id, number, s.price, "購入", u.name+"が購入");
-                    cnt++;
-                    if(cnt>=limit){
-                      return res.redirect("/stock/list");
-                    }
+                    return next();
                   });
                 });
               });
-            })(i);
+            }), i);
           }
+          itr.next();
         });
       }
       catch(err){
+        console.log(err);
         for(var i in err)console.log(i+":"+err[i]);
         req.session.error=errorHandler.response(err);
         return res.view();
