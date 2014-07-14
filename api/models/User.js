@@ -68,6 +68,11 @@ module.exports = {
       });
     });
   },
+  toJSON: function() {
+    var obj = this.toObject();
+    delete obj.password;
+    return obj;
+  },
   beforeCreate:function(attrs, next){
     User.findOne({user_id:attrs.user_id}).exec(function(err, u){
       if(!u){
@@ -86,9 +91,9 @@ module.exports = {
       }
     });
   },
-  beforeUpdate:function(attrs, next){
+  beforeValidate:function(attrs, next){
     var bcrypt=require('bcrypt');
-    if(attrs.password === void 0){
+    if(attrs.password === void 0 || Object.keys(attrs).length>1){
       return next();
     }
     bcrypt.genSalt(10, function(err, salt){
