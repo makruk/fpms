@@ -130,7 +130,7 @@ module.exports = {
           }
           else{
             if(req.session.user_id===id){
-              req.session.user_id=user_id;
+              req.session.user_id=saved.user_id;
             }
             if(inOut == 1 || inOut == 0){
               User.payment(found.user_id, money, inOut, note || "残高調整", function(err){
@@ -176,17 +176,17 @@ module.exports = {
         return res.view();
       }
       else{
-        var name=req.param('name');
-        var user_id=req.param('user_id');
-        var grade=req.param('grade');
+        found.name=req.param('name');
+        found.user_id=req.param('user_id');
+        found.grade=req.param('grade');
 
-        User.update({user_id:id},{name:name, user_id:user_id, grade:grade}).exec(function(err, updated){
+        found.save(function(err, saved){
           if(err){
             req.session.error=errorHandler.response(err);
             return res.view();
           }
           else{
-            req.session.user_id=user_id;
+            req.session.user_id=saved.user_id;
             return res.redirect('/user/mypage');
           }
         });
