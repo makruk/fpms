@@ -6,7 +6,6 @@
 */
 
 module.exports = {
-  semaphore:false,
   attributes: {
     name:{type:"string"},
     user_id:{type:"string", required:true,unique:true},
@@ -29,8 +28,8 @@ module.exports = {
     }
   },
   payment:function(id, cash, kind, note, cb){
-    if( !(this.semaphore=this.semaphore?this.semaphore:true) ){
-      while(this.semaphore);
+    if( !(sails.config.semaphore.payment=sails.config.semaphore.payment?sails.config.semaphore.payment:true) ){
+      while(sails.config.semaphore.payment);
     }
     console.log("payment in:"+note);
     if(cash == 0){
