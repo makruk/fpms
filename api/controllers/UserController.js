@@ -46,7 +46,7 @@ module.exports = {
   },
   user:function(req, res){
     var id=req.param('id');
-    User.findOne({or:[{user_id:id},{id:id}]}).exec(function findOneCB(err, found){
+    User.findOne({user_id:id}).exec(function findOneCB(err, found){
       if(found === void 0)return res.notFound();
       if(err)return res.serverError();
       this.user=found;
@@ -90,7 +90,7 @@ module.exports = {
   },
   edit:function(req, res){
     var id=req.param('id');
-    User.findOne({user_id:id}).exec(function findOneCB(err, found){
+    User.findOne({or:[{user_id:id},{id:id}]}).exec(function findOneCB(err, found){
       this.user=found;
       if(req.method==="GET"){
         return res.view();

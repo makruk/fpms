@@ -92,6 +92,9 @@ module.exports = {
   },
   beforeValidate:function(attrs, next){
     var bcrypt=require('bcrypt');
+    if(attrs.user_id){
+      attrs.user_id=attrs.user_id.replace("/", "");
+    }
     if(attrs.password === void 0 || Object.keys(attrs).length>1){
       return next();
     }
