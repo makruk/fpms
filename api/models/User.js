@@ -6,7 +6,7 @@
 */
 
 module.exports = {
-
+  semaphore:false,
   attributes: {
     name:{type:"string"},
     user_id:{type:"string", required:true,unique:true},
@@ -29,6 +29,9 @@ module.exports = {
     }
   },
   payment:function(id, cash, kind, note, cb){
+    if( !(this.semaphore=this.semaphore?this.semaphore:true) ){
+      while(this.semaphore);
+    }
     console.log("payment in:"+note);
     if(cash == 0){
       if(cb)cb(void 0);
