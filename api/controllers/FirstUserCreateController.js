@@ -8,8 +8,8 @@
 module.exports = {
   index:function(req, res){
     User.find({}).exec(function(err, f){
-      if(err)return res.serverError();
-      if(f.length>0)return res.serverError();
+      if(err)return res.serverError("DB error.");
+      if(f.length>0)return res.forbidden();
       var pass=(function(){
         var ret="";
         for(var i=0;i<10;i++){
