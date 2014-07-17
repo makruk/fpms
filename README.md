@@ -84,11 +84,111 @@ Microsoft Visual Studio 2010が入っている場合、node-gypのインスト�
 
 リクエストIDを指定すると、リクエストの詳細情報を閲覧できます。この画面でフィードバックを行う事もできます。
 
+    [get]  /request/destroy/[リクエストID]
+    
+リクエストIDを指定すると、リクエストを削除できます。
+
 #### Stock
+
+在庫の登録、入荷、在庫巣の変更が可能です。
+
+    [get]  /stock
+    
+在庫リストを表示します。カテゴリによるフィルタリング、ソートが可能です。
+
+    [get]  /stock/[商品ID]
+    
+商品の詳細情報を表示します。売り上げ推移の表示も可能です。
+
+    [get]  /stock/[商品ID]/edit
+    
+商品情報を編集します。
+
+    [get]  /stock/create
+    
+新しい商品を登録します。
+
+    [get]  /stock/add?number=[入荷数]&id=[商品ID]&...
+
+商品を入荷します。
+
+    [get]  /stock/loss/
+    
+在庫数の変更を行います。
 
 #### User
 
+    [get]  /user?name=[名前]&grade=[学年]&from_balance=[残高]&to_balance=[残高]&sort=[ソート方法]&r1=[ソート方法(0/1)]
+    
+ユーザーリストを表示します。また、名前、学年、残高で絞込み検索が可能です。ソート方法も指定可能です。
+
+    [get]  /user/[ユーザーID]
+    
+ユーザーの詳細情報を表示します。残高の推移も表示可能です。
+
+    [get]  /user/[ユーザーID]/edit
+    
+ユーザー情報を変更できます。
+
+    [get]  /user/[ユーザーID]/password
+    
+ユーザーのパスワードを変更できます。
+
+    [get]  /user/create
+    
+新しいユーザーを登録します。
+
+    [get]  /user/alledit
+    
+一括編集を行います。
+
 #### Log
+
+    [get]  /log/
+    
+ログ閲覧を行います。
+
+### User
+
+購入者権限を持つユーザーは、商品の購入、リクエストの送信、自分の情報の閲覧・編集が可能です。
+
+#### Stock
+
+    [get]  /stock/list
+    
+商品リストを表示します。ソート、カテゴリによるフィルタが可能です。
+
+    [get/post]  /stock/purchase?id[商品ID]=[購入数]...
+    
+購入処理を行います。
+
+#### Request
+
+    [get]  /request/user_request?
+    
+リクエストリストを表示します。リクエストの送信も可能です。
+
+    [post]  /request/reqsubmit?request=[リクエスト]
+    
+リクエストを行います。
+
+    [get]  /request/evaluation/[リクエストID]
+    
+リクエストをお気に入りにします。
+
+#### User
+
+    [get]  /user/mypage
+    
+自分の情報を表示します。残高の推移も表示可能です。
+
+    [get]  /user/mypage/edit
+    
+自分の情報を編集します。
+
+    [get]  /user/[ユーザーID]/password
+    
+自分のパスワードを編集します。
 
 a [Sails](http://sailsjs.org) application
 
