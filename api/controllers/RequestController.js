@@ -50,6 +50,8 @@ module.exports = {
 	request:function(req,res){
 		var id = req.param('id');
 		Request.findOne({id:id}).populate('User').populate('favUser').exec(function (err,found){
+			if(err)return res.serverError(err);
+			if(found === void 0) return res.notFound();
 			this.request = found;
 			this.user=found.User;
 			return res.view();
@@ -85,6 +87,8 @@ module.exports = {
 		var user_id = req.session.user_id;
 		var id;
 		User.findOne({user_id:user_id}).exec(function(err,found){
+			if(err)res.serverError(err);
+			if(found===void 0)res.notFound();
 			id = found.id;
 			/*フィードバックのチェック*/
 			var checkfeed = {contains:""};
@@ -119,7 +123,7 @@ module.exports = {
 		});
   },
 	reqsubmit:function(req,res){
-    if(req.method == 'GET')return res.view();
+		if(req.method == 'GET')return res.view();
 		var request = req.param('request');
 		if(request == ""){
 			return res.redirect("/request/user_request");
@@ -128,6 +132,8 @@ module.exports = {
 
 		var id;
 		User.findOne({user_id:user_id}).exec(function(err,found){
+			if(err)res.serverError(err);
+			if(found===void 0)res.notFound();
 			id = found.id;
 			Request.create({request:request,review:0,User:id})
 			.exec(function(err){
@@ -145,6 +151,8 @@ module.exports = {
 
 		User.findOne({user_id:user_id}).exec(function(err,found){
 			id = found.id;
+			if(err)res.serverError(err);
+			if(found===void 0)res.notFound();
 			Request.findOne({id:request_id}).exec(function(err,found){
 				found.favUser.add(id);
 				found.save(function(err){
